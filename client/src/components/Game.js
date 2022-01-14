@@ -27,11 +27,15 @@ const Game=() => {
     const shuffledDeck = shuffleDeck(deck);
     console.log(shuffledDeck);
 
+    const onBetSubmit = (betAmount) => {
+        setPlayerBet(betAmount)
+    }
+
     return(
         <>
         <h4>Game lol</h4>
         <Dealer />
-        <Player />
+        <Player onBetSubmit={onBetSubmit}/>
         {shuffledDeck}
         </>
     )
