@@ -32,12 +32,16 @@ const Game=() => {
         totalAmount=totalAmount + Number(betAmount)
         setPlayerBet(totalAmount)
     }
+    const onBetClear=() => {
+        setPlayerBet(0)
+        
+    }
 
     return(
         <>
         <h4>Game lol</h4>
         <Dealer />
-        <Player onBetSubmit={onBetSubmit}/>
+        <Player onBetSubmit={onBetSubmit} onBetClear={onBetClear}/>
         {shuffledDeck}
         </>
     )
