@@ -1,9 +1,11 @@
 import React from "react";
 
-const PlayerItem = () => {
+const PlayerItem = ({player}) => {
     
     return(
-        <p>PlayerItem</p>
+        <>
+            <p>Name: {player.name} - Turns Survived: {player.turnsSurvived}</p>
+        </>
     )
 }
 
