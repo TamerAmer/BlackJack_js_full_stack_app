@@ -16,14 +16,23 @@ const Game=() => {
             "1S","2S","3S","4S","5S","6S","7S","8S","9S","10S","JS","QS","KS"]
             //does deck need to be a useState?? not rendered anywhere
 
+            // is deck stored in database?
+    
+    function shuffleDeck(deck) {
+        deck = deck.sort(() => Math.random() - 0.5)
+        console.log(deck);
+    }
     
 
+    const shuffledDeck = shuffleDeck(deck);
+    console.log(shuffledDeck);
 
     return(
         <>
         <h4>Game lol</h4>
         <Dealer />
         <Player />
+        {shuffledDeck}
         </>
     )
 }
