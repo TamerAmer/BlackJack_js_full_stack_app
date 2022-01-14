@@ -1,7 +1,9 @@
 import React from "react";
 
-const Dealer = () => {
+const Dealer = ({dealerHand}) => {
     
+    
+
     return(
         <h4>Dealer</h4>
     )
