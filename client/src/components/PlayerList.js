@@ -1,11 +1,14 @@
-import React,{useState} from "react"
 import PlayerItem from "./PlayerItem"
 
-const PlayerList=() => {
+const PlayerList=({players}) => {
+
+    const playersList = players.map((player) =>{
+        return <PlayerItem player={player} key={player._id} />
+    });
     return(
         <>
-        <h4>PlayerList workssss</h4>
-        <PlayerItem />
+        <h4>Player List</h4>
+        {playersList}
         </>
     )
 }
