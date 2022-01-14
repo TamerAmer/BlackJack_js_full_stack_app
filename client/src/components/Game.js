@@ -28,7 +28,9 @@ const Game=() => {
     console.log(shuffledDeck);
 
     const onBetSubmit = (betAmount) => {
-        setPlayerBet(betAmount)
+        let totalAmount=playerBet
+        totalAmount=totalAmount + Number(betAmount)
+        setPlayerBet(totalAmount)
     }
 
     return(
