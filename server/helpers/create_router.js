@@ -7,7 +7,7 @@ const createRouter = function (collection) {
 
   //INDEX - GET ALL 
   router.get('/', (req, res) => {
-    //takes our games/collection and presents it as an array async - promise
+    //takes our collection and presents it as an array async - promise
     collection.find().toArray()
       .then(docs => res.json(docs))
       .catch((err) => {
@@ -36,7 +36,7 @@ const createRouter = function (collection) {
   //CREATE
   router.post('/', (req, res) => {
     const newData = req.body;
-    //insertOne returns a"result"(banana) object which we can then use to show
+    //insertOne returns a "result" object which we can then use to show
     collection.insertOne(newData)
       .then((result) => res.json(result.ops[0]))
       .catch((err) => {
