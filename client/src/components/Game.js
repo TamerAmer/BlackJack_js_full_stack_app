@@ -70,7 +70,7 @@ const Game=() => {
         <>
         <h4>Game lol</h4>
         <Dealer />
-        <Player onBetSubmit={onBetSubmit} onBetClear={onBetClear}/>
+        <Player onBetSubmit={onBetSubmit} onBetClear={onBetClear} currentBetAmount={playerBet}/>
 
         </>
     )
