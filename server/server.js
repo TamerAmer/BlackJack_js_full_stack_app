@@ -17,7 +17,7 @@ MongoClient.connect('mongodb://localhost:27017', {useUnifiedTopology: true})
   //create the routes
   const playersRouter = createRouter(playersCollection);
   //point app to the routes
-  app.use('/api/players', playesrsRouter);
+  app.use('/api/players', playersRouter);
 })
 .catch(console.error);
 
