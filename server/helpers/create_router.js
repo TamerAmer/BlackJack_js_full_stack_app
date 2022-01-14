@@ -19,6 +19,20 @@ const createRouter = function (collection) {
         });
     });
 
+    //SHOW - GET ON BY ID
+    router.get('/:id', (req, res) => {
+    const id = req.params.id;
+    //use ObjectID to convert id 
+    collection
+      .findOne({ _id: ObjectID(id) })
+      .then((doc) => res.json(doc))
+      .catch((err) => {
+        console.error(err);
+        res.status(500);
+        res.json({ status: 500, error: err });
+      });
+  });
+
     return router;
 }
 
