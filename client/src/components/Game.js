@@ -15,10 +15,10 @@ const Game=() => {
     //refreshes render when state changes
     useEffect(()=>{
         //only on first load...
-        shuffleDeck();
+        let shuffledDeck =shuffleDeck();
+        dealCards(shuffledDeck);
+        
       },[]);
-    
-    
             
     function initialiseDeck()
     {
@@ -28,24 +28,19 @@ const Game=() => {
         "1S","2S","3S","4S","5S","6S","7S","8S","9S","10S","JS","QS","KS"]
     
         return deck;
-
     }
 
     function shuffleDeck() {
-        console.log("shuffle Deck fired");
-        console.log(deck);
         //make copy of array
-        let tempDeck = deck.map(s =>s);        
+        let shuffledDeck = deck.map(s =>s);        
         //random sort (this works)
-        tempDeck.sort(() => Math.random() - 0.5)
-        console.log(tempDeck);
+        shuffledDeck.sort(() => Math.random() - 0.5)
         //
-        setDeck(tempDeck);
-        console.log(deck);
+        setDeck(shuffledDeck);
+        return shuffledDeck;
     }
     
-    function dealCards() {
-        console.log(deck);
+    function dealCards(deck) {
         //shift takes from array and saves in variable
         //Player
         let twoCards = [];             
@@ -58,24 +53,13 @@ const Game=() => {
         twoCards.push( deck.shift() );
         twoCards.push( deck.shift() );
         setDealerHand(twoCards);
-
-        console.log(deck);
-
     }
-
-    //const shuffledDeck = shuffleDeck(deck);
-    //const dealtCards = dealCards();
-    //console.log(shuffledDeck);
-
-    
 
     return(
         <>
-        <h4>Game lol</h4>
-        <Dealer />
-        <Player />
-        
-        
+            <h4>Game lol</h4>
+            <Dealer />
+            <Player />
         </>
     )
 }
