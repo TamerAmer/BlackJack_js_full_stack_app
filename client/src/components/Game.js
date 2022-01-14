@@ -85,10 +85,41 @@ const Game=() => {
                 }
             }
         })
-        // const addedValues
+        let totalValue=0
+        
+        cardValues.map((value) => {
+            totalValue=totalValue+value
+        })
 
+        while(totalValue>21){
+            const hasAce=cardValues.map((value) => {
+                let exists=false
+                if(value==11){
+                    exists=true
+                }
+                return exists
+                
+            })
+            if (hasAce){
+                let loopCounter
+                for(loopCounter=0; loopCounter < cardValues.length; loopCounter++){
+                    if(cardValues[loopCounter]==11){
+                        cardValues[loopCounter]=1
+                        totalValue=0
+                        cardValues.map((value) => {   
+                            totalValue=totalValue+value
+                        })
+                        break
+                    }
+                }
+            }else{ break}
+            
+
+        }
+        console.log(totalValue)
     }
 
+    // const testArray=["AS","AD","AH","AC"]
     return(
         <>
         <h4>Game lol</h4>
