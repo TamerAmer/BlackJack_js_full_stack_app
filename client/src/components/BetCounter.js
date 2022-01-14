@@ -11,20 +11,18 @@ const BetCounter = ({onBetSubmit}) => {
 	};
 
 	const handleCounterChange = (evt) => {
-        console.log(evt.target.value)
+		console.log(evt.target.value)
 		onBetSubmit(evt.target.value)
 	}
 
 	return (
-		<>
 			<div className="counter-container">
-				<button value="5" id="button" className="five" onClick={handleCounterChange}><span className="FIVE">£5</span></button>
-				<button value="10" id="button" className="ten" onClick={handleCounterChange}><span className="TEN">£10</span></button>
-				<button value="20" id="button" className="twenty" onClick={handleCounterChange}><span className="TWENTY">£20</span></button>
+				<button value="5" id="button" className="five" onClick={handleCounterChange}>£5</button>
+				<button value="10" id="button" className="ten" onClick={handleCounterChange}>£10</button>
+				<button value="20" id="button" className="twenty" onClick={handleCounterChange}>£20</button>
 				{/* <p className="stake" >Stake: {currentBetAmount}</p> */}
 				<button id="button" className="clear" onClick={() => clear()}>Clear</button>
             </div>
-		</>
 	);
 };
 
