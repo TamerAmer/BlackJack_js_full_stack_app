@@ -27,8 +27,7 @@ const Game=() => {
         "1D","2D","3D","4D","5D","6D","7D","8D","9D","10D","JD","QD","KD",
         "1S","2S","3S","4S","5S","6S","7S","8S","9S","10S","JS","QS","KS"]
     
-        return deck;
-    }
+
 
     function shuffleDeck() {
         //make copy of array
@@ -55,11 +54,23 @@ const Game=() => {
         setDealerHand(twoCards);
     }
 
+    const onBetSubmit = (betAmount) => {
+        let totalAmount=playerBet
+        totalAmount=totalAmount + Number(betAmount)
+        setPlayerBet(totalAmount)
+    }
+    const onBetClear=() => {
+        setPlayerBet(0)
+        
+    }
+
     return(
         <>
-            <h4>Game lol</h4>
-            <Dealer />
-            <Player />
+        <h4>Game lol</h4>
+        <Dealer />
+        <Player onBetSubmit={onBetSubmit} onBetClear={onBetClear}/>
+        {shuffledDeck}
+
         </>
     )
 }
