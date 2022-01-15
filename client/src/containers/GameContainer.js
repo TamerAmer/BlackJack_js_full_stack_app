@@ -95,15 +95,23 @@ const GameContainer=() => {
     const onHitMe = () => {
         //pass player card
         console.log("On hit me GameContainer")
+        //create copy of hand and take from the deck
+        let newPlayerHand = [...playerHand, deck.shift()];
+        //set
+        setPlayerHand(newPlayerHand);
+
     }
 
     const onStand = () => {
         //start dealer logic
         //go to Dealer.js?
-        console.log("On stand GameContainer")
-    }
+        console.log("On stand GameContainer");
 
-    
+        //what is player hand's total?
+        const playerHandTotal = handValuator(playerHand);
+
+        console.log("Player's hand total = " + playerHandTotal);
+    }
 
     const handValuator=(arrayOfCards) => {
 
@@ -144,8 +152,6 @@ const GameContainer=() => {
             }
         }
         
-        
-        console.log(totalValue)
         return(totalValue)
     }
       
