@@ -94,14 +94,14 @@ const Game=() => {
         })
 
         while(totalValue>21){
-            const hasAce=cardValues.map((value) => {
-                let exists=false
-                if(value===11){
-                    exists=true
+            let loopCounter,hasAce
+            for(loopCounter=0; loopCounter < cardValues.length; loopCounter++){
+                if(cardValues[loopCounter]===11){
+                    hasAce=(true)
+                    break
                 }
-                return exists
                 
-            })
+            }
             if (hasAce){
                 let loopCounter
                 for(loopCounter=0; loopCounter < cardValues.length; loopCounter++){
@@ -133,7 +133,7 @@ const Game=() => {
         
     
 
-    const testArray=["AS","AD","AH","AC","KH","KS"]
+    const testArray=["AS","AC","AD","KH","KQ"]
     return(
         <>
         <h4>Game lol</h4>
