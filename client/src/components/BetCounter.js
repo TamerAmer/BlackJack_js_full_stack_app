@@ -6,6 +6,8 @@ const BetCounter = ({onBetSubmit,onBetClear, currentBetAmount}) => {
 	// 	onBetSubmit(total + amount);
 	// };
 
+
+
 	const handleClear = () => {
 		onBetClear();
 	};
