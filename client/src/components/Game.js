@@ -60,13 +60,11 @@ const Game=() => {
         let totalAmount=playerBet
         totalAmount=totalAmount + Number(betAmount)
         setPlayerBet(totalAmount)
-        setPlayerMoney(playerMoney - betAmount)
     }
     const onBetClear=() => {
         setPlayerBet(0)
         
     }
-
 
     const handValuator=(arrayOfCards) => {
         const cardValues=arrayOfCards.map((card) => {
