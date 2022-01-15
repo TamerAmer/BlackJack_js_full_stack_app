@@ -38,7 +38,19 @@ const GameContainer=() => {
         //update the players list with object received from db
         //get all players and add our new player
         const newPlayers = [...players, player];
-        setPlayers(newPlayers);
+        setPlayers(newPlayers)
+        console.log("then fired");
+
+        //once we have added player to front end list, we can start a game with this player
+        gameFlow();
+
+    }
+
+    const gameFlow = () => { 
+        //shuffle
+        let shuffledDeck = shuffleDeck();
+        //deal shuffle to dealer and players
+        dealCards(shuffledDeck);
     }
 
     const shuffleDeck=() =>{
