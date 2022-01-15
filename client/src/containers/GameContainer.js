@@ -9,7 +9,7 @@ import { getPlayers } from "../helpers/DBHelpers";
 const GameContainer=() => {
     
     const [players, setPlayers] = useState([]);
-    const [currentPlayer,setCurrentPlayer]=useState(0)
+    const [currentPlayer,setCurrentPlayer]=useState(null)
     const [playerHand,setPlayerHand]=useState([])
     const [dealerHand,setDealerHand]=useState([])
     const [playerMoney,setPlayerMoney]=useState(100)
@@ -38,8 +38,10 @@ const GameContainer=() => {
         //update the players list with object received from db
         //get all players and add our new player
         const newPlayers = [...players, player];
-        setPlayers(newPlayers)
-        
+        //add player to list
+        setPlayers(newPlayers);
+        //remember this player has active/current player
+        setCurrentPlayer(player);
 
         //once we have added player to front end list, we can start a game with this player
         gameFlow();
@@ -81,7 +83,13 @@ const GameContainer=() => {
         setDealerHand(twoCards);
     }
 
-    const onBetSubmit = (betAmount) => {        
+    const onBetSubmit = (betAmount) => {   
+        if(currentPlayer == null)
+        {
+            console.log("no player asigned")
+            return;
+        }
+
         let totalAmount=playerBet
         totalAmount=totalAmount + Number(betAmount)
         setPlayerBet(totalAmount)
@@ -89,10 +97,22 @@ const GameContainer=() => {
         
     }
     const onBetClear=() => {
+        if(currentPlayer == null)
+        {
+            console.log("no player asigned")
+            return;
+        }
+
         setPlayerBet(0)        
     }
 
     const onHitMe = () => {
+
+        if(currentPlayer == null)
+        {
+            console.log("no player asigned")
+            return;
+        }
         //pass player card
         console.log("On hit me GameContainer")
         //create copy of hand and take from the deck
@@ -100,17 +120,36 @@ const GameContainer=() => {
         //set
         setPlayerHand(newPlayerHand);
 
+        //at this point we need to check if player is bust
+        const playerHandTotal = handValuator(playerHand);
+
+        if(playerHandTotal > 21)
+        {
+            console.log("Player is bust!");
+            //remove player from game
+            setCurrentPlayer(null);
+            //show game over - go to player list?
+        }
+        else
+        {
+            // player can keep playing
+        }
+
     }
 
     const onStand = () => {
+
+        if(currentPlayer == null)
+        {
+            console.log("no player asigned")
+            return;
+        }
         //start dealer logic
         //go to Dealer.js?
         console.log("On stand GameContainer");
 
-        //what is player hand's total?
-        const playerHandTotal = handValuator(playerHand);
+        //go to dealer's turn (or next player)
 
-        console.log("Player's hand total = " + playerHandTotal);
     }
 
     const handValuator=(arrayOfCards) => {
