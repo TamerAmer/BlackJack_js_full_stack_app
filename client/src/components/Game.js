@@ -105,7 +105,6 @@ const Game=() => {
                 totalValue -= 10;
                 console.log(totalValue);
             }
-
         }
         
         
