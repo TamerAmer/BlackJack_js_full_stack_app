@@ -69,6 +69,8 @@ const Game=() => {
 
 
     const handValuator=(arrayOfCards) => {
+
+        let aces = []
         const cardValues=arrayOfCards.map((card) => {
             let firstChar = card.charAt(0)
             if (Number.isInteger(Number(firstChar))){
@@ -80,6 +82,8 @@ const Game=() => {
                 }
             }else{
                 if(firstChar=="A"){
+                    //remember this ace
+                    aces.push(card);
                     return(11)
                 }
                else{
@@ -93,6 +97,17 @@ const Game=() => {
             totalValue=totalValue+value
         })
 
+        for(let i = 0; i < aces.length; i++)
+        {
+            if (totalValue > 21)
+            {
+                console.log("reducing value");
+                totalValue -= 10;
+                console.log(totalValue);
+            }
+
+        }
+        /*
         while(totalValue>21){
             let loopCounter,hasAce
             for(loopCounter=0; loopCounter < cardValues.length; loopCounter++){
@@ -115,10 +130,11 @@ const Game=() => {
                         break
                     }
                 }
-            }else break
-            
+            } else break           
 
         }
+        */
+        
         console.log(totalValue)
         return(totalValue)
     }
