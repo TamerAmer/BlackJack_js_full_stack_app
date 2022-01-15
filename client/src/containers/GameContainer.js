@@ -5,6 +5,7 @@ import PlayerForm from "../components/PlayerForm"
 import Dealer from "../components/Dealer"
 import Player from "../components/Player"
 import { getPlayers } from "../helpers/DBHelpers";
+import { updatePlayer } from "../helpers/DBHelpers"
 
 const GameContainer=() => {
     
@@ -88,6 +89,12 @@ const GameContainer=() => {
 
         console.log("Dealer's first is " + twoCards[0]);
     }
+    
+    // const updatePlayerMoney = (playerToUpdate, moneyToRemove) => {
+    //     playerToUpdate = players.at(-1);
+    //     updatePlayer(playerToUpdate).currentMoney -= moneyToRemove
+    //     console.log(playerToUpdate.name);
+    // }
 
     const onBetSubmit = (betAmount) => {   
         if(currentPlayer == null)
@@ -100,8 +107,15 @@ const GameContainer=() => {
         totalAmount=totalAmount + Number(betAmount)
         setPlayerBet(totalAmount)
         setPlayerMoney(playerMoney - betAmount)
-        
     }
+
+    const onPlaceBet = (betAmount) => {
+        currentPlayer = players.at(-1);
+        updatePlayer(currentPlayer) 
+        
+        }
+
+
     const onBetClear=() => {
         if(currentPlayer == null)
         {
@@ -145,7 +159,7 @@ const GameContainer=() => {
 
         console.log("Player now has " + playerHandValue );
 
-         
+
     }
 
     const onStand = () => {
@@ -263,7 +277,7 @@ const GameContainer=() => {
         <>
             {currentPlayer == null ? 
             <PlayerList players={players}/> :             
-            <Player onBetSubmit={onBetSubmit} onBetClear={onBetClear} currentBetAmount={playerBet} onHitMe={onHitMe} onStand={onStand}/>}            
+            <Player onPlaceBet={onPlaceBet} onBetSubmit={onBetSubmit} onBetClear={onBetClear} currentBetAmount={playerBet} onHitMe={onHitMe} onStand={onStand}/>}            
 
             <PlayerForm addPlayer={addPlayer}/>
 
