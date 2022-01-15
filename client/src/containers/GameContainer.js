@@ -39,7 +39,7 @@ const GameContainer=() => {
         //get all players and add our new player
         const newPlayers = [...players, player];
         setPlayers(newPlayers)
-        console.log("then fired");
+        
 
         //once we have added player to front end list, we can start a game with this player
         gameFlow();
@@ -47,6 +47,7 @@ const GameContainer=() => {
     }
 
     const gameFlow = () => { 
+        console.log("game flow")
         //shuffle
         let shuffledDeck = shuffleDeck();
         //deal shuffle to dealer and players
@@ -54,6 +55,7 @@ const GameContainer=() => {
     }
 
     const shuffleDeck=() =>{
+        console.log("shuffling deck");
         //make copy of array
         let shuffledDeck = deck.map(s =>s);        
         //random sort (this works)
@@ -64,6 +66,7 @@ const GameContainer=() => {
     }
     
     function dealCards(deck) {
+        console.log("dealing cards");
         //shift takes from array and saves in variable
         //Player
         let twoCards = [];             
@@ -78,16 +81,29 @@ const GameContainer=() => {
         setDealerHand(twoCards);
     }
 
-    const onBetSubmit = (betAmount) => {
+    const onBetSubmit = (betAmount) => {        
         let totalAmount=playerBet
         totalAmount=totalAmount + Number(betAmount)
         setPlayerBet(totalAmount)
         setPlayerMoney(playerMoney - betAmount)
-    }
-    const onBetClear=() => {
-        setPlayerBet(0)
         
     }
+    const onBetClear=() => {
+        setPlayerBet(0)        
+    }
+
+    const onHitMe = () => {
+        //pass player card
+        console.log("On hit me GameContainer")
+    }
+
+    const onStand = () => {
+        //start dealer logic
+        //go to Dealer.js?
+        console.log("On stand GameContainer")
+    }
+
+    
 
     const handValuator=(arrayOfCards) => {
 
@@ -140,7 +156,7 @@ const GameContainer=() => {
             <PlayerList players={players}/>
             <PlayerForm addPlayer={addPlayer}/>
             <Dealer dealerHand={dealerHand}/>
-            <Player onBetSubmit={onBetSubmit} onBetClear={onBetClear} currentBetAmount={playerBet}/>
+            <Player onBetSubmit={onBetSubmit} onBetClear={onBetClear} currentBetAmount={playerBet} onHitMe={onHitMe} onStand={onStand}/>
         </>
     );
 };
