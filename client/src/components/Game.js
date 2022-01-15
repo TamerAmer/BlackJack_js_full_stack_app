@@ -107,33 +107,7 @@ const Game=() => {
             }
 
         }
-        /*
-        while(totalValue>21){
-            let loopCounter,hasAce
-            for(loopCounter=0; loopCounter < cardValues.length; loopCounter++){
-                if(cardValues[loopCounter]===11){
-                    hasAce=(true)
-                    break
-                }
-                
-            }
-            if (hasAce){
-                let loopCounter
-                for(loopCounter=0; loopCounter < cardValues.length; loopCounter++){
-                    if(cardValues[loopCounter]==11){
-                        cardValues[loopCounter]=1
-                        totalValue=0
-                        cardValues.map((value) => {   
-                            totalValue=totalValue+value
-                        })
-                        console.log(totalValue)
-                        break
-                    }
-                }
-            } else break           
-
-        }
-        */
+        
         
         console.log(totalValue)
         return(totalValue)
