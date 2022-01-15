@@ -69,6 +69,8 @@ const Game=() => {
 
 
     const handValuator=(arrayOfCards) => {
+
+        let aces = []
         const cardValues=arrayOfCards.map((card) => {
             let firstChar = card.charAt(0)
             if (Number.isInteger(Number(firstChar))){
@@ -80,6 +82,8 @@ const Game=() => {
                 }
             }else{
                 if(firstChar=="A"){
+                    //remember this ace
+                    aces.push(card);
                     return(11)
                 }
                else{
@@ -93,41 +97,40 @@ const Game=() => {
             totalValue=totalValue+value
         })
 
-        while(totalValue>21){
-            const hasAce=cardValues.map((value) => {
-                let exists=false
-                if(value==11){
-                    exists=true
-                }
-                return exists
-                
-            })
-            if (hasAce){
-                let loopCounter
-                for(loopCounter=0; loopCounter < cardValues.length; loopCounter++){
-                    if(cardValues[loopCounter]==11){
-                        cardValues[loopCounter]=1
-                        totalValue=0
-                        cardValues.map((value) => {   
-                            totalValue=totalValue+value
-                        })
-                        break
-                    }
-                }
-            }else{ break}
-            
+        for(let i = 0; i < aces.length; i++)
+        {
+            if (totalValue > 21)
+            {
+                console.log("reducing value");
+                totalValue -= 10;
+                console.log(totalValue);
+            }
 
         }
+        
+        
         console.log(totalValue)
+        return(totalValue)
     }
 
-    // const testArray=["AS","AD","AH","AC"]
+    // const hitMe=(arrayOfCards) => {
+    //     const newArrayOfCards=arrayOfCards.map(c=>c)
+    //     newArrayOfCards.push( deck.shift() );
+    //     handValuator(newArrayOfCards)
+    //     setDealerHand(hitMe(dealerHand))
+    // }
+
+        
+    
+
+    const testArray=["AS","AC","AD","KH","KQ"]
     return(
         <>
         <h4>Game lol</h4>
         <Dealer dealerHand={dealerHand}/>
         <Player onBetSubmit={onBetSubmit} onBetClear={onBetClear} currentBetAmount={playerBet}/>
-        {handValuator(dealerHand)}
+        {handValuator(testArray)}
+        {/* {hitMe(dealerHand)} */}
         </>
     )
 }
