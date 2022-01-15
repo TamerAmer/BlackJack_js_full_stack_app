@@ -1,13 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { updatePlayer } from "../helpers/DBHelpers";
 
-const BetCounter = ({ onPlaceBet, onBetSubmit,onBetClear, currentBetAmount}) => {
+const BetCounter = ({ onPlaceBet, onBetSubmit,onBetClear,  player}) => {
 
 	// const dep = (amount) => {
 	// 	onBetSubmit(total + amount);
 	// };
 
-
+    const [currentBetAmount, setCurrentBetAmount] = useState(0);
 
 	const handleClear = () => {
 		onBetClear();
@@ -15,11 +15,23 @@ const BetCounter = ({ onPlaceBet, onBetSubmit,onBetClear, currentBetAmount}) => 
 
 	const handleCounterChange = (evt) => {
 		console.log(evt.target.value)
-		onBetSubmit(evt.target.value)
+		//onBetSubmit(evt.target.value)
+
+        setCurrentBetAmount(currentBetAmount + evt.target.value);
 	}
 
-	const handleSubmitBet = () => {
-		onPlaceBet();
+	const handleSubmitBet = (evt) => {
+
+         //stop post request to current url
+        evt.preventDefault();
+        console.log(player);
+        //update player object         
+        //player.currentMoney -= currentBetAmount
+
+        //update db
+        updatePlayer(player)
+        
+
 		// TODO
 		// updatePlayerMoney()
 	};

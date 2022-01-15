@@ -14,7 +14,7 @@ const GameContainer=() => {
     const [playerHand,setPlayerHand]=useState([])
     const [dealerHand,setDealerHand]=useState([])
     const [playerMoney,setPlayerMoney]=useState(100)
-    const [playerBet,setPlayerBet]=useState(0)
+    //const [playerBet,setPlayerBet]=useState(0)
     const [deck, setDeck] = useState( initialiseDeck() )
 
     useEffect( () => {    
@@ -103,15 +103,17 @@ const GameContainer=() => {
             return;
         }
 
-        let totalAmount=playerBet
-        totalAmount=totalAmount + Number(betAmount)
-        setPlayerBet(totalAmount)
-        setPlayerMoney(playerMoney - betAmount)
+       // let totalAmount=playerBet
+       // totalAmount=totalAmount + Number(betAmount)
+       // setPlayerBet(totalAmount)
+        //setPlayerMoney(playerMoney - betAmount)
     }
 
-    const onPlaceBet = (betAmount) => {
-        currentPlayer = players.at(-1);
-        updatePlayer(currentPlayer) 
+    const onPlaceBet = () => {
+       
+        console.log("on place bet front end")
+        //db
+        //updatePlayer(players[2]) 
         
         }
 
@@ -123,7 +125,7 @@ const GameContainer=() => {
             return;
         }
 
-        setPlayerBet(0)        
+       // setPlayerBet(0)        
     }
 
     //player hit me   
@@ -277,7 +279,7 @@ const GameContainer=() => {
         <>
             {currentPlayer == null ? 
             <PlayerList players={players}/> :             
-            <Player onPlaceBet={onPlaceBet} onBetSubmit={onBetSubmit} onBetClear={onBetClear} currentBetAmount={playerBet} onHitMe={onHitMe} onStand={onStand}/>}            
+            <Player onPlaceBet={onPlaceBet} onBetSubmit={onBetSubmit} onBetClear={onBetClear} onHitMe={onHitMe} onStand={onStand} player={currentPlayer}/>}            
 
             <PlayerForm addPlayer={addPlayer}/>
 
