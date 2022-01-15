@@ -19,6 +19,8 @@ const Game=() => {
         dealCards(shuffledDeck);
         
       },[]);
+
+    
             
     function initialiseDeck()
     {
@@ -101,24 +103,24 @@ const Game=() => {
         {
             if (totalValue > 21)
             {
-                console.log("reducing value");
                 totalValue -= 10;
-                console.log(totalValue);
             }
 
         }
-        
-        
-        console.log(totalValue)
         return(totalValue)
     }
 
-    // const hitMe=(arrayOfCards) => {
-    //     const newArrayOfCards=arrayOfCards.map(c=>c)
-    //     newArrayOfCards.push( deck.shift() );
-    //     handValuator(newArrayOfCards)
-    //     setDealerHand(hitMe(dealerHand))
-    // }
+    const hitMe=(arrayOfCards) => {
+        console.log(arrayOfCards)
+        const newArrayOfCards=arrayOfCards.map(c=>c)
+        newArrayOfCards.push( deck.shift() );
+        console.log(newArrayOfCards)
+        handValuator(newArrayOfCards)
+    }
+    const hitTheDealer=() => {
+        setDealerHand(hitMe(dealerHand))
+    }
+    
 
         
     
@@ -127,10 +129,10 @@ const Game=() => {
     return(
         <>
         <h4>Game lol</h4>
-        <Dealer dealerHand={dealerHand}/>
+        <Dealer dealerHand={dealerHand} hitTheDealer={hitTheDealer} handValuator={handValuator}/>
         <Player onBetSubmit={onBetSubmit} onBetClear={onBetClear} currentBetAmount={playerBet}/>
         {handValuator(testArray)}
-        {/* {hitMe(dealerHand)} */}
+        {/* {setDealerHand(hitMe(dealerHand))} */}
         </>
     )
 }
