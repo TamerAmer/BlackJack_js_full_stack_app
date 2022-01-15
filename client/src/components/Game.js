@@ -96,7 +96,7 @@ const Game=() => {
         while(totalValue>21){
             const hasAce=cardValues.map((value) => {
                 let exists=false
-                if(value==11){
+                if(value===11){
                     exists=true
                 }
                 return exists
@@ -111,23 +111,36 @@ const Game=() => {
                         cardValues.map((value) => {   
                             totalValue=totalValue+value
                         })
+                        console.log(totalValue)
                         break
                     }
                 }
-            }else{ break}
+            }else break
             
 
         }
         console.log(totalValue)
+        return(totalValue)
     }
 
-    // const testArray=["AS","AD","AH","AC"]
+    // const hitMe=(arrayOfCards) => {
+    //     const newArrayOfCards=arrayOfCards.map(c=>c)
+    //     newArrayOfCards.push( deck.shift() );
+    //     handValuator(newArrayOfCards)
+    //     setDealerHand(hitMe(dealerHand))
+    // }
+
+        
+    
+
+    const testArray=["AS","AD","AH","AC","KH","KS"]
     return(
         <>
         <h4>Game lol</h4>
         <Dealer dealerHand={dealerHand}/>
         <Player onBetSubmit={onBetSubmit} onBetClear={onBetClear} currentBetAmount={playerBet}/>
-        {handValuator(dealerHand)}
+        {handValuator(testArray)}
+        {/* {hitMe(dealerHand)} */}
         </>
     )
 }
