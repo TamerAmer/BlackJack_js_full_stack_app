@@ -49,6 +49,8 @@ const GameContainer=() => {
     }
 
     const gameFlow = () => { 
+
+        //Betting phase goes here!
         console.log("game flow")
         //shuffle
         let shuffledDeck = shuffleDeck();
@@ -76,11 +78,15 @@ const GameContainer=() => {
         twoCards.push( deck.shift() );
         setPlayerHand(twoCards);
 
+        console.log("Player has " + handValuator(twoCards));
+
         //Dealer
         twoCards = [];        
         twoCards.push( deck.shift() );
         twoCards.push( deck.shift() );
         setDealerHand(twoCards);
+
+        console.log("Dealer's first is " + twoCards[0]);
     }
 
     const onBetSubmit = (betAmount) => {   
@@ -106,8 +112,8 @@ const GameContainer=() => {
         setPlayerBet(0)        
     }
 
+    //player hit me   
     const onHitMe = () => {
-
         if(currentPlayer == null)
         {
             console.log("no player asigned")
@@ -117,24 +123,29 @@ const GameContainer=() => {
         console.log("On hit me GameContainer")
         //create copy of hand and take from the deck
         let newPlayerHand = [...playerHand, deck.shift()];
+        //if(newPlayerHand )
         //set
         setPlayerHand(newPlayerHand);
 
         //at this point we need to check if player is bust
-        const playerHandTotal = handValuator(playerHand);
+        
+        let playerHandValue = handValuator(newPlayerHand);  
+        console.log("player hand value = " + playerHandValue)
 
-        if(playerHandTotal > 21)
+        //check for bust
+        if(playerHandValue > 21)
         {
+            
+
             console.log("Player is bust!");
             //remove player from game
             setCurrentPlayer(null);
-            //show game over - go to player list?
-        }
-        else
-        {
-            // player can keep playing
         }
 
+
+        console.log("Player now has " + playerHandValue );
+
+         
     }
 
     const onStand = () => {
@@ -148,11 +159,65 @@ const GameContainer=() => {
         //go to Dealer.js?
         console.log("On stand GameContainer");
 
-        //go to dealer's turn (or next player)
+        //go to dealer's turn (or next player) --->
+        let dealerHandValue = handValuator(dealerHand);
+        while (dealerHandValue < 17 )
+        {
+            let newDealerHand = [...dealerHand, deck.shift()];
+            //set
+            setDealerHand(newDealerHand);
+
+            dealerHandValue = handValuator(newDealerHand);
+
+            console.log("Dealer total = " + dealerHandValue);
+        }
+
+        if(dealerHandValue > 21)
+        {
+            dealerHandValue = -1;
+        }
+
+        console.log("Finished dealer while loop");
+        //if we get passed the while loop -dealer has finished playing
+        //show game end screen here
+
+        //set to -2 so player always loses against dealer
+        //working this out again unless we want to save to state?
+        let playerHandValue = handValuator(playerHand);
+        if(playerHandValue > 21)
+        {
+            playerHandValue = -2;
+        }
+        
+        console.log("IF statement player hand value = " + playerHandValue);
+        console.log("IF statement dealer hand value = " + dealerHandValue);
+        if( playerHandValue > dealerHandValue)
+        {
+            //player wins
+            console.log("Player wins!")
+        }
+        else if (dealerHandValue > playerHandValue)
+        {
+            //dealer wins
+            console.log("Dealer wins!")
+        }
+        else
+        {
+            //a "push" happens, player gets money back
+            console.log("Push - Player gets money back")
+        }
+
+        //next turn
+        //clear cards
+        setDealerHand([]);
+        setPlayerHand([]);
+
+        //go to betting phase
+        gameFlow();
 
     }
 
-    const handValuator=(arrayOfCards) => {
+    const handValuator = (arrayOfCards) => {
 
         let aces = []
         const cardValues=arrayOfCards.map((card) => {
@@ -196,12 +261,14 @@ const GameContainer=() => {
       
     return(
         <>
-            <h2>something</h2>
-            
-            <PlayerList players={players}/>
+            {currentPlayer == null ? 
+            <PlayerList players={players}/> :             
+            <Player onBetSubmit={onBetSubmit} onBetClear={onBetClear} currentBetAmount={playerBet} onHitMe={onHitMe} onStand={onStand}/>}            
+
             <PlayerForm addPlayer={addPlayer}/>
+
             <Dealer dealerHand={dealerHand}/>
-            <Player onBetSubmit={onBetSubmit} onBetClear={onBetClear} currentBetAmount={playerBet} onHitMe={onHitMe} onStand={onStand}/>
+            
         </>
     );
 };
