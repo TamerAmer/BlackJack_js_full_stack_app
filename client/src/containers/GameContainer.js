@@ -15,7 +15,7 @@ const GameContainer=() => {
     const [dealerHand,setDealerHand]=useState([])
     //const [playerMoney,setPlayerMoney]=useState(100)
     //const [playerBet,setPlayerBet]=useState(0)
-    const [deck, setDeck] = useState( initialiseDeck() )
+    const [deck, setDeck] = useState( )
 
     useEffect( () => {    
         console.log("use effect GameContainer");
@@ -32,7 +32,8 @@ const GameContainer=() => {
         "AD","2D","3D","4D","5D","6D","7D","8D","9D","10D","JD","QD","KD",
         "AS","2S","3S","4S","5S","6S","7S","8S","9S","10S","JS","QS","KS"]
 
-        return deck
+        const shuffledDeck=shuffleDeck(deck)
+        setDeck(shuffledDeck)
     }
 
     const addPlayer = (player) => {
@@ -43,7 +44,8 @@ const GameContainer=() => {
         setPlayers(newPlayers);
         //remember this player has active/current player
         setCurrentPlayer(player);
-        shuffleDeck(setDeck(initialiseDeck()))
+        
+        initialiseDeck()
     }
 
     const addBet = (player) => {
@@ -69,19 +71,17 @@ const GameContainer=() => {
         //Betting phase goes here!
         console.log("game flow")
         //shuffle
-        let shuffledDeck = shuffleDeck();
         //deal shuffle to dealer and players
-        dealCards(shuffledDeck);
+        dealCards(deck);
     }
 
-    const shuffleDeck=() =>{
+    const shuffleDeck=(deckToShuffle) =>{
         console.log("shuffling deck");
         //make copy of array
-        let shuffledDeck = deck.map(s =>s);        
+        let shuffledDeck = deckToShuffle.map(s =>s);        
         //random sort (this works)
         shuffledDeck.sort(() => Math.random() - 0.5)
         //
-        setDeck(shuffledDeck);
         return shuffledDeck;
     }
     
