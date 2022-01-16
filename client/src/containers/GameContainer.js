@@ -7,16 +7,20 @@ import Player from "../components/Player"
 import { getPlayers } from "../helpers/DBHelpers";
 import { updatePlayer } from "../helpers/DBHelpers"
 import BetCounter from "../components/BetCounter"
+import PlayerActions from "../components/PlayerActions"
+import PlayAgain from "../components/PlayAgain"
+import PlayerMoney from "../components/PlayerMoney"
+import Stake from "../components/Stake"
 
 const GameContainer=() => {
     
     const [players, setPlayers] = useState([]);
-    const [currentPlayer,setCurrentPlayer]=useState(null)
-    const [playerHand,setPlayerHand]=useState([])
-    const [dealerHand,setDealerHand]=useState([])
-    const [deck, setDeck] = useState()
-
-   
+    const [currentPlayer,setCurrentPlayer]=useState(null);
+    const [playerHand,setPlayerHand]=useState([]);
+    const [dealerHand,setDealerHand]=useState([]);
+    const [deck, setDeck] = useState();
+    const [turnStage, setTurnStage] = useState(0);
+    const [turnEndMessage, setTurnEndMessage] = useState("");
 
     useEffect( () => {    
         console.log("use effect GameContainer");
@@ -26,19 +30,7 @@ const GameContainer=() => {
 
       }, []);
 
-    function initialiseDeck()
-    {
-        let deck=["AH","2H","3H","4H","5H","6H","7H","8H","9H","10H","JH","QH","KH",
-        "AC","2C","3C","4C","5C","6C","7C","8C","9C","10C","JC","QC","KC",
-        "AD","2D","3D","4D","5D","6D","7D","8D","9D","10D","JD","QD","KD",
-        "AS","2S","3S","4S","5S","6S","7S","8S","9S","10S","JS","QS","KS"]
-
-        const shuffledDeck = shuffleDeck(deck)
-        setDeck(shuffledDeck)
-
-        return shuffledDeck;
-    }
-
+    ///////on button presses functions
     const addPlayer = (player) => {
         //update the players list with object received from db
         //get all players and add our new player
@@ -47,7 +39,7 @@ const GameContainer=() => {
         setPlayers(newPlayers);
         //remember this player has active/current player
         setCurrentPlayer(player);
-        
+
         initialiseDeck()
     }
 
@@ -69,8 +61,90 @@ const GameContainer=() => {
         turnFlow();
 
     }
+    //player hit me   
+    const onHitMe = () => {
+        if(currentPlayer == null)
+        {
+            console.log("no player asigned")
+            return;
+        }
+        //pass player card
+        console.log("On hit me GameContainer")
+        //create copy of hand and take from the deck
+        let newPlayerHand = [...playerHand, deck.shift()];
+        //if(newPlayerHand )
+        //set
+        setPlayerHand(newPlayerHand);
+
+        //at this point we need to check if player is bust
+        
+        let playerHandValue = handValuator(newPlayerHand);  
+        console.log("player hand value = " + playerHandValue)
+
+        //check for bust
+        if(playerHandValue > 21)
+        {
+            //Check for player money.. if 0 then setCurrentPlayer to null
+            console.log("Player is bust!");
+        }else{
+            console.log("Player now has " + playerHandValue );
+        }
+
+        if(playerHandValue >= 21)
+        {
+            //we can use state, this wasn't auto fired
+            autoStand(playerHandValue, dealerHand);
+        }
+
+    }
+    //I think a change is needed to stop state change delays from causing miss fire bugs
+    //If we instead pass a parameter in onStand() that takes in the playerHand and potentially the handValue we eliminate the need for state changes that can potentially mess up the program
+    const onStand = () => {
+
+        //this function is called if player presses Stand button
+        //we don't update the cards
+        //just call dealer turn
+
+        console.log("onStand- from button press")       
+
+         //dealer turn.. we can use state, this wasn't autofired
+         const dealerHandValue = dealerTurn(dealerHand);
+
+         // resolution - we can use what's stored in state, 
+         //there were no changes lately (player just pressed stand)
+         const playerHandValue = handValuator(playerHand);
+         turnResolution(playerHandValue, dealerHandValue);
+    }
+
+    const onPlayAgain = () => {
+        //got to betting phase
+        setTurnStage(1);
+    }
+    //////end of on button presses functions
+
+    ///////game helper functions////
+
+    function initialiseDeck()
+    {
+         //set turn stage so we can keep track of what to render
+         setTurnStage(1);
+
+        let deck=["AH","2H","3H","4H","5H","6H","7H","8H","9H","10H","JH","QH","KH",
+        "AC","2C","3C","4C","5C","6C","7C","8C","9C","10C","JC","QC","KC",
+        "AD","2D","3D","4D","5D","6D","7D","8D","9D","10D","JD","QD","KD",
+        "AS","2S","3S","4S","5S","6S","7S","8S","9S","10S","JS","QS","KS"]
+
+        const shuffledDeck = shuffleDeck(deck)
+        setDeck(shuffledDeck)
+
+        return shuffledDeck;
+    }
 
     const turnFlow = () => {         
+
+        //progress the turn stage
+        setTurnStage(2);
+
         //Betting phase goes here!
         console.log("game flow")
         //shuffle
@@ -133,63 +207,6 @@ const GameContainer=() => {
 
     }
 
-    
-
-    //player hit me   
-    const onHitMe = () => {
-        if(currentPlayer == null)
-        {
-            console.log("no player asigned")
-            return;
-        }
-        //pass player card
-        console.log("On hit me GameContainer")
-        //create copy of hand and take from the deck
-        let newPlayerHand = [...playerHand, deck.shift()];
-        //if(newPlayerHand )
-        //set
-        setPlayerHand(newPlayerHand);
-
-        //at this point we need to check if player is bust
-        
-        let playerHandValue = handValuator(newPlayerHand);  
-        console.log("player hand value = " + playerHandValue)
-
-        //check for bust
-        if(playerHandValue > 21)
-        {
-            //Check for player money.. if 0 then setCurrentPlayer to null
-            console.log("Player is bust!");
-        }else{
-            console.log("Player now has " + playerHandValue );
-        }
-
-        if(playerHandValue >= 21)
-        {
-            //we can use state, this wasn't auto fired
-            autoStand(playerHandValue, dealerHand);
-        }
-
-    }
-    //I think a change is needed to stop state change delays from causing miss fire bugs
-    //If we instead pass a parameter in onStand() that takes in the playerHand and potentially the handValue we eliminate the need for state changes that can potentially mess up the program
-    const onStand = () => {
-
-        //this function is called if player presses Stand button
-        //we don't update the cards
-        //just call dealer turn
-
-        console.log("onStand- from button press")       
-
-         //dealer turn.. we can use state, this wasn't autofired
-         const dealerHandValue = dealerTurn(dealerHand);
-
-         // resolution - we can use what's stored in state, 
-         //there were no changes lately (player just pressed stand)
-         const playerHandValue = handValuator(playerHand);
-         turnResolution(playerHandValue, dealerHandValue);
-    }
-
     const autoStand = (playerHandValue, _dealerHand) => {
         //dealer turn..
         // resolution - we can't use what's in state because this call
@@ -241,6 +258,10 @@ const GameContainer=() => {
     }
 
     const turnResolution = (playerHandValue, dealerHandValue) => {
+
+         //set turn stage so we can keep track of what to render
+         setTurnStage(3);
+
         console.log("on turn resolution")
         //set to -2 so player always loses against dealer
         //working this out again unless we want to save to state?
@@ -277,7 +298,9 @@ const GameContainer=() => {
         if( playerHandValue > dealerHandValue)
         {
             //player wins
-            console.log("Player wins!")
+            console.log("Player wins!");
+
+            setTurnEndMessage("Not bad - You won!");
             
             const playerWonMoney = {
                 
@@ -298,20 +321,28 @@ const GameContainer=() => {
         {
             //dealer wins
             console.log("Dealer wins!")
+
+            setTurnEndMessage("Too bad - Dealer Wins!")
+
+
             // check if player has 0 money. If player has 0 money then
-            // set player to null
+            
+            
+            
         }
         else
         {
             //a "push" happens, player gets money back
             console.log("Push - Player gets money back")
+
+            setTurnEndMessage("Push! What the fuck happens!?")
             //Give player 1x bet amount back in their money property
         }
 
         //next turn
         //clear cards
-        setDealerHand([]);
-        setPlayerHand([]);
+        //setDealerHand([]);
+        //setPlayerHand([]);
 
         //go to betting phase
         // gameFlow();
@@ -359,17 +390,37 @@ const GameContainer=() => {
         
         return(totalValue)
     }
-      
+    //////end of game helper functions
+
     return(
         <>
-            {currentPlayer == null ? 
-            <PlayerList players={players}/> :             
-            <Player onHitMe={onHitMe} onStand={onStand} player={currentPlayer} addBet={addBet} playerHand={playerHand}/>}            
-
-            <PlayerForm addPlayer={addPlayer}/>
-
-            <Dealer dealerHand={dealerHand}/>
-            
+            {turnStage > 0 ?
+                <PlayerMoney player={currentPlayer}/> : null
+            }
+            {turnStage == 2 ?
+                <Stake stake={currentPlayer.stake}/> : null
+            }
+            {turnStage == 0 ? 
+                <PlayerList players={players}/> : null
+            }               
+            {turnStage == 0 ?
+                <PlayerForm addPlayer={addPlayer}/> : null
+            }
+            {turnStage == 1 ?
+                <BetCounter addBet={addBet} player={currentPlayer}/> : null            
+            }           
+            {turnStage > 1?
+                <Dealer dealerHand={dealerHand}/> : null
+            }
+            {turnStage > 1 ?
+                <Player player={currentPlayer} playerHand={playerHand}/> : null
+            }           
+            {turnStage == 2 ?
+                <PlayerActions onHitMe={onHitMe} onStand={onStand}/> : null
+            }
+            {turnStage == 3 ?
+                <PlayAgain turnEndMessage={turnEndMessage} onPlayAgain={onPlayAgain}/> : null
+            }
         </>
     );
 };

@@ -3,7 +3,7 @@ import PlayerActions from "./PlayerActions";
 import BetCounter from "./BetCounter";
 import Card from "./Card";
 
-const Player = ({onHitMe, onStand, player, addBet, playerHand}) => {
+const Player = ({player, playerHand}) => {
    
     const showHand = playerHand.map((card, index) => {
         return <Card card={card} key={index} />
@@ -11,11 +11,9 @@ const Player = ({onHitMe, onStand, player, addBet, playerHand}) => {
 
     return(
         <>
-            <h3>Player Mon£y = {player.currentMoney}</h3>            
-            <PlayerActions onHitMe={onHitMe} onStand={onStand}/>
-            <BetCounter addBet={addBet} player={player}/>
             <h2>Player Hand</h2>
             {showHand}            
+            <br/>
 
 
         </>

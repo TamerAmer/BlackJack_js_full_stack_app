@@ -1,11 +1,8 @@
 import React, { useState } from "react";
 import { postPlayer, updatePlayer } from "../helpers/DBHelpers";
+import Stake from "./Stake";
 
 const BetCounter = ({ addBet, player}) => {
-
-	// const dep = (amount) => {
-	// 	onBetSubmit(total + amount);
-	// };
 
     const [currentBetAmount, setCurrentBetAmount] = useState(0);
 
@@ -22,7 +19,7 @@ const BetCounter = ({ addBet, player}) => {
 	const handleSubmitBet = (evt) => {
 
          //stop post request to current url
-        evt.preventDefault();
+        evt.preventDefault(); //necessary? - test
     
         //update db
         const updatedPlayer = {
@@ -40,11 +37,13 @@ const BetCounter = ({ addBet, player}) => {
 
 	return (
 			<div className="counter-container">
+				
+				<Stake stake={currentBetAmount} />
+
 				<button value="5" id="button" className="five" onClick={handleCounterChange}>£5</button>
 				<button value="10" id="button" className="ten" onClick={handleCounterChange}>£10</button>
 				<button value="20" id="button" className="twenty" onClick={handleCounterChange}>£20</button>
-				<button id="button" className="place-bet" onClick={handleSubmitBet} >Place Bet</button>
-				<p className="stake" >Stake: {currentBetAmount}</p>
+				<button id="button" className="place-bet" onClick={handleSubmitBet} >Place Bet</button>				
 				<button id="button" className="clear" onClick={handleClear}>Clear</button>
             </div>
 	);
