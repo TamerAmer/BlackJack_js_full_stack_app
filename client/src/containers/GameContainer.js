@@ -227,6 +227,15 @@ const GameContainer=() => {
             dealerHandValue=22
         }
         if(playerHandValue==22 && playerHandValue>dealerHandValue){
+            const playerGotBlackjack = {
+                'currentMoney': currentPlayer.currentMoney + (currentPlayer.stake *2.5)
+            }
+            setCurrentPlayer(playerGotBlackjack);
+            updatePlayer(playerGotBlackjack, currentPlayer._id)
+            .then((data) => {
+                playerGotBlackjack._id = currentPlayer._id
+            })
+
             console.log("Players wins with a BlackJack!!!")
             //2.5x bet amount in winning goes here
         }
