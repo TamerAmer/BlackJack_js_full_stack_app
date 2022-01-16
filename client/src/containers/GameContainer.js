@@ -155,18 +155,22 @@ const GameContainer=() => {
             //Check for player money.. if 0 then setCurrentPlayer to null
             console.log("Player is bust!");
             //remove player from game
-            setCurrentPlayer(null);
+            // setCurrentPlayer(null);
             //move player automatically to onStand() if they go bust and still have money
-        }
-
+            onStand()
+        }else{
 
         console.log("Player now has " + playerHandValue );
+
+        }
+
         if (playerHandValue===21){
             onStand()
         }
 
     }
-
+    //I think a change is needed to stop state change delays from causing miss fire bugs
+    //If we instead pass a parameter in onStand() that takes in the playerHand and potentially the handValue we eliminate the need for state changes that can potentially mess up the program
     const onStand = () => {
 
         if(currentPlayer == null)
@@ -180,7 +184,9 @@ const GameContainer=() => {
 
         //go to dealer's turn (or next player) --->
         let dealerHandValue = handValuator(dealerHand);
-        let newDealerHand;
+      
+        let newDealerHand
+
         while (dealerHandValue < 17 )
         {
             newDealerHand = [...dealerHand, deck.shift()];
@@ -190,7 +196,6 @@ const GameContainer=() => {
 
             console.log("Dealer total = " + dealerHandValue);
         }
-
         setDealerHand(newDealerHand);
 
 
@@ -214,6 +219,17 @@ const GameContainer=() => {
         }
         console.log("IF statement player hand value = " + playerHandValue);
         console.log("IF statement dealer hand value = " + dealerHandValue);
+        if (playerHand.length==2 && playerHandValue==21){
+            playerHandValue=22
+        }
+        
+        if (dealerHand.length==2 && dealerHandValue==21){
+            dealerHandValue=22
+        }
+        if(playerHandValue==22 && playerHandValue>dealerHandValue){
+            console.log("Players wins with a BlackJack!!!")
+            //2.5x bet amount in winning goes here
+        }
         //check for blackjack on either the player side or the dealer side
         //if either have a blackjack set the handValue to 22
         //if player wins with blackjack give player 2.5x bet amount
