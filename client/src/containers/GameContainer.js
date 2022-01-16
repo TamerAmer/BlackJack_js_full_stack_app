@@ -35,6 +35,8 @@ const GameContainer=() => {
 
         const shuffledDeck = shuffleDeck(deck)
         setDeck(shuffledDeck)
+
+        return shuffledDeck;
     }
 
     const addPlayer = (player) => {
@@ -68,9 +70,7 @@ const GameContainer=() => {
 
     }
 
-    const turnFlow = () => { 
-        
-        
+    const turnFlow = () => {         
         //Betting phase goes here!
         console.log("game flow")
         //shuffle
@@ -88,37 +88,40 @@ const GameContainer=() => {
         return shuffledDeck;
     }
     
-    function dealCards(deck) {
+    function dealCards(_deck) {
         console.log("dealing cards");
         //shift takes from array and saves in variable
         //Player
-        // if(deck.length<25){
-        //     setDeck(initialiseDeck())
-        //     shuffleDeck()
-        // }
+        if(_deck.length<25){
+            console.log("attempting to reset");
+            //set a new deck to state
+            _deck = initialiseDeck();
+            console.log(_deck);
+            
+        }
         let twoCards = [];             
-        twoCards.push( deck.shift() );
-        twoCards.push( deck.shift() );
+        twoCards.push( _deck.shift() );
+        twoCards.push( _deck.shift() );
         setPlayerHand(twoCards);
-        const handValue=handValuator(twoCards)
-        
-        console.log("Player has " + handValue);
+        const playerHandValue = handValuator(twoCards)
 
-        if(handValue===21){
-            console.log("BLACKJACK!!!")
+        console.log("Player has " + playerHandValue);
+
+        if(playerHandValue===21){
+            console.log("PLAYER BLACKJACK!!!")
         }
 
-
         //Dealer
-        twoCards = [];        
-        twoCards.push( deck.shift() );
-        twoCards.push( deck.shift() );
-        setDealerHand(twoCards);
+        let _dealerHand = [];        
+        _dealerHand.push( _deck.shift() );
+        _dealerHand.push( _deck.shift() );
+        setDealerHand(_dealerHand);
+        
+        console.log("Dealer's first is " + _dealerHand[0]);
+        console.log("Dealer's second is " + _dealerHand[1]);
 
-        console.log("Dealer's first is " + twoCards[0]);
-        console.log("Dealer's second is " + twoCards[1]);
-        if(handValue===21){
-            onStand(playerHandValue)
+        if(playerHandValue === 21){
+            autoStand(playerHandValue, _dealerHand)
         }
         // if(handValue===21){
         //     if (handValue === 21 && handValuator(twoCards)===21){
@@ -162,44 +165,67 @@ const GameContainer=() => {
         }
 
         if(playerHandValue >= 21)
-            onStand(playerHandValue);
+        {
+            //we can use state, this wasn't auto fired
+            autoStand(playerHandValue, dealerHand);
+        }
 
     }
     //I think a change is needed to stop state change delays from causing miss fire bugs
     //If we instead pass a parameter in onStand() that takes in the playerHand and potentially the handValue we eliminate the need for state changes that can potentially mess up the program
-    const onStand = (playerHandValue) => {
+    const onStand = () => {
 
-        if(currentPlayer == null)
-        {
-            console.log("no player asigned")
-            return;
-        }
-        
-         //dealer turn..
-         const dealerHandValue = dealerTurn();
+        //this function is called if player presses Stand button
+        //we don't update the cards
+        //just call dealer turn
 
-         // resolution
+        console.log("onStand- from button press")       
+
+         //dealer turn.. we can use state, this wasn't autofired
+         const dealerHandValue = dealerTurn(dealerHand);
+
+         // resolution - we can use what's stored in state, 
+         //there were no changes lately (player just pressed stand)
+         const playerHandValue = handValuator(playerHand);
          turnResolution(playerHandValue, dealerHandValue);
-        
-
     }
 
-    const dealerTurn = () => {
+    const autoStand = (playerHandValue, _dealerHand) => {
+        //dealer turn..
+        // resolution - we can't use what's in state because this call
+        // was made too quickly for state to keep up
+        // use passed dealerHand to find value of hand
+        const dealerHandValue = handValuator(_dealerHand);
+        //and use passed playerHandValue to complete the parameters for turnResolution
+        turnResolution(playerHandValue, dealerHandValue);
+    }
+
+    const dealerTurn = (_dealerHand) => {
         //start dealer logic
         //go to Dealer.js?
-        console.log("On stand GameContainer");
+        console.log("On dealer turn");
 
-        //go to dealer's turn (or next player) --->
-        let dealerHandValue = handValuator(dealerHand);
+        //before we start make a copy of deck from state- we will be making too many changes quickly for
+        //it to keep up
+        let deckCopy = [...deck];
+        //don't use state!
+        let dealerHandValue = handValuator(_dealerHand);
         let newDealerHand;
+        console.log("Dealer hand..");
+        console.log(_dealerHand);
         while (dealerHandValue < 17 )
-        {
-            newDealerHand = [...dealerHand, deck.shift()];
+        {   
+            //get a card from deck(in state)
+            newDealerHand = [..._dealerHand, deckCopy.shift()];
+            console.log(newDealerHand);
             //set
             dealerHandValue = handValuator(newDealerHand);
 
             console.log("Dealer total = " + dealerHandValue);
         }
+
+        //now we have finished, set deck in state from our copy
+        setDeck(deckCopy);
 
         setDealerHand(newDealerHand);
 
@@ -214,7 +240,7 @@ const GameContainer=() => {
     }
 
     const turnResolution = (playerHandValue, dealerHandValue) => {
-
+        console.log("on turn resolution")
         //set to -2 so player always loses against dealer
         //working this out again unless we want to save to state?
        
