@@ -14,9 +14,9 @@ const GameContainer=() => {
     const [currentPlayer,setCurrentPlayer]=useState(null)
     const [playerHand,setPlayerHand]=useState([])
     const [dealerHand,setDealerHand]=useState([])
-    //const [playerMoney,setPlayerMoney]=useState(100)
-    // const [playerBet,setPlayerBet]=useState(0)
-    const [deck, setDeck] = useState( )
+    const [deck, setDeck] = useState()
+
+   
 
     useEffect( () => {    
         console.log("use effect GameContainer");
@@ -33,7 +33,7 @@ const GameContainer=() => {
         "AD","2D","3D","4D","5D","6D","7D","8D","9D","10D","JD","QD","KD",
         "AS","2S","3S","4S","5S","6S","7S","8S","9S","10S","JS","QS","KS"]
 
-        const shuffledDeck=shuffleDeck(deck)
+        const shuffledDeck = shuffleDeck(deck)
         setDeck(shuffledDeck)
     }
 
@@ -65,6 +65,7 @@ const GameContainer=() => {
 
         //ready to start game now we have a player and a bet!
         turnFlow();
+
     }
 
     const turnFlow = () => { 
@@ -100,7 +101,9 @@ const GameContainer=() => {
         twoCards.push( deck.shift() );
         setPlayerHand(twoCards);
         const handValue=handValuator(twoCards)
+        
         console.log("Player has " + handValue);
+
         if(handValue===21){
             console.log("BLACKJACK!!!")
         }
@@ -113,8 +116,9 @@ const GameContainer=() => {
         setDealerHand(twoCards);
 
         console.log("Dealer's first is " + twoCards[0]);
+        console.log("Dealer's second is " + twoCards[1]);
         if(handValue===21){
-            onStand()
+            onStand(playerHandValue)
         }
         // if(handValue===21){
         //     if (handValue === 21 && handValuator(twoCards)===21){
@@ -151,53 +155,53 @@ const GameContainer=() => {
         //check for bust
         if(playerHandValue > 21)
         {
-            
             //Check for player money.. if 0 then setCurrentPlayer to null
             console.log("Player is bust!");
-            //remove player from game
-            // setCurrentPlayer(null);
-            //move player automatically to onStand() if they go bust and still have money
-            onStand()
         }else{
-
-        console.log("Player now has " + playerHandValue );
-
+            console.log("Player now has " + playerHandValue );
         }
 
-        if (playerHandValue===21){
-            onStand()
-        }
+        if(playerHandValue >= 21)
+            onStand(playerHandValue);
 
     }
     //I think a change is needed to stop state change delays from causing miss fire bugs
     //If we instead pass a parameter in onStand() that takes in the playerHand and potentially the handValue we eliminate the need for state changes that can potentially mess up the program
-    const onStand = () => {
+    const onStand = (playerHandValue) => {
 
         if(currentPlayer == null)
         {
             console.log("no player asigned")
             return;
         }
+        
+         //dealer turn..
+         const dealerHandValue = dealerTurn();
+
+         // resolution
+         turnResolution(playerHandValue, dealerHandValue);
+        
+
+    }
+
+    const dealerTurn = () => {
         //start dealer logic
         //go to Dealer.js?
         console.log("On stand GameContainer");
 
         //go to dealer's turn (or next player) --->
         let dealerHandValue = handValuator(dealerHand);
-      
-        let newDealerHand
-
+        let newDealerHand;
         while (dealerHandValue < 17 )
         {
             newDealerHand = [...dealerHand, deck.shift()];
             //set
-
             dealerHandValue = handValuator(newDealerHand);
 
             console.log("Dealer total = " + dealerHandValue);
         }
-        setDealerHand(newDealerHand);
 
+        setDealerHand(newDealerHand);
 
         if(dealerHandValue > 21)
         {
@@ -205,14 +209,15 @@ const GameContainer=() => {
         }
 
         console.log("Finished dealer while loop");
-        //if we get passed the while loop -dealer has finished playing
-        //show game end screen here
 
-        
+        return dealerHandValue;
+    }
+
+    const turnResolution = (playerHandValue, dealerHandValue) => {
 
         //set to -2 so player always loses against dealer
         //working this out again unless we want to save to state?
-        let playerHandValue = handValuator(playerHand);
+       
         if(playerHandValue > 21)
         {
             playerHandValue = -2;
@@ -284,7 +289,6 @@ const GameContainer=() => {
         //go to betting phase
         // gameFlow();
         console.log("Place Your Bets")
-
     }
 
     const handValuator = (arrayOfCards) => {
