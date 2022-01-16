@@ -26,6 +26,7 @@ const BetCounter = ({ addBet, player}) => {
        
         //update db
         const updatedPlayer = {
+			"stake":currentBetAmount,
             "currentMoney": (player.currentMoney - currentBetAmount)
         }
         //update player updates db, then() updates front end
