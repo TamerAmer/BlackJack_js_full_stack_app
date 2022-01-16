@@ -15,8 +15,9 @@ export const postPlayer = (payload) => {
 
 }
 
-export const updatePlayer = (player) => {
-    return fetch(playersURL + player._id, {
+export const updatePlayer = (player,id) => {
+    
+    return fetch(playersURL + id, {
         method: 'PUT',
         body: JSON.stringify(player),
         headers: {

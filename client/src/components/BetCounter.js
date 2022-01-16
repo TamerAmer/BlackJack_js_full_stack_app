@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { updatePlayer } from "../helpers/DBHelpers";
+import { postPlayer, updatePlayer } from "../helpers/DBHelpers";
 
-const BetCounter = ({ onPlaceBet, onBetSubmit,onBetClear,  player}) => {
+const BetCounter = ({ addBet, player}) => {
 
 	// const dep = (amount) => {
 	// 	onBetSubmit(total + amount);
@@ -10,30 +10,31 @@ const BetCounter = ({ onPlaceBet, onBetSubmit,onBetClear,  player}) => {
     const [currentBetAmount, setCurrentBetAmount] = useState(0);
 
 	const handleClear = () => {
-		onBetClear();
+		setCurrentBetAmount(0);
 	};
 
 	const handleCounterChange = (evt) => {
-		console.log(evt.target.value)
-		//onBetSubmit(evt.target.value)
-
-        setCurrentBetAmount(currentBetAmount + evt.target.value);
+        const intIncrement =  parseInt(evt.target.value)
+        const intCurrentBet = parseInt(currentBetAmount);
+        setCurrentBetAmount(intCurrentBet + intIncrement);
 	}
 
 	const handleSubmitBet = (evt) => {
 
          //stop post request to current url
         evt.preventDefault();
-        console.log(player);
-        //update player object         
-        //player.currentMoney -= currentBetAmount
-
+       
         //update db
-        updatePlayer(player)
-        
-
-		// TODO
-		// updatePlayerMoney()
+        const updatedPlayer = {
+            "currentMoney": (player.currentMoney - currentBetAmount)
+        }
+        //update player updates db, then() updates front end
+        updatePlayer(updatedPlayer, player._id)
+        .then((data) =>
+        {
+            updatedPlayer._id = player._id;
+            addBet(updatedPlayer);
+        })
 	};
 
 	return (
