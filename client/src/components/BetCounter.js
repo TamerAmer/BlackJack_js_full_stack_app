@@ -23,7 +23,7 @@ const BetCounter = ({ addBet, player}) => {
 
          //stop post request to current url
         evt.preventDefault();
-       
+    
         //update db
         const updatedPlayer = {
 			"stake":currentBetAmount,

@@ -6,6 +6,7 @@ import Dealer from "../components/Dealer"
 import Player from "../components/Player"
 import { getPlayers } from "../helpers/DBHelpers";
 import { updatePlayer } from "../helpers/DBHelpers"
+import BetCounter from "../components/BetCounter"
 
 const GameContainer=() => {
     
@@ -14,7 +15,7 @@ const GameContainer=() => {
     const [playerHand,setPlayerHand]=useState([])
     const [dealerHand,setDealerHand]=useState([])
     //const [playerMoney,setPlayerMoney]=useState(100)
-    //const [playerBet,setPlayerBet]=useState(0)
+    // const [playerBet,setPlayerBet]=useState(0)
     const [deck, setDeck] = useState( )
 
     useEffect( () => {    
@@ -57,6 +58,7 @@ const GameContainer=() => {
         const playerToChange = newPlayers.find( obj => obj._id === player._id)
         
         playerToChange.currentMoney = player.currentMoney;
+        playerToChange.stake = player.stake;
 
         //re set the players
         setPlayers(newPlayers);
@@ -182,18 +184,20 @@ const GameContainer=() => {
 
         //go to dealer's turn (or next player) --->
         let dealerHandValue = handValuator(dealerHand);
+      
         let newDealerHand
+
         while (dealerHandValue < 17 )
         {
             newDealerHand = [...dealerHand, deck.shift()];
             //set
-            
 
             dealerHandValue = handValuator(newDealerHand);
 
             console.log("Dealer total = " + dealerHandValue);
         }
         setDealerHand(newDealerHand);
+
 
         if(dealerHandValue > 21)
         {
@@ -203,6 +207,8 @@ const GameContainer=() => {
         console.log("Finished dealer while loop");
         //if we get passed the while loop -dealer has finished playing
         //show game end screen here
+
+        
 
         //set to -2 so player always loses against dealer
         //working this out again unless we want to save to state?
@@ -231,7 +237,20 @@ const GameContainer=() => {
         {
             //player wins
             console.log("Player wins!")
-            console.log(currentPlayer.stake)
+            
+            const playerWonMoney = {
+                
+                'currentMoney': currentPlayer.currentMoney + (currentPlayer.stake *2)
+            }
+            setCurrentPlayer(playerWonMoney);
+            updatePlayer(playerWonMoney, currentPlayer._id)
+            .then((data) =>
+            {
+                
+                playerWonMoney._id = currentPlayer._id;
+                //addBet(playerWonMoney);
+            })
+    
             //Give player 2x bet amount back in their money property
         }
         else if (dealerHandValue > playerHandValue)
