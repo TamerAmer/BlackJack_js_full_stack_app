@@ -2,8 +2,7 @@ const Card = ({card}) => {
 
     return (
         <>
-            <h4>card location..</h4>
-                
+            <img className="card" src={require ("../images/cards/" + card + ".png")}/>
         </>
     )
 }

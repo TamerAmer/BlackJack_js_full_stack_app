@@ -16,6 +16,7 @@ const GameContainer=() => {
     //const [playerMoney,setPlayerMoney]=useState(100)
     //const [playerBet,setPlayerBet]=useState(0)
     const [deck, setDeck] = useState( )
+    const [turnInProgress, setTurnInProgress] = useState(false)
 
     useEffect( () => {    
         console.log("use effect GameContainer");
@@ -60,6 +61,9 @@ const GameContainer=() => {
 
         //re set the players
         setPlayers(newPlayers);
+
+        //set flag
+        setTurnInProgress(true);
 
         //ready to start game now we have a player and a bet!
         turnFlow();
@@ -231,10 +235,10 @@ const GameContainer=() => {
             //Give player 1x bet amount back in their money property
         }
 
-        //next turn
+        //next turn         moving to start of next turn
         //clear cards
-        setDealerHand([]);
-        setPlayerHand([]);
+        //setDealerHand([]);
+        //setPlayerHand([]);
 
         //go to betting phase
         // gameFlow();
@@ -286,15 +290,13 @@ const GameContainer=() => {
       
     return(
         <>
-            {currentPlayer == null ? 
+            {turnInProgress == true ? 
             <PlayerList players={players}/> :             
-            <Player onHitMe={onHitMe} onStand={onStand} player={currentPlayer} addBet={addBet} playerHand={playerHand}/>}            
-
-            <PlayerForm addPlayer={addPlayer}/>
-
+            <Player onHitMe={onHitMe} onStand={onStand} player={currentPlayer} addBet={addBet} playerHand={playerHand}/>}
             <Dealer dealerHand={dealerHand}/>
+            <PlayerForm addPlayer={addPlayer}/>
             
-            <img src={require ("../images/cards/2C.png")}/>
+            
         </>
     );
 };

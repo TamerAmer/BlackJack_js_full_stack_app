@@ -14,6 +14,7 @@ const Player = ({onHitMe, onStand, player, addBet, playerHand}) => {
             <h3>Player Mon£y = {player.currentMoney}</h3>            
             <PlayerActions onHitMe={onHitMe} onStand={onStand}/>
             <BetCounter addBet={addBet} player={player}/>
+            <h2>Player Hand</h2>
             {showHand}            
 
 
