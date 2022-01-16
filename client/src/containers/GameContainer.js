@@ -207,16 +207,17 @@ const GameContainer=() => {
 
         //before we start make a copy of deck from state- we will be making too many changes quickly for
         //it to keep up
-        let deckCopy = [...deck];
+        let deckCopy = deck.map(c=>c)
         //don't use state!
         let dealerHandValue = handValuator(_dealerHand);
-        let newDealerHand;
+        let newDealerHand=_dealerHand;
         console.log("Dealer hand..");
         console.log(_dealerHand);
         while (dealerHandValue < 17 )
         {   
-            //get a card from deck(in state)
-            newDealerHand = [..._dealerHand, deckCopy.shift()];
+            const card=deckCopy.splice(0,1)   
+            console.log(card[0])     
+            newDealerHand.splice(0,0,card[0])
             console.log(newDealerHand);
             //set
             dealerHandValue = handValuator(newDealerHand);
@@ -248,12 +249,12 @@ const GameContainer=() => {
         {
             playerHandValue = -2;
         }
-        console.log("IF statement player hand value = " + playerHandValue);
-        console.log("IF statement dealer hand value = " + dealerHandValue);
-        if (playerHand.length==2 && playerHandValue==21){
+        if (playerHand.length==2 && handValuator(playerHand)==21){
             playerHandValue=22
         }
         
+        console.log("IF statement player hand value = " + playerHandValue);
+        console.log("IF statement dealer hand value = " + dealerHandValue);
         if (dealerHand.length==2 && dealerHandValue==21){
             dealerHandValue=22
         }
