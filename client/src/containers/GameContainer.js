@@ -5,6 +5,7 @@ import PlayerForm from "../components/PlayerForm"
 import Dealer from "../components/Dealer"
 import Player from "../components/Player"
 import { getPlayers } from "../helpers/DBHelpers";
+import { updatePlayer } from "../helpers/DBHelpers"
 
 const GameContainer=() => {
     
@@ -12,8 +13,8 @@ const GameContainer=() => {
     const [currentPlayer,setCurrentPlayer]=useState(null)
     const [playerHand,setPlayerHand]=useState([])
     const [dealerHand,setDealerHand]=useState([])
-    const [playerMoney,setPlayerMoney]=useState(100)
-    const [playerBet,setPlayerBet]=useState(0)
+    //const [playerMoney,setPlayerMoney]=useState(100)
+    //const [playerBet,setPlayerBet]=useState(0)
     const [deck, setDeck] = useState( initialiseDeck() )
 
     useEffect( () => {    
@@ -42,10 +43,23 @@ const GameContainer=() => {
         setPlayers(newPlayers);
         //remember this player has active/current player
         setCurrentPlayer(player);
+    }
 
-        //once we have added player to front end list, we can start a game with this player
+    const addBet = (player) => {
+        
+        //make a copy of players list so we can make changes
+        const newPlayers = [...players];
+        //find player and change current money to the 
+        //passed player object's current money
+        const playerToChange = newPlayers.find( obj => obj._id === player._id)
+        
+        playerToChange.currentMoney = player.currentMoney;
+
+        //re set the players
+        setPlayers(newPlayers);
+
+        //ready to start game now we have a player and a bet!
         gameFlow();
-
     }
 
     const gameFlow = () => { 
@@ -89,28 +103,7 @@ const GameContainer=() => {
         console.log("Dealer's first is " + twoCards[0]);
     }
 
-    const onBetSubmit = (betAmount) => {   
-        if(currentPlayer == null)
-        {
-            console.log("no player asigned")
-            return;
-        }
-
-        let totalAmount=playerBet
-        totalAmount=totalAmount + Number(betAmount)
-        setPlayerBet(totalAmount)
-        setPlayerMoney(playerMoney - betAmount)
-        
-    }
-    const onBetClear=() => {
-        if(currentPlayer == null)
-        {
-            console.log("no player asigned")
-            return;
-        }
-
-        setPlayerBet(0)        
-    }
+    
 
     //player hit me   
     const onHitMe = () => {
@@ -145,7 +138,7 @@ const GameContainer=() => {
 
         console.log("Player now has " + playerHandValue );
 
-         
+
     }
 
     const onStand = () => {
@@ -263,7 +256,7 @@ const GameContainer=() => {
         <>
             {currentPlayer == null ? 
             <PlayerList players={players}/> :             
-            <Player onBetSubmit={onBetSubmit} onBetClear={onBetClear} currentBetAmount={playerBet} onHitMe={onHitMe} onStand={onStand}/>}            
+            <Player onHitMe={onHitMe} onStand={onStand} player={currentPlayer} addBet={addBet}/>}            
 
             <PlayerForm addPlayer={addPlayer}/>
 

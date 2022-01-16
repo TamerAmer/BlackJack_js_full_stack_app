@@ -33,6 +33,7 @@ const PlayerForm=({addPlayer}) => {
         postPlayer(formData)
         .then((data) =>
         {
+            
             addPlayer(data);
         })
 

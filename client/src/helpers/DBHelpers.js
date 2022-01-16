@@ -12,4 +12,17 @@ export const postPlayer = (payload) => {
         headers: { 'Content-Type': 'application/json' }
     })
     .then(res => res.json())
+
+}
+
+export const updatePlayer = (player,id) => {
+    
+    return fetch(playersURL + id, {
+        method: 'PUT',
+        body: JSON.stringify(player),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(res => res.json());
 }
