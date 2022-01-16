@@ -364,7 +364,7 @@ const GameContainer=() => {
         <>
             {currentPlayer == null ? 
             <PlayerList players={players}/> :             
-            <Player onHitMe={onHitMe} onStand={onStand} player={currentPlayer} addBet={addBet}/>}            
+            <Player onHitMe={onHitMe} onStand={onStand} player={currentPlayer} addBet={addBet} playerHand={playerHand}/>}            
 
             <PlayerForm addPlayer={addPlayer}/>
 
