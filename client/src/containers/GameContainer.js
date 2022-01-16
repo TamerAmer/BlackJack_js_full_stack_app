@@ -43,6 +43,7 @@ const GameContainer=() => {
         setPlayers(newPlayers);
         //remember this player has active/current player
         setCurrentPlayer(player);
+        shuffleDeck(setDeck(initialiseDeck()))
     }
 
     const addBet = (player) => {
@@ -59,11 +60,12 @@ const GameContainer=() => {
         setPlayers(newPlayers);
 
         //ready to start game now we have a player and a bet!
-        gameFlow();
+        turnFlow();
     }
 
-    const gameFlow = () => { 
-
+    const turnFlow = () => { 
+        
+        
         //Betting phase goes here!
         console.log("game flow")
         //shuffle
@@ -87,12 +89,20 @@ const GameContainer=() => {
         console.log("dealing cards");
         //shift takes from array and saves in variable
         //Player
+        // if(deck.length<25){
+        //     setDeck(initialiseDeck())
+        //     shuffleDeck()
+        // }
         let twoCards = [];             
         twoCards.push( deck.shift() );
         twoCards.push( deck.shift() );
         setPlayerHand(twoCards);
+        const handValue=handValuator(twoCards)
+        console.log("Player has " + handValue);
+        if(handValue===21){
+            console.log("BLACKJACK!!!")
+        }
 
-        console.log("Player has " + handValuator(twoCards));
 
         //Dealer
         twoCards = [];        
@@ -101,6 +111,17 @@ const GameContainer=() => {
         setDealerHand(twoCards);
 
         console.log("Dealer's first is " + twoCards[0]);
+        if(handValue===21){
+            onStand()
+        }
+        // if(handValue===21){
+        //     if (handValue === 21 && handValuator(twoCards)===21){
+        //         console.log("Dealer's second is " + twoCards[1]);
+        //         console.log("Dealer also has a BlackJack, its a push :(")            
+        //     }
+        //     dealCards(deck)
+        // }
+
     }
 
     
@@ -129,15 +150,18 @@ const GameContainer=() => {
         if(playerHandValue > 21)
         {
             
-
+            //Check for player money.. if 0 then setCurrentPlayer to null
             console.log("Player is bust!");
             //remove player from game
             setCurrentPlayer(null);
+            //move player automatically to onStand() if they go bust and still have money
         }
 
 
         console.log("Player now has " + playerHandValue );
-
+        if (playerHandValue===21){
+            onStand()
+        }
 
     }
 
@@ -181,23 +205,30 @@ const GameContainer=() => {
         {
             playerHandValue = -2;
         }
-        
         console.log("IF statement player hand value = " + playerHandValue);
         console.log("IF statement dealer hand value = " + dealerHandValue);
+        //check for blackjack on either the player side or the dealer side
+        //if either have a blackjack set the handValue to 22
+        //if player wins with blackjack give player 2.5x bet amount
         if( playerHandValue > dealerHandValue)
         {
             //player wins
             console.log("Player wins!")
+            console.log(currentPlayer.stake)
+            //Give player 2x bet amount back in their money property
         }
         else if (dealerHandValue > playerHandValue)
         {
             //dealer wins
             console.log("Dealer wins!")
+            // check if player has 0 money. If player has 0 money then
+            // set player to null
         }
         else
         {
             //a "push" happens, player gets money back
             console.log("Push - Player gets money back")
+            //Give player 1x bet amount back in their money property
         }
 
         //next turn
@@ -206,7 +237,8 @@ const GameContainer=() => {
         setPlayerHand([]);
 
         //go to betting phase
-        gameFlow();
+        // gameFlow();
+        console.log("Place Your Bets")
 
     }
 
