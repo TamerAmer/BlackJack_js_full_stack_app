@@ -58,6 +58,7 @@ const GameContainer=() => {
         const playerToChange = newPlayers.find( obj => obj._id === player._id)
         
         playerToChange.currentMoney = player.currentMoney;
+        playerToChange.stake = player.stake;
 
         //re set the players
         setPlayers(newPlayers);
@@ -202,6 +203,8 @@ const GameContainer=() => {
         //if we get passed the while loop -dealer has finished playing
         //show game end screen here
 
+        
+
         //set to -2 so player always loses against dealer
         //working this out again unless we want to save to state?
         let playerHandValue = handValuator(playerHand);
@@ -227,11 +230,11 @@ const GameContainer=() => {
             console.log(currentPlayer);
             updatePlayer(playerWonMoney, currentPlayer._id)
             .then((data) =>
-        {
-            
-            playerWonMoney._id = currentPlayer._id;
-            addBet(playerWonMoney);
-        })
+            {
+                
+                playerWonMoney._id = currentPlayer._id;
+                //addBet(playerWonMoney);
+            })
     
             //Give player 2x bet amount back in their money property
         }
