@@ -224,10 +224,9 @@ const GameContainer=() => {
             
             const playerWonMoney = {
                 
-                'currentMoney': currentPlayer.currentMoney
+                'currentMoney': currentPlayer.currentMoney + (currentPlayer.stake *2)
             }
             setCurrentPlayer(playerWonMoney);
-            console.log(currentPlayer);
             updatePlayer(playerWonMoney, currentPlayer._id)
             .then((data) =>
             {
