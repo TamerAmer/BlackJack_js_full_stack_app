@@ -24,6 +24,7 @@ const GameContainer=() => {
     const [turnEndMessage, setTurnEndMessage] = useState("");
     const [minBet, setMinBet] = useState(5);
     const [canSplit, setCanSplit]=useState(false)
+    const [hasSplit, setHasSplit]=useState(false)
 
     useEffect( () => {    
         console.log("use effect GameContainer");
@@ -101,6 +102,10 @@ const GameContainer=() => {
 
     }  
     const onHitMe = () => {
+
+        if (hasSplit==true){
+            //This is where we add code if the player has clicked to split and we want to add a card
+        }
 
         //pass player card
         console.log("On hit me GameContainer")
@@ -201,7 +206,7 @@ const GameContainer=() => {
     const onSplit=(() => {
 
         console.log("On Split (Game container)");
-
+        const currentStake = players.at(-1).stake;
         const updatedPlayer = {
             'currentMoney': players.at(-1).currentMoney - currentStake
         }
@@ -293,8 +298,8 @@ const GameContainer=() => {
         if(playerHandValue===21){
             console.log("PLAYER BLACKJACK!!!")
         }
-        const firsCard=handValuator(twoCards[0])
-        const secondCard=handValuator(twoCards[1])
+        const firsCard=handValuator([twoCards[0]])
+        const secondCard=handValuator([twoCards[1]])
         if(firsCard==secondCard){
             setCanSplit(true)
         }

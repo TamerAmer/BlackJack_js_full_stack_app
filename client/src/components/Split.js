@@ -1,6 +1,6 @@
 import React from "react"
 
-const Split=(onSplit) => {
+const Split=({onSplit}) => {
 
     const handleSplit=() => {
         console.log("handle split")
