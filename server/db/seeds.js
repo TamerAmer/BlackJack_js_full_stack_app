@@ -12,11 +12,11 @@ db.players.insertMany(
         {
             name: "Grimwalf Dooberstein", 
             currentMoney: 0,         
-            turnsSurvived: 5
+            turnsSurvived: 1
         },
         {
             name: "Dreamy Swastbecker",          
             currentMoney: 0,
-            turnsSurvived: 1
+            turnsSurvived: 5
         }
       ]);
