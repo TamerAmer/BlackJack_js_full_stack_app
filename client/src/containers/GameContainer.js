@@ -21,6 +21,7 @@ const GameContainer=() => {
     const [deck, setDeck] = useState();
     const [turnStage, setTurnStage] = useState(0);
     const [turnEndMessage, setTurnEndMessage] = useState("");
+    const [minBet, setMinBet] = useState(5);
 
     useEffect( () => {    
         console.log("use effect GameContainer");
@@ -63,7 +64,7 @@ const GameContainer=() => {
     }
     //player hit me   
     const onHitMe = () => {
-       
+
         //pass player card
         console.log("On hit me GameContainer")
         //create copy of hand and take from the deck
@@ -244,8 +245,9 @@ const GameContainer=() => {
         //dealer turn..
         // resolution - we can't use what's in state because this call
         // was made too quickly for state to keep up
+        
         // use passed dealerHand to find value of hand
-        const dealerHandValue = handValuator(_dealerHand);
+        const dealerHandValue = dealerTurn(_dealerHand)
         //and use passed playerHandValue to complete the parameters for turnResolution
         turnResolution(playerHandValue, dealerHandValue);
     }
@@ -263,19 +265,22 @@ const GameContainer=() => {
         let newDealerHand=_dealerHand;
         console.log("Dealer hand..");
         console.log(_dealerHand);
-        while (dealerHandValue < 17 )
-        {   
-            const card=deckCopy.splice(0,1)   
-            console.log(card[0]) 
-            newDealerHand.push(card[0])    
-            // newDealerHand.splice(0,0,card[0])
-            console.log(newDealerHand);
-            //set
-            dealerHandValue = handValuator(newDealerHand);
+        if (dealerHandValue == 21){
+            dealerHandValue="BlackJack"
+        }else{
+            while (dealerHandValue < 17 )
+            {   
+                const card=deckCopy.splice(0,1)   
+                console.log(card[0]) 
+                newDealerHand.push(card[0])    
+                // newDealerHand.splice(0,0,card[0])
+                console.log(newDealerHand);
+                //set
+                dealerHandValue = handValuator(newDealerHand);
 
-            console.log("Dealer total = " + dealerHandValue);
+                console.log("Dealer total = " + dealerHandValue);
+            }
         }
-
         //now we have finished, set deck in state from our copy
         setDeck(deckCopy);
 
@@ -293,8 +298,7 @@ const GameContainer=() => {
 
     const turnResolution = (playerHandValue, dealerHandValue) => {
 
-         //set turn stage so we can keep track of what to render
-         setTurnStage(3);
+         
 
         console.log("on turn resolution")
         //set to -2 so player always loses against dealer
@@ -308,29 +312,17 @@ const GameContainer=() => {
             playerHandValue=22
         }
         
+        if (dealerHandValue=="BlackJack"){
+            dealerHandValue=22
+            console.log("Dealer has BlackJack")
+        }
         console.log("IF statement player hand value = " + playerHandValue);
         console.log("IF statement dealer hand value = " + dealerHandValue);
-        if (dealerHand.length==2 && dealerHandValue==21){
-            dealerHandValue=22
-        }
 
-
-        if(playerHandValue==22 && playerHandValue>dealerHandValue){
-            const playerGotBlackjack = {
-                'currentMoney': players.at(-1).currentMoney + (players.at(-1).stake *2.5)
-            }
-            //setCurrentPlayer(playerGotBlackjack);
-            updatePlayer(playerGotBlackjack, players.at(-1)._id)
-            .then((data) => {
-                playerGotBlackjack._id = players.at(-1)._id
-            })
-
-            console.log("Players wins with a BlackJack!!!")
-            //2.5x bet amount in winning goes here
-        }
         //check for blackjack on either the player side or the dealer side
         //if either have a blackjack set the handValue to 22
         //if player wins with blackjack give player 2.5x bet amount
+        let updatedPlayerTest = players.at(-1); 
         if( playerHandValue > dealerHandValue)
         {
             //player wins
@@ -340,10 +332,19 @@ const GameContainer=() => {
             
             //////
              //update db
-            const updatedPlayer = {
-                'currentMoney': players.at(-1).currentMoney + (players.at(-1).stake * 2)
+            let moneyToAdd = players.at(-1).stake * 2
+            
+            if (playerHandValue == 22){
+                moneyToAdd = players.at(-1).stake * 2.5
+                console.log('player wins with Blackjack!!!!, stake changed');
+            }
+
+            const updatedPlayer = { 
+                'turnsSurvived': players.at(-1).turnsSurvived + 1,
+                'currentMoney': players.at(-1).currentMoney + moneyToAdd
             }
             //update player updates db, then() updates front end
+            console.log(moneyToAdd);
             updatePlayer(updatedPlayer, players.at(-1)._id)
             .then((data) =>
             {
@@ -352,9 +353,11 @@ const GameContainer=() => {
             })
 
             //update front end
-            players.at(-1).currentMoney = players.at(-1).currentMoney + (players.at(-1).stake * 2)
+            players.at(-1).currentMoney = players.at(-1).currentMoney + moneyToAdd
+
+            //and force a re-render
+            setTurnEndMessage("Player Wins with Blackjack!")
     
-            //Give player 2x bet amount back in their money property
         }
         else if (dealerHandValue > playerHandValue)
         {
@@ -362,11 +365,6 @@ const GameContainer=() => {
             console.log("Dealer wins!")
 
             setTurnEndMessage("Too bad - Dealer Wins!")
-
-
-            // check if player has 0 money. If player has 0 money then
-            
-            
             
         }
         else
@@ -374,18 +372,44 @@ const GameContainer=() => {
             //a "push" happens, player gets money back
             console.log("Push - Player gets money back")
 
+            let moneyToAdd = players.at(-1).stake
+
+            const updatedPlayer = { 
+                'currentMoney': players.at(-1).currentMoney + moneyToAdd,
+                'turnsSurvived': players.at(-1).turnsSurvived + 1
+            }
+            //update player updates db, then() updates front end
+            console.log(moneyToAdd);
+            updatePlayer(updatedPlayer, players.at(-1)._id)
+            .then((data) =>
+            {
+                updatedPlayer._id = players.at(-1)._id;
+                
+            })
+
+            //update front end
+            players.at(-1).currentMoney = players.at(-1).currentMoney + moneyToAdd
+
             setTurnEndMessage("Push! What the fuck happens!?")
             //Give player 1x bet amount back in their money property
         }
 
-        //next turn
-        //clear cards
-        //setDealerHand([]);
-        //setPlayerHand([]);
-
-        //go to betting phase
-        // gameFlow();
-        console.log("Place Your Bets")
+        //set turn stage so we can keep track of what to render
+        //check if player is still alive
+        if(players.at(-1).currentMoney >= minBet) 
+        {
+            console.log("Player survives")
+            //increase min bet
+            setMinBet(minBet + 5);
+            //we can play again with same player
+            setTurnStage(3);
+        }
+        else
+        {
+            console.log("Player dies")
+            //player is dead
+            setTurnStage(0);
+        }
     }
 
     const handValuator = (arrayOfCards) => {
@@ -446,7 +470,7 @@ const GameContainer=() => {
                 <PlayerForm addPlayer={addPlayer}/> : null
             }
             {turnStage == 1 ?
-                <BetCounter addBet={addBet} player={players.at(-1)}/> : null            
+                <BetCounter addBet={addBet} player={players.at(-1)} minBet={minBet}/> : null            
             }           
             {turnStage > 1?
                 <Dealer dealerHand={dealerHand}/> : null
