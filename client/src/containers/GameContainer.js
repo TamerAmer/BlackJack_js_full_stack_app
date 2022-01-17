@@ -212,9 +212,9 @@ const GameContainer=() => {
             console.log(_deck);
             
         }
-        let twoCards = [];             
-        twoCards.push( _deck.shift() );
-        twoCards.push( _deck.shift() );
+        let twoCards = ['AH', 'KC'];             
+        // twoCards.push( _deck.shift() );
+        // twoCards.push( _deck.shift() );
         setPlayerHand(twoCards);
         let playerHandValue = handValuator(twoCards)
 
@@ -314,20 +314,6 @@ const GameContainer=() => {
             dealerHandValue=22
         }
 
-
-        if(playerHandValue==22 && playerHandValue>dealerHandValue){
-            const playerGotBlackjack = {
-                'currentMoney': players.at(-1).currentMoney + (players.at(-1).stake *2.5)
-            }
-            //setCurrentPlayer(playerGotBlackjack);
-            updatePlayer(playerGotBlackjack, players.at(-1)._id)
-            .then((data) => {
-                playerGotBlackjack._id = players.at(-1)._id
-            })
-
-            console.log("Players wins with a BlackJack!!!")
-            //2.5x bet amount in winning goes here
-        }
         //check for blackjack on either the player side or the dealer side
         //if either have a blackjack set the handValue to 22
         //if player wins with blackjack give player 2.5x bet amount
@@ -340,8 +326,14 @@ const GameContainer=() => {
             
             //////
              //update db
-            const updatedPlayer = {
-                'currentMoney': players.at(-1).currentMoney + (players.at(-1).stake * 2)
+            let currentStake = players.at(-1).stake * 2
+            if (playerHandValue == 22){
+                currentStake = players.at(-1).stake * 2.5
+                console.log('player wins with Blackjack!!!!, stake changed');
+            }
+
+            const updatedPlayer = { 
+                'currentMoney': players.at(-1).currentMoney + currentStake
             }
             //update player updates db, then() updates front end
             updatePlayer(updatedPlayer, players.at(-1)._id)
