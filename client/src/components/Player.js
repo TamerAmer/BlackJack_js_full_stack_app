@@ -1,14 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PlayerActions from "./PlayerActions";
 import BetCounter from "./BetCounter";
+import Card from "./Card";
 
-const Player = ({onBetSubmit,onBetClear,currentBetAmount}) => {
-    
+const Player = ({player, playerHand}) => {
+   
+    const showHand = playerHand.map((card, index) => {
+        return <Card card={card} key={index} />
+    });
+
     return(
         <>
-        <h3>Player</h3>
-        <PlayerActions />
-        <BetCounter onBetSubmit={onBetSubmit} onBetClear={onBetClear} currentBetAmount={currentBetAmount}/>
+            <h2>Player Hand</h2>
+            {showHand}            
+            <br/>
+
+
         </>
     )
 }
