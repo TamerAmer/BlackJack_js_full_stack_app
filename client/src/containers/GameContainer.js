@@ -118,6 +118,47 @@ const GameContainer=() => {
         //got to betting phase
         setTurnStage(1);
     }
+
+    const onDoubleDown = () => {
+        console.log("On Double down (Game container)");
+
+        //double player stake
+        //////
+        //update db
+        const currentStake = players.at(-1).stake;
+        const updatedPlayer = {
+            'currentMoney': players.at(-1).currentMoney - currentStake,
+            'stake': (currentStake * 2)            
+        }
+        //update player updates db, then() updates front end
+        updatePlayer(updatedPlayer, players.at(-1)._id)
+        .then((data) =>
+        {
+            updatedPlayer._id = players.at(-1)._id;
+            
+        });
+
+        //update front end
+        players.at(-1).stake = players.at(-1).stake * 2;
+        players.at(-1).currentMoney = players.at(-1).currentMoney - currentStake;
+
+        //pass player card
+        console.log("On hit me GameContainer")
+        //create copy of hand and take from the deck
+        let newPlayerHand = [...playerHand, deck.shift()];
+        //if(newPlayerHand )
+        //set
+        setPlayerHand(newPlayerHand);
+
+        //dear turn 
+        dealerTurn(dealerHand);
+
+        let playerHandValue = handValuator(newPlayerHand);  
+        console.log("player hand value = " + playerHandValue)
+
+        autoStand(playerHandValue,dealerHand);
+
+    }
     //////end of on button presses functions
 
     ///////game helper functions////
@@ -420,7 +461,7 @@ const GameContainer=() => {
                 <Player player={players.at(-1)} playerHand={playerHand}/> : null
             }           
             {turnStage == 2 ?
-                <PlayerActions onHitMe={onHitMe} onStand={onStand}/> : null
+                <PlayerActions onHitMe={onHitMe} onStand={onStand} onDoubleDown={onDoubleDown}/> : null
             }
             {turnStage == 3 ?
                 <PlayAgain turnEndMessage={turnEndMessage} onPlayAgain={onPlayAgain}/> : null
