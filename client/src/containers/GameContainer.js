@@ -21,6 +21,7 @@ const GameContainer=() => {
     const [deck, setDeck] = useState();
     const [turnStage, setTurnStage] = useState(0);
     const [turnEndMessage, setTurnEndMessage] = useState("");
+    const [minBet, setMinBet] = useState(5);
 
     useEffect( () => {    
         console.log("use effect GameContainer");
@@ -63,6 +64,9 @@ const GameContainer=() => {
     }
     //player hit me   
     const onHitMe = () => {
+
+        //check if player has enough money to hit
+        //if(players.at(-1).currentMoney < )
        
         //pass player card
         console.log("On hit me GameContainer")
@@ -293,8 +297,7 @@ const GameContainer=() => {
 
     const turnResolution = (playerHandValue, dealerHandValue) => {
 
-         //set turn stage so we can keep track of what to render
-         setTurnStage(3);
+         
 
         console.log("on turn resolution")
         //set to -2 so player always loses against dealer
@@ -317,6 +320,7 @@ const GameContainer=() => {
         //check for blackjack on either the player side or the dealer side
         //if either have a blackjack set the handValue to 22
         //if player wins with blackjack give player 2.5x bet amount
+        let updatedPlayerTest = players.at(-1); 
         if( playerHandValue > dealerHandValue)
         {
             //player wins
@@ -334,6 +338,7 @@ const GameContainer=() => {
             }
 
             const updatedPlayer = { 
+                'turnsSurvived': players.at(-1).turnsSurvived + 1,
                 'currentMoney': players.at(-1).currentMoney + moneyToAdd
             }
             //update player updates db, then() updates front end
@@ -368,7 +373,8 @@ const GameContainer=() => {
             let moneyToAdd = players.at(-1).stake
 
             const updatedPlayer = { 
-                'currentMoney': players.at(-1).currentMoney + moneyToAdd
+                'currentMoney': players.at(-1).currentMoney + moneyToAdd,
+                'turnsSurvived': players.at(-1).turnsSurvived + 1
             }
             //update player updates db, then() updates front end
             console.log(moneyToAdd);
@@ -386,14 +392,22 @@ const GameContainer=() => {
             //Give player 1x bet amount back in their money property
         }
 
-        //next turn
-        //clear cards
-        //setDealerHand([]);
-        //setPlayerHand([]);
-
-        //go to betting phase
-        // gameFlow();
-        console.log("Place Your Bets")
+        //set turn stage so we can keep track of what to render
+        //check if player is still alive
+        if(players.at(-1).currentMoney >= minBet) 
+        {
+            console.log("Player survives")
+            //increase min bet
+            setMinBet(minBet + 5);
+            //we can play again with same player
+            setTurnStage(3);
+        }
+        else
+        {
+            console.log("Player dies")
+            //player is dead
+            setTurnStage(0);
+        }
     }
 
     const handValuator = (arrayOfCards) => {
