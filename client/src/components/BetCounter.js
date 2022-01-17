@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {updatePlayer } from "../helpers/DBHelpers";
 import Stake from "./Stake";
+import '../css/BetCounter.css'
 
 const BetCounter = ({ addBet, player, minBet}) => {
 
