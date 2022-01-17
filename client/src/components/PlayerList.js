@@ -1,4 +1,5 @@
 import PlayerItem from "./PlayerItem"
+import '../css/PlayerList.css'
 
 const PlayerList=({players}) => {
 
@@ -16,10 +17,10 @@ const PlayerList=({players}) => {
     });
 
     return(
-        <>
-        <h4>Top 5 Best Players Ever!</h4>
-        {playersList}
-        </>
+        <div className="player-list">
+        <h4 className="list-title">Top 5 Best Players Ever!</h4>
+        <div className="player-items"> {playersList} </div>
+        </div>
     )
 }
 export default PlayerList
