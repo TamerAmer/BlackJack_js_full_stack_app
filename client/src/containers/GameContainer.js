@@ -95,6 +95,8 @@ const GameContainer=() => {
             //we can use state, this wasn't auto fired
             autoStand(playerHandValue, dealerHand);
         }
+        //separate the if statements to fix the blackjack bug
+        //blackjack only occurs if this autoStand will trigger, use this
 
     }
     //I think a change is needed to stop state change delays from causing miss fire bugs
@@ -233,8 +235,9 @@ const GameContainer=() => {
         while (dealerHandValue < 17 )
         {   
             const card=deckCopy.splice(0,1)   
-            console.log(card[0])     
-            newDealerHand.splice(0,0,card[0])
+            console.log(card[0]) 
+            newDealerHand.push(card[0])    
+            // newDealerHand.splice(0,0,card[0])
             console.log(newDealerHand);
             //set
             dealerHandValue = handValuator(newDealerHand);
