@@ -244,8 +244,9 @@ const GameContainer=() => {
         //dealer turn..
         // resolution - we can't use what's in state because this call
         // was made too quickly for state to keep up
+        
         // use passed dealerHand to find value of hand
-        const dealerHandValue = handValuator(_dealerHand);
+        const dealerHandValue = dealerTurn(_dealerHand)
         //and use passed playerHandValue to complete the parameters for turnResolution
         turnResolution(playerHandValue, dealerHandValue);
     }
@@ -263,19 +264,22 @@ const GameContainer=() => {
         let newDealerHand=_dealerHand;
         console.log("Dealer hand..");
         console.log(_dealerHand);
-        while (dealerHandValue < 17 )
-        {   
-            const card=deckCopy.splice(0,1)   
-            console.log(card[0]) 
-            newDealerHand.push(card[0])    
-            // newDealerHand.splice(0,0,card[0])
-            console.log(newDealerHand);
-            //set
-            dealerHandValue = handValuator(newDealerHand);
+        if (dealerHandValue == 21){
+            dealerHandValue="BlackJack"
+        }else{
+            while (dealerHandValue < 17 )
+            {   
+                const card=deckCopy.splice(0,1)   
+                console.log(card[0]) 
+                newDealerHand.push(card[0])    
+                // newDealerHand.splice(0,0,card[0])
+                console.log(newDealerHand);
+                //set
+                dealerHandValue = handValuator(newDealerHand);
 
-            console.log("Dealer total = " + dealerHandValue);
+                console.log("Dealer total = " + dealerHandValue);
+            }
         }
-
         //now we have finished, set deck in state from our copy
         setDeck(deckCopy);
 
@@ -308,11 +312,12 @@ const GameContainer=() => {
             playerHandValue=22
         }
         
+        if (dealerHandValue=="BlackJack"){
+            dealerHandValue=22
+            console.log("Dealer has BlackJack")
+        }
         console.log("IF statement player hand value = " + playerHandValue);
         console.log("IF statement dealer hand value = " + dealerHandValue);
-        if (dealerHand.length==2 && dealerHandValue==21){
-            dealerHandValue=22
-        }
 
         //check for blackjack on either the player side or the dealer side
         //if either have a blackjack set the handValue to 22
