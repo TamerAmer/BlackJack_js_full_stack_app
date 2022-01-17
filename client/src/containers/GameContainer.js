@@ -65,9 +65,6 @@ const GameContainer=() => {
     //player hit me   
     const onHitMe = () => {
 
-        //check if player has enough money to hit
-        //if(players.at(-1).currentMoney < )
-       
         //pass player card
         console.log("On hit me GameContainer")
         //create copy of hand and take from the deck
@@ -468,7 +465,7 @@ const GameContainer=() => {
                 <PlayerForm addPlayer={addPlayer}/> : null
             }
             {turnStage == 1 ?
-                <BetCounter addBet={addBet} player={players.at(-1)}/> : null            
+                <BetCounter addBet={addBet} player={players.at(-1)} minBet={minBet}/> : null            
             }           
             {turnStage > 1?
                 <Dealer dealerHand={dealerHand}/> : null
