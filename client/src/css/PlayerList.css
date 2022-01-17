@@ -1,0 +1,22 @@
+.player-list{
+    padding-top: 10px;
+    /* background-color: rgb(65, 128, 199); */
+}
+
+.list-title{
+    font-family: Junkyard;
+    font-size: 30px;
+    font-style: oblique;
+    color: rgb(237, 75, 186);
+    text-shadow: 2px 2px #296dec;
+
+}
+
+.player-items{
+    font-family: Junkyard;
+    font-size: 20px;
+    font-weight: 800;
+    color: rgb(88, 175, 140);
+    text-shadow: 2px 2px #296dec;
+
+}

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {updatePlayer } from "../helpers/DBHelpers";
 import Stake from "./Stake";
+import '../css/BetCounter.css'
 
 const BetCounter = ({ addBet, player, minBet}) => {
 
@@ -22,13 +23,13 @@ const BetCounter = ({ addBet, player, minBet}) => {
         evt.preventDefault(); //necessary? - test
 
 		//check if player has enough money to increment bet
-		if(player.currentMoney > currentBetAmount){
+		if(player.currentMoney >= currentBetAmount){
 			console.log("player has enough money for bet");
 		}
 		else
 		{
 			console.log("player does NOT have enough money for bet - restting stake");
-		 	setCurrentBetAmount(0);
+		 	setCurrentBetAmount(minBet);
 			return;
 		}
     

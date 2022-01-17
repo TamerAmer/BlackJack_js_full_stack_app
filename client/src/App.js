@@ -1,12 +1,12 @@
-import './App.css';
+import './css/App.css';
 import GameContainer from './containers/GameContainer';
 
 function App() {
   return (
-    <>
-      <h1>BlackJack 101</h1>
+    <div className='app-container'>
+      <h1 className='title' >BlackJack 101</h1>
       <GameContainer/>
-    </>
+    </div>
   );
 }
 

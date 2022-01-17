@@ -1,0 +1,59 @@
+.app-container{
+  height: 1000px;
+  text-align: center;
+  padding-bottom: 30px;
+  background-color: rgb(35, 31, 32)
+}
+
+.card{
+  max-width: 20%;
+  height: auto;
+}
+
+.title{
+  color: rgb(237, 75, 186);
+  text-shadow: 2px 2px #296dec;
+  padding-top: 20px;
+  font-family: Junkyard;
+  font-size: 80px;
+  font-weight:bolder;
+  margin: auto;
+  
+}
+
+.player-money{
+  font-family: Junkyard;
+  font-size: 30px;
+  color: #fff;
+  text-shadow:
+    0 0 7px #fff,
+    0 0 10px #fff,
+    0 0 21px #fff,
+    0 0 42px #0fa,
+    0 0 82px #0fa,
+    0 0 92px #0fa,
+    0 0 102px #0fa,
+    0 0 151px #0fa;
+
+}
+
+@keyframes flicker {
+  0%, 18%, 22%, 25%, 53%, 57%, 100% {
+    text-shadow:
+      0 0 4px #fff,
+      0 0 11px #fff,
+      0 0 19px #fff,
+      0 0 40px #0fa,
+      0 0 80px #0fa,
+      0 0 90px #0fa,
+      0 0 100px #0fa,
+      0 0 150px #0fa;
+  }
+  20%, 24%, 55% {       
+    text-shadow: none;
+  }
+}
+
+span{
+  animation: flicker 1.5s infinite alternate;  
+}

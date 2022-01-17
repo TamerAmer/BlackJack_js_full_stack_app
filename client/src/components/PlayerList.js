@@ -1,23 +1,26 @@
 import PlayerItem from "./PlayerItem"
+import '../css/PlayerList.css'
 
 const PlayerList=({players}) => {
 
-    const sortList = () => {
-        //sort list by turnSurvived
-        players.sort((a, b) => parseInt(a.turnsSurvived) - parseInt(b.turnsSurvived));
-    }
+    //make deep copy, we don't want to alter list in state
+    let playersCopy = [...players];
 
-    const playersList = players.map((player) =>{
-        //only return top 5
-
+    //sort whole list (reversed (b,a))
+    //take first 5
+    //return components to render
+    const playersList = playersCopy
+    .sort((b, a) => parseInt(a.turnsSurvived) - parseInt(b.turnsSurvived))
+    .slice(0,5)    
+    .map((player) =>{
         return <PlayerItem player={player} key={player._id} />
     });
-    
+
     return(
-        <>
-        <h4>Player List</h4>
-        {playersList}
-        </>
+        <div className="player-list">
+        <h4 className="list-title">Top 5 Best Players Ever!</h4>
+        <div className="player-items"> {playersList} </div>
+        </div>
     )
 }
 export default PlayerList
