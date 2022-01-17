@@ -212,9 +212,9 @@ const GameContainer=() => {
             console.log(_deck);
             
         }
-        let twoCards = ['AH', 'KC'];             
-        // twoCards.push( _deck.shift() );
-        // twoCards.push( _deck.shift() );
+        let twoCards = [];             
+        twoCards.push( _deck.shift() );
+        twoCards.push( _deck.shift() );
         setPlayerHand(twoCards);
         let playerHandValue = handValuator(twoCards)
 
@@ -326,16 +326,18 @@ const GameContainer=() => {
             
             //////
              //update db
-            let currentStake = players.at(-1).stake * 2
+            let moneyToAdd = players.at(-1).stake * 2
+            
             if (playerHandValue == 22){
-                currentStake = players.at(-1).stake * 2.5
+                moneyToAdd = players.at(-1).stake * 2.5
                 console.log('player wins with Blackjack!!!!, stake changed');
             }
 
             const updatedPlayer = { 
-                'currentMoney': players.at(-1).currentMoney + currentStake
+                'currentMoney': players.at(-1).currentMoney + moneyToAdd
             }
             //update player updates db, then() updates front end
+            console.log(moneyToAdd);
             updatePlayer(updatedPlayer, players.at(-1)._id)
             .then((data) =>
             {
@@ -344,7 +346,7 @@ const GameContainer=() => {
             })
 
             //update front end
-            players.at(-1).currentMoney = players.at(-1).currentMoney + (players.at(-1).stake * 2)
+            players.at(-1).currentMoney = players.at(-1).currentMoney + moneyToAdd
     
             //Give player 2x bet amount back in their money property
         }
@@ -365,6 +367,23 @@ const GameContainer=() => {
         {
             //a "push" happens, player gets money back
             console.log("Push - Player gets money back")
+
+            let moneyToAdd = players.at(-1).stake
+
+            const updatedPlayer = { 
+                'currentMoney': players.at(-1).currentMoney + moneyToAdd
+            }
+            //update player updates db, then() updates front end
+            console.log(moneyToAdd);
+            updatePlayer(updatedPlayer, players.at(-1)._id)
+            .then((data) =>
+            {
+                updatedPlayer._id = players.at(-1)._id;
+                
+            })
+
+            //update front end
+            players.at(-1).currentMoney = players.at(-1).currentMoney + moneyToAdd
 
             setTurnEndMessage("Push! What the fuck happens!?")
             //Give player 1x bet amount back in their money property
