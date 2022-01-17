@@ -19,9 +19,9 @@ const PlayerActions = ({onHitMe, onStand, onDoubleDown}) => {
     
     return(
         <>
-            <button onClick={handleHitMe}>Hit Me</button>
-            <button onClick={handleDoubleDown}>Double Down</button>
-            <button onClick={handleStand}>Stand</button>
+            <button className="player-action-button" id="button" onClick={handleHitMe}>Hit Me</button>
+            <button className="player-action-button" id="button" onClick={handleDoubleDown}>Double Down</button>
+            <button className="player-action-button" id="button" onClick={handleStand}>Stand</button>
         </>
     )
 }

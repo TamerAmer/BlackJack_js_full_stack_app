@@ -1,8 +1,8 @@
 .app-container{
-  height: auto;
+  height: 1000px;
   text-align: center;
   padding-bottom: 30px;
-  background-color: rgb(68, 142, 227);
+  background-color: rgb(35, 31, 32)
 }
 
 .card{
@@ -10,3 +10,13 @@
   height: auto;
 }
 
+.title{
+  color: rgb(237, 75, 186);
+  text-shadow: 2px 2px #296dec;
+  padding-top: 20px;
+  font-family: Junkyard;
+  font-size: 80px;
+  font-weight:bolder;
+  margin: auto;
+  
+}
