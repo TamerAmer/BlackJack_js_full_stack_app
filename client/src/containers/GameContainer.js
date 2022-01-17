@@ -25,6 +25,7 @@ const GameContainer=() => {
     const [minBet, setMinBet] = useState(5);
     const [canSplit, setCanSplit]=useState(false)
     const [hasSplit, setHasSplit]=useState(false)
+    const [splitHand, setSplitHand]=useState([])
 
     useEffect( () => {    
         console.log("use effect GameContainer");
@@ -88,14 +89,21 @@ const GameContainer=() => {
         {
             //Check for player money.. if 0 then setCurrentPlayer to null
             console.log("Player is bust!");
+            setHasSplit(false)
+            const handHolder=playerHand
+            setPlayerHand(splitHand)
+            setSplitHand(handHolder)
         }else{
             console.log("Player now has " + playerHandValue );
         }
 
-        if(playerHandValue >= 21)
+        if(playerHandValue = 21)
         {
             //we can use state, this wasn't auto fired
-            
+            const handHolder=playerHand
+            setPlayerHand(splitHand)
+            setSplitHand(handHolder)
+            //ADD BLACKJACK MIMIC CODE HERE
         }
         //separate the if statements to fix the blackjack bug
         //blackjack only occurs if this autoStand will trigger, use this
@@ -104,8 +112,9 @@ const GameContainer=() => {
     const onHitMe = () => {
 
         if (hasSplit==true){
-            //This is where we add code if the player has clicked to split and we want to add a card
-        }
+            onHitSplit()
+        }else{
+        
 
         //pass player card
         console.log("On hit me GameContainer")
@@ -136,6 +145,7 @@ const GameContainer=() => {
         }
         //separate the if statements to fix the blackjack bug
         //blackjack only occurs if this autoStand will trigger, use this
+        }
 
     }
     //I think a change is needed to stop state change delays from causing miss fire bugs
@@ -203,9 +213,11 @@ const GameContainer=() => {
 
     }
 
-    const onSplit=(() => {
+    const onSplit = (() => {
 
         console.log("On Split (Game container)");
+        setHasSplit(true)
+        setCanSplit(false)
         const currentStake = players.at(-1).stake;
         const updatedPlayer = {
             'currentMoney': players.at(-1).currentMoney - currentStake
@@ -229,6 +241,7 @@ const GameContainer=() => {
         let secondPlayerHand = [...secondSplit,deck.shift()]
 
         setPlayerHand(firstPlayerHand)
+        setSplitHand(secondPlayerHand)
 
     })
 
