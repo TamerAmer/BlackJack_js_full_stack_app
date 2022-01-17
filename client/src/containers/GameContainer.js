@@ -15,7 +15,7 @@ import Stake from "../components/Stake"
 const GameContainer=() => {
     
     const [players, setPlayers] = useState([]);
-    const [currentPlayer,setCurrentPlayer]=useState(null);
+    //const [currentPlayer,setCurrentPlayer]=useState(null);
     const [playerHand,setPlayerHand]=useState([]);
     const [dealerHand,setDealerHand]=useState([]);
     const [deck, setDeck] = useState();
@@ -38,7 +38,7 @@ const GameContainer=() => {
         //add player to list
         setPlayers(newPlayers);
         //remember this player has active/current player
-        setCurrentPlayer(player);
+        //setCurrentPlayer(player);
 
         initialiseDeck()
     }
@@ -63,11 +63,7 @@ const GameContainer=() => {
     }
     //player hit me   
     const onHitMe = () => {
-        if(currentPlayer == null)
-        {
-            console.log("no player asigned")
-            return;
-        }
+       
         //pass player card
         console.log("On hit me GameContainer")
         //create copy of hand and take from the deck
@@ -276,14 +272,16 @@ const GameContainer=() => {
         if (dealerHand.length==2 && dealerHandValue==21){
             dealerHandValue=22
         }
+
+
         if(playerHandValue==22 && playerHandValue>dealerHandValue){
             const playerGotBlackjack = {
-                'currentMoney': currentPlayer.currentMoney + (currentPlayer.stake *2.5)
+                'currentMoney': players.at(-1).currentMoney + (players.at(-1).stake *2.5)
             }
-            setCurrentPlayer(playerGotBlackjack);
-            updatePlayer(playerGotBlackjack, currentPlayer._id)
+            //setCurrentPlayer(playerGotBlackjack);
+            updatePlayer(playerGotBlackjack, players.at(-1)._id)
             .then((data) => {
-                playerGotBlackjack._id = currentPlayer._id
+                playerGotBlackjack._id = players.at(-1)._id
             })
 
             console.log("Players wins with a BlackJack!!!")
@@ -299,18 +297,21 @@ const GameContainer=() => {
 
             setTurnEndMessage("Not bad - You won!");
             
-            const playerWonMoney = {
-                
-                'currentMoney': currentPlayer.currentMoney + (currentPlayer.stake *2)
+            //////
+             //update db
+            const updatedPlayer = {
+                'currentMoney': players.at(-1).currentMoney + (players.at(-1).stake * 2)
             }
-            setCurrentPlayer(playerWonMoney);
-            updatePlayer(playerWonMoney, currentPlayer._id)
+            //update player updates db, then() updates front end
+            updatePlayer(updatedPlayer, players.at(-1)._id)
             .then((data) =>
             {
+                updatedPlayer._id = players.at(-1)._id;
                 
-                playerWonMoney._id = currentPlayer._id;
-                //addBet(playerWonMoney);
             })
+
+            //update front end
+            players.at(-1).currentMoney = players.at(-1).currentMoney + (players.at(-1).stake * 2)
     
             //Give player 2x bet amount back in their money property
         }
@@ -392,10 +393,10 @@ const GameContainer=() => {
     return(
         <>
             {turnStage > 0 ?
-                <PlayerMoney player={currentPlayer}/> : null
+                <PlayerMoney player={players.at(-1)}/> : null
             }
             {turnStage == 2 ?
-                <Stake stake={currentPlayer.stake}/> : null
+                <Stake stake={players.at(-1).stake}/> : null
             }
             {turnStage == 0 ? 
                 <PlayerList players={players}/> : null
@@ -404,13 +405,13 @@ const GameContainer=() => {
                 <PlayerForm addPlayer={addPlayer}/> : null
             }
             {turnStage == 1 ?
-                <BetCounter addBet={addBet} player={currentPlayer}/> : null            
+                <BetCounter addBet={addBet} player={players.at(-1)}/> : null            
             }           
             {turnStage > 1?
                 <Dealer dealerHand={dealerHand}/> : null
             }
             {turnStage > 1 ?
-                <Player player={currentPlayer} playerHand={playerHand}/> : null
+                <Player player={players.at(-1)} playerHand={playerHand}/> : null
             }           
             {turnStage == 2 ?
                 <PlayerActions onHitMe={onHitMe} onStand={onStand}/> : null
