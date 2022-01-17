@@ -179,7 +179,7 @@ const GameContainer=() => {
         twoCards.push( _deck.shift() );
         twoCards.push( _deck.shift() );
         setPlayerHand(twoCards);
-        const playerHandValue = handValuator(twoCards)
+        let playerHandValue = handValuator(twoCards)
 
         console.log("Player has " + playerHandValue);
 
@@ -197,15 +197,9 @@ const GameContainer=() => {
         console.log("Dealer's second is " + _dealerHand[1]);
 
         if(playerHandValue === 21){
+            playerHandValue="BlackJack"
             autoStand(playerHandValue, _dealerHand)
         }
-        // if(handValue===21){
-        //     if (handValue === 21 && handValuator(twoCards)===21){
-        //         console.log("Dealer's second is " + twoCards[1]);
-        //         console.log("Dealer also has a BlackJack, its a push :(")            
-        //     }
-        //     dealCards(deck)
-        // }
 
     }
 
@@ -273,7 +267,7 @@ const GameContainer=() => {
         {
             playerHandValue = -2;
         }
-        if (playerHand.length==2 && handValuator(playerHand)==21){
+        if (playerHandValue=="BlackJack"){
             playerHandValue=22
         }
         
