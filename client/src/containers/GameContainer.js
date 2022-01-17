@@ -90,14 +90,14 @@ const GameContainer=() => {
             //Check for player money.. if 0 then setCurrentPlayer to null
             console.log("Player is bust!");
             setHasSplit(false)
-            const handHolder=playerHand
+            const handHolder=newPlayerHand
             setPlayerHand(splitHand)
             setSplitHand(handHolder)
         }else{
             console.log("Player now has " + playerHandValue );
         }
 
-        if(playerHandValue = 21)
+        if(playerHandValue == 21)
         {
             //we can use state, this wasn't auto fired
             const handHolder=playerHand
@@ -300,9 +300,9 @@ const GameContainer=() => {
 
         console.log(_deck);
 
-        let twoCards = [];             
-        twoCards.push( _deck.shift() );
-        twoCards.push( _deck.shift() );
+        let twoCards = ["9S","9H"];             
+        // twoCards.push( _deck.shift() );
+        // twoCards.push( _deck.shift() );
         setPlayerHand(twoCards);
         let playerHandValue = handValuator(twoCards)
 
