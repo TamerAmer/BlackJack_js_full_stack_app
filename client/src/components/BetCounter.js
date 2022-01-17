@@ -1,25 +1,36 @@
 import React, { useState } from "react";
-import { postPlayer, updatePlayer } from "../helpers/DBHelpers";
+import {updatePlayer } from "../helpers/DBHelpers";
 import Stake from "./Stake";
 
-const BetCounter = ({ addBet, player}) => {
+const BetCounter = ({ addBet, player, minBet}) => {
 
-    const [currentBetAmount, setCurrentBetAmount] = useState(0);
+    const [currentBetAmount, setCurrentBetAmount] = useState(minBet);
 
 	const handleClear = () => {
-		setCurrentBetAmount(0);
+		setCurrentBetAmount(minBet);
 	};
 
 	const handleCounterChange = (evt) => {
-        const intIncrement =  parseInt(evt.target.value)
+        const intIncrement =  parseInt(evt.target.value);
         const intCurrentBet = parseInt(currentBetAmount);
         setCurrentBetAmount(intCurrentBet + intIncrement);
-	}
+	};
 
 	const handleSubmitBet = (evt) => {
 
          //stop post request to current url
         evt.preventDefault(); //necessary? - test
+
+		//check if player has enough money to increment bet
+		if(player.currentMoney > currentBetAmount){
+			console.log("player has enough money for bet");
+		}
+		else
+		{
+			console.log("player does NOT have enough money for bet - restting stake");
+		 	setCurrentBetAmount(0);
+			return;
+		}
     
         //update db
         const updatedPlayer = {
@@ -32,7 +43,7 @@ const BetCounter = ({ addBet, player}) => {
         {
             updatedPlayer._id = player._id;
             addBet(updatedPlayer);
-        })
+        });
 	};
 
 	return (
