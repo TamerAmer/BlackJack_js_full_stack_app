@@ -1,0 +1,12 @@
+.app-container{
+  height: auto;
+  text-align: center;
+  padding-bottom: 30px;
+  background-color: rgb(68, 142, 227);
+}
+
+.card{
+  max-width: 20%;
+  height: auto;
+}
+
