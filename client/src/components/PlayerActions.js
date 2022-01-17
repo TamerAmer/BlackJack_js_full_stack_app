@@ -1,6 +1,7 @@
 import React from "react";
+import { updatePlayer } from "../helpers/DBHelpers";
 
-const PlayerActions = ({onHitMe, onStand}) => {
+const PlayerActions = ({onHitMe, onStand, onDoubleDown}) => {
 
     const handleHitMe = () => {
         console.log("handle hit me")
@@ -14,8 +15,10 @@ const PlayerActions = ({onHitMe, onStand}) => {
     }
     const handleDoubleDown=() => {
         console.log("handle double down")
-        onHitMe()
-        onStand()
+
+       
+
+        onDoubleDown();
     }
     
     return(
