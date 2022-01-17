@@ -23,6 +23,7 @@ const GameContainer=() => {
     const [turnStage, setTurnStage] = useState(0);
     const [turnEndMessage, setTurnEndMessage] = useState("");
     const [minBet, setMinBet] = useState(5);
+    const [canSplit, setCanSplit]=useState(false)
 
     useEffect( () => {    
         console.log("use effect GameContainer");
@@ -66,7 +67,39 @@ const GameContainer=() => {
         turnFlow();
 
     }
-    //player hit me   
+    //player hit me
+    const onHitSplit=() => {
+        //pass player card
+        console.log("On hit Split GameContainer")
+        //create copy of hand and take from the deck
+        let newPlayerHand = [...playerHand, deck.shift()];
+        //if(newPlayerHand )
+        //set
+        setPlayerHand(newPlayerHand);
+
+        //at this point we need to check if player is bust
+        
+        let playerHandValue = handValuator(newPlayerHand);  
+        console.log("player hand value = " + playerHandValue)
+
+        //check for bust
+        if(playerHandValue > 21)
+        {
+            //Check for player money.. if 0 then setCurrentPlayer to null
+            console.log("Player is bust!");
+        }else{
+            console.log("Player now has " + playerHandValue );
+        }
+
+        if(playerHandValue >= 21)
+        {
+            //we can use state, this wasn't auto fired
+            
+        }
+        //separate the if statements to fix the blackjack bug
+        //blackjack only occurs if this autoStand will trigger, use this
+
+    }  
     const onHitMe = () => {
 
         //pass player card
@@ -190,6 +223,8 @@ const GameContainer=() => {
         let firstPlayerHand = [...firstSplit, deck.shift()];
         let secondPlayerHand = [...secondSplit,deck.shift()]
 
+        setPlayerHand(firstPlayerHand)
+
     })
 
     //////end of on button presses functions
@@ -257,6 +292,11 @@ const GameContainer=() => {
 
         if(playerHandValue===21){
             console.log("PLAYER BLACKJACK!!!")
+        }
+        const firsCard=handValuator(twoCards[0])
+        const secondCard=handValuator(twoCards[1])
+        if(firsCard==secondCard){
+            setCanSplit(true)
         }
 
         //Dealer
@@ -533,6 +573,10 @@ const GameContainer=() => {
             }           
             {turnStage == 2 ?
                 <PlayerActions onHitMe={onHitMe} onStand={onStand} onDoubleDown={onDoubleDown}/> : null
+            }
+            {turnStage == 2 ?
+                canSplit == true ?
+                    <Split onSplit={onSplit}/> : null :null
             }
             {turnStage == 3 ?
                 <PlayAgain turnEndMessage={turnEndMessage} onPlayAgain={onPlayAgain}/> : null
