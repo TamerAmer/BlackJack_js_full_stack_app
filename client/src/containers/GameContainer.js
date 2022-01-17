@@ -347,8 +347,10 @@ const GameContainer=() => {
 
             //update front end
             players.at(-1).currentMoney = players.at(-1).currentMoney + moneyToAdd
+
+            //and force a re-render
+            setTurnEndMessage("Player Wins with Blackjack!")
     
-            //Give player 2x bet amount back in their money property
         }
         else if (dealerHandValue > playerHandValue)
         {
@@ -356,11 +358,6 @@ const GameContainer=() => {
             console.log("Dealer wins!")
 
             setTurnEndMessage("Too bad - Dealer Wins!")
-
-
-            // check if player has 0 money. If player has 0 money then
-            
-            
             
         }
         else
