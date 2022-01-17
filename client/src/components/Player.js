@@ -6,7 +6,7 @@ import Card from "./Card";
 const Player = ({player, playerHand}) => {
    
     const showHand = playerHand.map((card, index) => {
-        return <Card card={card} key={index} />
+        return <Card card={card}  key={index} />
     });
 
     return(
