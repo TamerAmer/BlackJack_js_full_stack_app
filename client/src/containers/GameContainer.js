@@ -321,8 +321,7 @@ const GameContainer=() => {
 
         //check for blackjack on either the player side or the dealer side
         //if either have a blackjack set the handValue to 22
-        //if player wins with blackjack give player 2.5x bet amount
-        let updatedPlayerTest = players.at(-1); 
+        //if player wins with blackjack give player 2.5x bet amount        
         if( playerHandValue > dealerHandValue)
         {
             //player wins
@@ -340,7 +339,6 @@ const GameContainer=() => {
             }
 
             const updatedPlayer = { 
-                'turnsSurvived': players.at(-1).turnsSurvived + 1,
                 'currentMoney': players.at(-1).currentMoney + moneyToAdd
             }
             //update player updates db, then() updates front end
@@ -350,19 +348,24 @@ const GameContainer=() => {
             {
                 updatedPlayer._id = players.at(-1)._id;
                 
-            })
+            });
 
             //update front end
-            players.at(-1).currentMoney = players.at(-1).currentMoney + moneyToAdd
+            players.at(-1).currentMoney = players.at(-1).currentMoney + moneyToAdd;
 
             //and force a re-render
-            setTurnEndMessage("Player Wins with Blackjack!")
+            if (playerHandValue == 22){
+                setTurnEndMessage("Player Wins with Blackjack!")
+            }
+            else
+                setTurnEndMessage("Player Wins!")
     
         }
         else if (dealerHandValue > playerHandValue)
         {
             //dealer wins
             console.log("Dealer wins!")
+           
 
             setTurnEndMessage("Too bad - Dealer Wins!")
             
@@ -375,8 +378,7 @@ const GameContainer=() => {
             let moneyToAdd = players.at(-1).stake
 
             const updatedPlayer = { 
-                'currentMoney': players.at(-1).currentMoney + moneyToAdd,
-                'turnsSurvived': players.at(-1).turnsSurvived + 1
+                'currentMoney': players.at(-1).currentMoney + moneyToAdd                
             }
             //update player updates db, then() updates front end
             console.log(moneyToAdd);
@@ -389,6 +391,7 @@ const GameContainer=() => {
 
             //update front end
             players.at(-1).currentMoney = players.at(-1).currentMoney + moneyToAdd
+            
 
             setTurnEndMessage("Push! What the fuck happens!?")
             //Give player 1x bet amount back in their money property
@@ -396,11 +399,26 @@ const GameContainer=() => {
 
         //set turn stage so we can keep track of what to render
         //check if player is still alive
+        //increase min bet
+        setMinBet(minBet + 5);
+        
         if(players.at(-1).currentMoney >= minBet) 
         {
+            //save to db
+            const updatedPlayer = {                 
+                'turnsSurvived': players.at(-1).turnsSurvived + 1
+            }
+            updatePlayer(updatedPlayer, players.at(-1)._id)
+            .then((data) =>
+            {
+                updatedPlayer._id = players.at(-1)._id;                
+            })
+
+            //update front end turns
+            players.at(-1).turnsSurvived = players.at(-1).turnsSurvived + 1;
+
             console.log("Player survives")
-            //increase min bet
-            setMinBet(minBet + 5);
+            
             //we can play again with same player
             setTurnStage(3);
         }
@@ -409,6 +427,7 @@ const GameContainer=() => {
             console.log("Player dies")
             //player is dead
             setTurnStage(0);
+
         }
     }
 
@@ -451,7 +470,7 @@ const GameContainer=() => {
             }
         }
         
-        return(totalValue)
+        return(totalValue);
     }
     //////end of game helper functions
 
