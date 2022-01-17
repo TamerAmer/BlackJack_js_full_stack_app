@@ -11,6 +11,7 @@ import PlayerActions from "../components/PlayerActions"
 import PlayAgain from "../components/PlayAgain"
 import PlayerMoney from "../components/PlayerMoney"
 import Stake from "../components/Stake"
+import Split from "../components/Split"
 
 const GameContainer=() => {
     
@@ -163,6 +164,34 @@ const GameContainer=() => {
         autoStand(playerHandValue,dealerHand);
 
     }
+
+    const onSplit=(() => {
+
+        console.log("On Split (Game container)");
+
+        const updatedPlayer = {
+            'currentMoney': players.at(-1).currentMoney - currentStake
+        }
+
+        updatePlayer(updatedPlayer, players.at(-1)._id)
+        .then((data) =>
+        {
+            updatedPlayer._id = players.at(-1)._id;
+            
+        });
+        players.at(-1).currentMoney = players.at(-1).currentMoney - currentStake;
+
+        const firstSplit=[]
+        const secondSplit=[]
+
+        firstSplit.push(playerHand[0])
+        secondSplit.push(playerHand[1])
+
+        let firstPlayerHand = [...firstSplit, deck.shift()];
+        let secondPlayerHand = [...secondSplit,deck.shift()]
+
+    })
+
     //////end of on button presses functions
 
     ///////game helper functions////
