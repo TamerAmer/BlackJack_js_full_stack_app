@@ -178,7 +178,7 @@ const GameContainer=() => {
     }
 
     const onDoubleDown = () => {
-        if(hasSplit==true){
+        if(hasSplit===true){
             setHasSplit(false)
             setSplitDoubleDown(true)
             let newPlayerHand = [...playerHand, deck.shift()];
@@ -483,7 +483,9 @@ const GameContainer=() => {
         let isSplit=[playerHandValue]
         let splitHandValue
         //ADD SPLIT HAND RESOLUTION CODE HERE
-        if (splitHand !== []){
+        if (splitHand.length >= 1){
+            console.log(splitHand)
+            console.log("in turn resolution splithand if statement")
             splitHandValue=handValuator(splitHand)
             isSplit.push(splitHandValue)
             setSplitHand([])
@@ -523,8 +525,10 @@ const GameContainer=() => {
                 //////
                 //update db
                 let moneyToAdd = players.at(-1).stake * 2
-                if(isSplit[i]==splitHandValue && splitDoubleDown==true){
+
+                if(isSplit[i]===splitHandValue && splitDoubleDown==true){
                     moneyToAdd = players.at(-1).stake * 4
+                    console.log("Quadrouple stake")
                 }
                 
                 if (playerHandValue == 22){
