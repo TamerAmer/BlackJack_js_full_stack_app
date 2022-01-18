@@ -391,9 +391,9 @@ const GameContainer=() => {
 
         console.log(_deck);
 
-        let twoCards = ["AH","AD"];             
-        // twoCards.push( _deck.shift() );
-        // twoCards.push( _deck.shift() );
+        let twoCards = [];             
+        twoCards.push( _deck.shift() );
+        twoCards.push( _deck.shift() );
 
         setPlayerHand(twoCards);
         let playerHandValue = handValuator(twoCards)
@@ -454,7 +454,7 @@ const GameContainer=() => {
         let newDealerHand=_dealerHand;
         console.log("Dealer hand..");
         console.log(_dealerHand);
-        if (dealerHandValue == 21){
+        if (dealerHandValue == 21 && _dealerHand.length==2){
             dealerHandValue="BlackJack"
         }else{
             while (dealerHandValue < 17 )
