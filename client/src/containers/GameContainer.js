@@ -183,6 +183,9 @@ const GameContainer=() => {
         setSplitHand([]);
         setPlayerHand([]);
         setDealerHand([]);
+        setCanSplit(false)
+        setHasSplit(false)
+        setSplitDoubleDown(false)
     }
 
     const onDoubleDown = () => {
@@ -413,6 +416,8 @@ const GameContainer=() => {
         }
         const firsCard=handValuator([twoCards[0]])
         const secondCard=handValuator([twoCards[1]])
+        console.log(firsCard)
+        console.log(secondCard)
         if(firsCard==secondCard){
             setCanSplit(true)
         }
