@@ -701,8 +701,9 @@ const GameContainer=() => {
                     <PlayerActions onHitMe={onHitMe} onStand={onStand}/> : null
             }
             {turnStage == 2 ?
-                players.at(-1).currentMoney > players.at(-1).stake?
-                    <DoubleDown onDoubleDown={onDoubleDown}/> : null :null
+                playerHand.length==2?
+                    players.at(-1).currentMoney > players.at(-1).stake?
+                        <DoubleDown onDoubleDown={onDoubleDown}/> : null :null :null
             }
             {turnStage == 2 ?
                 canSplit == true ?
