@@ -181,6 +181,7 @@ const GameContainer=() => {
             setSplitDoubleDown(true)
             let newPlayerHand = [...playerHand, deck.shift()];
             setPlayerHand(newPlayerHand);
+            console.log(newPlayerHand)
             const handHolder=newPlayerHand
             setPlayerHand(splitHand)
             setSplitHand(handHolder)
@@ -478,6 +479,7 @@ const GameContainer=() => {
         if (splitHand !== []){
             splitHandValue=handValuator(splitHand)
             isSplit.push(splitHandValue)
+            setSplitHand([])
         }
         for(let i = 0; i < isSplit.length; i++)
         {
