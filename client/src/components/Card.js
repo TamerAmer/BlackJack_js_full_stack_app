@@ -1,8 +1,8 @@
-const Card = ({card}) => {
+const Card = ({card, className}) => {
 
     return (
         <>
-            <img className="card" src={require ("../images/cards/" + card + ".png")}/>
+            <img className={className} src={require ("../images/cards/" + card + ".png")}/>
         </>
     )
 }
