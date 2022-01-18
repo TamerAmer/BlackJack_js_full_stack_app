@@ -114,7 +114,16 @@ span{
 
   .card{
     box-shadow: rgb(49, 203, 255, 0.4) -5px 5px, rgb(49, 203, 255, 0.3) -10px 10px, rgb(49, 203, 255, 0.2) -15px 15px, rgb(49, 203, 255, 0.1) -20px 20px, rgb(49, 203, 255, 0.0) -25px 25px;
-    max-width: 13%;
+    max-width: 8%;
+    height: auto;
+    margin-right: 55px;
+    margin-bottom: 25px;
+    /* padding: px; */
+  }
+
+  .cardSmall{
+    box-shadow: rgb(49, 203, 255, 0.4) -5px 5px, rgb(49, 203, 255, 0.3) -10px 10px, rgb(49, 203, 255, 0.2) -15px 15px, rgb(49, 203, 255, 0.1) -20px 20px, rgb(49, 203, 255, 0.0) -25px 25px;
+    max-width: 4%;
     height: auto;
     margin-right: 55px;
     margin-bottom: 25px;

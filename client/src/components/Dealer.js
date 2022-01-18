@@ -5,12 +5,12 @@ import CardFaceDown from "./CardFaceDown";
 const Dealer = ({dealerHand, turnStage}) => {
     
     const showHand = dealerHand.map((card, index) => {
-        return <Card card={card} key={index} />
+        return <Card card={card} className={"card"}  key={index} />
     });
 
     //do this on a copy, don't change original array
     const showOne = [...dealerHand].splice(0,1).map((card, index) => {
-        return <Card card={card} key={index} />
+        return <Card card={card} className={"card"}  key={index} />
     });
 
     return(

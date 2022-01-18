@@ -175,6 +175,11 @@ const GameContainer=() => {
     const onPlayAgain = () => {
         //got to betting phase
         setTurnStage(1);
+
+        //reset hands
+        setSplitHand([]);
+        setPlayerHand([]);
+        setDealerHand([]);
     }
 
     const onDoubleDown = () => {
@@ -385,9 +390,9 @@ const GameContainer=() => {
 
         console.log(_deck);
 
-        let twoCards = [];             
-        twoCards.push( _deck.shift() );
-        twoCards.push( _deck.shift() );
+        let twoCards = ['7H','7D'];             
+        //twoCards.push( _deck.shift() );
+        //twoCards.push( _deck.shift() );
 
         setPlayerHand(twoCards);
         let playerHandValue = handValuator(twoCards)
@@ -486,7 +491,7 @@ const GameContainer=() => {
         if (splitHand !== []){
             splitHandValue=handValuator(splitHand)
             isSplit.push(splitHandValue)
-            setSplitHand([])
+//            setSplitHand([]) --//DEL TOOK OUT and moved to play again
         }
         for(let i = 0; i < isSplit.length; i++)
         {
@@ -595,9 +600,9 @@ const GameContainer=() => {
         //set turn stage so we can keep track of what to render
         //check if player is still alive
         //increase min bet
-        setMinBet(minBet + 5);
-        
-        if(players.at(-1).currentMoney >= minBet) 
+        const _minBet = minBet + 5;
+        setMinBet(_minBet);        
+        if(players.at(-1).currentMoney >= _minBet) 
         {
             //save to db
             const updatedPlayer = {                 
@@ -690,8 +695,8 @@ const GameContainer=() => {
                 <Dealer dealerHand={dealerHand} turnStage={turnStage}/> : null
             }
             {turnStage > 1 ?
-                <Player player={players.at(-1)} playerHand={playerHand}/> : null
-            }           
+                <Player playerHand={playerHand} splitHand={splitHand}/> : null
+            }     
             {turnStage == 2 ?
                 <PlayerActions onHitMe={onHitMe} onStand={onStand} onDoubleDown={onDoubleDown}/> : null
             }
