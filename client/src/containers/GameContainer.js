@@ -140,7 +140,10 @@ const GameContainer=() => {
     }
 
     const onSplitStand= () => {
-        
+        setHasSplit(false)
+        const handHolder=playerHand
+        setPlayerHand(splitHand)
+        setSplitHand(handHolder)
     }
     //I think a change is needed to stop state change delays from causing miss fire bugs
     //If we instead pass a parameter in onStand() that takes in the playerHand and potentially the handValue we eliminate the need for state changes that can potentially mess up the program
@@ -148,21 +151,22 @@ const GameContainer=() => {
         if(hasSplit=true){
             setHasSplit(false)
             onSplitStand()
+        }else{
+
+            //this function is called if player presses Stand button
+            //we don't update the cards
+            //just call dealer turn
+
+            console.log("onStand- from button press")       
+
+            //dealer turn.. we can use state, this wasn't autofired
+            const dealerHandValue = dealerTurn(dealerHand);
+
+            // resolution - we can use what's stored in state, 
+            //there were no changes lately (player just pressed stand)
+            const playerHandValue = handValuator(playerHand);
+            turnResolution(playerHandValue, dealerHandValue);
         }
-
-        //this function is called if player presses Stand button
-        //we don't update the cards
-        //just call dealer turn
-
-        console.log("onStand- from button press")       
-
-         //dealer turn.. we can use state, this wasn't autofired
-         const dealerHandValue = dealerTurn(dealerHand);
-
-         // resolution - we can use what's stored in state, 
-         //there were no changes lately (player just pressed stand)
-         const playerHandValue = handValuator(playerHand);
-         turnResolution(playerHandValue, dealerHandValue);
     }
 
     const onPlayAgain = () => {
@@ -441,7 +445,10 @@ const GameContainer=() => {
 
     const turnResolution = (playerHandValue, dealerHandValue) => {
 
-         
+         //ADD SPLIT HAND RESOLUTION CODE HERE
+         if (splitHand !== []){
+             
+         }
 
         console.log("on turn resolution")
         //set to -2 so player always loses against dealer
