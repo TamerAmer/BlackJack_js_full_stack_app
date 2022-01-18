@@ -15,10 +15,12 @@ const Dealer = ({dealerHand, turnStage}) => {
     return(
         <>
             <h2>Dealer Hand</h2>
-            {/* {turnStage == 2? <Card card = {dealerHand[0]} />: null} */}
-            {turnStage == 2? showOne: null}
+            
+            {/* {turnStage == 2? showOne: null}
             {turnStage == 2? <CardFaceDown/>: null}
-            {turnStage == 3? showHand: null}
+            {turnStage == 3? showHand: null} */}
+
+            {showHand}
             
         </>
     )

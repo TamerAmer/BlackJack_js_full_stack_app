@@ -217,7 +217,7 @@ const GameContainer=() => {
 
         console.log(_deck);
 
-        let twoCards = [];             
+        let twoCards = ['AH','KH'];             
         twoCards.push( _deck.shift() );
         twoCards.push( _deck.shift() );
         setPlayerHand(twoCards);
@@ -233,7 +233,7 @@ const GameContainer=() => {
         console.log(_deck);
 
         //Dealer
-        let _dealerHand = ['AH','2H'];        
+        let _dealerHand = [];        
         _dealerHand.push( _deck.shift() );
         _dealerHand.push( _deck.shift() );
         setDealerHand(_dealerHand);
