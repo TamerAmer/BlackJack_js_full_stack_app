@@ -385,9 +385,9 @@ const GameContainer=() => {
 
         console.log(_deck);
 
-        let twoCards = ["9S","9H"];             
-        // twoCards.push( _deck.shift() );
-        // twoCards.push( _deck.shift() );
+        let twoCards = [];             
+        twoCards.push( _deck.shift() );
+        twoCards.push( _deck.shift() );
         setPlayerHand(twoCards);
         let playerHandValue = handValuator(twoCards)
 
