@@ -10,13 +10,13 @@ const Player = ({player, playerHand}) => {
     });
 
     return(
-        <>
-            <h2>Player Hand</h2>
+        <div className="player">
+            <h2 className="hand-text">Player Hand</h2>
             {showHand}            
             <br/>
 
 
-        </>
+        </div>
     )
 }
 
