@@ -1,8 +1,8 @@
 const PlayerMoney = ({player}) => {
     return(
-        <>
-            <h3>Player Mon£y = {player.currentMoney}</h3>
-        </>
+        <div className="money-wrapper">
+            <h3 className="player-money">Player Mon<span>£</span>y = {player.currentMoney}</h3>
+        </div>
     )
 }
 
