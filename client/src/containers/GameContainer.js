@@ -220,7 +220,7 @@ const GameContainer=() => {
 
         console.log(_deck);
 
-        let twoCards = ['AH','AH'];             
+        let twoCards = ['AC','AS'];             
         //twoCards.push( _deck.shift() );
         //twoCards.push( _deck.shift() );
         setPlayerHand(twoCards);
@@ -233,9 +233,9 @@ const GameContainer=() => {
         }
 
         //Dealer
-        let _dealerHand = [];        
-        _dealerHand.push( _deck.shift() );
-        _dealerHand.push( _deck.shift() );
+        let _dealerHand = ['AH', 'AD'];        
+        //_dealerHand.push( _deck.shift() );
+        //_dealerHand.push( _deck.shift() );
         setDealerHand(_dealerHand);
         
         console.log("Dealer's first is " + _dealerHand[0]);

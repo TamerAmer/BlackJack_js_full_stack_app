@@ -14,7 +14,7 @@ const Card = ({ card }) => {
     useEffect(() => {
         const timeout = setTimeout(() => {
         toggle();
-        }, randomIntFromInterval(500,1500) );
+        }, randomIntFromInterval(200,500) );
     
         return () => {
           clearTimeout(timeout);
@@ -26,7 +26,7 @@ const Card = ({ card }) => {
     {
         //use timer to advance counter and ever 4th "frame", set image location alternate card image
        // console.log("counter = " + counter);
-        if(counter < 4)  
+        if(counter < 10)  
         {                  
             setCounter(counter+1);
             //need seperate flags because location after setting is different from varialbe declared
