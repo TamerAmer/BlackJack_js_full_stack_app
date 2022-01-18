@@ -697,11 +697,16 @@ const GameContainer=() => {
                 <Player player={players.at(-1)} playerHand={playerHand}/> : null
             }           
             {turnStage == 2 ?
-                <PlayerActions onHitMe={onHitMe} onStand={onStand} onDoubleDown={onDoubleDown}/> : null
+                    <PlayerActions onHitMe={onHitMe} onStand={onStand} onDoubleDown={onDoubleDown}/> : null
             }
+            {/* {turnStage == 2 ?
+                players.at(-1).currentMoney > players.at(-1).stake?
+                    <PlayerActions onHitMe={onHitMe} onStand={onStand} onDoubleDown={onDoubleDown}/> : null :null
+            } */}
             {turnStage == 2 ?
                 canSplit == true ?
-                    <Split onSplit={onSplit}/> : null :null
+                    players.at(-1).currentMoney > players.at(-1).stake?
+                        <Split onSplit={onSplit}/> : null :null :null
             }
             {turnStage == 3 ?
                 <PlayAgain turnEndMessage={turnEndMessage} onPlayAgain={onPlayAgain}/> : null
