@@ -1,13 +1,15 @@
 .counter-container{
-    position: absolute;
-    bottom:0;
-    right:0;
-    background-color: #f53eaa;
-    max-width:fit-content;
+    /* background-color: #f53eaa; */
+    font-family: Junkyard;
+    color:rgb(88, 175, 140);
+    text-shadow: 2px 2px #296dec;
+    text-decoration: underline;
 }
 
 #button{
     background-color: rgb(88, 175, 140);
     padding: 20px;
     border-radius: 50%;
+    font-family: Junkyard;
 }
+

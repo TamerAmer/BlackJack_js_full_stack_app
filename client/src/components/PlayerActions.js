@@ -1,6 +1,6 @@
 import React from "react";
 
-const PlayerActions = ({onHitMe, onStand, onDoubleDown}) => {
+const PlayerActions = ({onHitMe, onStand}) => {
 
     const handleHitMe = () => {
         console.log("handle hit me")
@@ -12,16 +12,11 @@ const PlayerActions = ({onHitMe, onStand, onDoubleDown}) => {
         console.log("handle stand")
         onStand();
     }
-    const handleDoubleDown=() => {
-        console.log("handle double down")
-        onDoubleDown();
-    }
     
     return(
         <>
-            <button onClick={handleHitMe}>Hit Me</button>
-            <button onClick={handleDoubleDown}>Double Down</button>
-            <button onClick={handleStand}>Stand</button>
+            <button className="player-action-button" id="button" onClick={handleHitMe}>Hit Me</button>
+            <button className="player-action-button" id="button" onClick={handleStand}>Stand</button>
         </>
     )
 }

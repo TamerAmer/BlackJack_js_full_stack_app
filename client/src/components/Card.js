@@ -6,6 +6,7 @@ const Card = ({ card }) => {
     const [imageLocation, setImageLocation] = useState(locationA)
     const [counter, setCounter] = useState(0);
 
+
     //https://stackoverflow.com/questions/4959975/generate-random-number-between-two-numbers-in-javascript  
     function randomIntFromInterval(min, max) { // min and max included 
         return Math.floor(Math.random() * (max - min + 1) + min)
@@ -41,7 +42,7 @@ const Card = ({ card }) => {
     }
     return (
         <>
-            <img className="card" src={imageLocation}/>           
+            <img className="card" src={imageLocation}/>  
         </>
     )
 }
