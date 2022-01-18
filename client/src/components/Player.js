@@ -3,7 +3,7 @@ import PlayerActions from "./PlayerActions";
 import BetCounter from "./BetCounter";
 import Card from "./Card";
 
-const Player = ({playerHand, splitHand}) => {
+const Player = ({handValuator, playerHand, splitHand}) => {
    
     const showHand = playerHand.map((card, index) => {
 
@@ -17,7 +17,7 @@ const Player = ({playerHand, splitHand}) => {
 
     return(
         <div className="player">
-            <h2 className="hand-text">Player Hand</h2>
+            <h2 className="hand-text">Player Hand: {handValuator(playerHand)}</h2>
             {showHand}             
 
             {splitHand.length > 0 ?  <h3 className="hand-text">Split Hand</h3> : null}

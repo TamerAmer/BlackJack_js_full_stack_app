@@ -183,9 +183,6 @@ const GameContainer=() => {
         setSplitHand([]);
         setPlayerHand([]);
         setDealerHand([]);
-        setCanSplit(false)
-        setHasSplit(false)
-        setSplitDoubleDown(false)
     }
 
     const onDoubleDown = () => {
@@ -416,8 +413,6 @@ const GameContainer=() => {
         }
         const firsCard=handValuator([twoCards[0]])
         const secondCard=handValuator([twoCards[1]])
-        console.log(firsCard)
-        console.log(secondCard)
         if(firsCard==secondCard){
             setCanSplit(true)
         }
@@ -674,7 +669,7 @@ const GameContainer=() => {
                     aces.push(card);
                     return(11)
                 }
-               else{
+            else{
                     return(10)
                 }
             }
@@ -720,7 +715,7 @@ const GameContainer=() => {
                 <Dealer dealerHand={dealerHand} turnStage={turnStage}/> : null
             }
             {turnStage > 1 ?
-                <Player playerHand={playerHand} splitHand={splitHand}/> : null
+                <Player handValuator={handValuator} playerHand={playerHand} splitHand={splitHand}/> : null
             }     
             {turnStage == 2 ?
                     <PlayerActions onHitMe={onHitMe} onStand={onStand}/> : null
