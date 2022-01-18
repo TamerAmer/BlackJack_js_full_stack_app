@@ -5,11 +5,7 @@
   background-color: rgb(35, 31, 32);
 }
 
-.card{
-  max-width: 13%;
-  height: auto;
-  padding: 10px;
-}
+
 
 .title{
   text-decoration: underline;
@@ -105,4 +101,13 @@ span{
   position:relative;
   width: 300px;
   height: 150px;
+  }
+
+  .card{
+    box-shadow: rgba(240, 46, 170, 0.4) -5px 5px, rgba(240, 46, 170, 0.3) -10px 10px, rgba(240, 46, 170, 0.2) -15px 15px, rgba(240, 46, 170, 0.1) -20px 20px, rgba(240, 46, 170, 0.05) -25px 25px;
+    max-width: 13%;
+    height: auto;
+    margin-right: 55px;
+    margin-bottom: 25px;
+    /* padding: px; */
   }
