@@ -8,10 +8,12 @@ const Dealer = ({dealerHand}) => {
     });
 
     return(
-        <>
-            <h2>Dealer Hand</h2>
-            {showHand}            
-        </>
+        <div className="dealer">
+            <h2 className="hand-text">Dealer Hand</h2>
+            <div className="dealer-cards">
+            {showHand}   
+            </div>         
+        </div>
     )
 }
 

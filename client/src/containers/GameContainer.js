@@ -41,6 +41,9 @@ const GameContainer=() => {
         //remember this player has active/current player
         //setCurrentPlayer(player);
 
+        //set turn stage so we can keep track of what to render
+        setTurnStage(1);
+
         initialiseDeck()
     }
 
@@ -107,12 +110,12 @@ const GameContainer=() => {
         console.log("onStand- from button press")       
 
          //dealer turn.. we can use state, this wasn't autofired
-         const dealerHandValue = dealerTurn(dealerHand);
+        const dealerHandValue = dealerTurn(dealerHand);
 
          // resolution - we can use what's stored in state, 
          //there were no changes lately (player just pressed stand)
-         const playerHandValue = handValuator(playerHand);
-         turnResolution(playerHandValue, dealerHandValue);
+        const playerHandValue = handValuator(playerHand);
+        turnResolution(playerHandValue, dealerHandValue);
     }
 
     const onPlayAgain = () => {
@@ -166,8 +169,6 @@ const GameContainer=() => {
 
     function initialiseDeck()
     {
-         //set turn stage so we can keep track of what to render
-         setTurnStage(1);
 
         let deck=["AH","2H","3H","4H","5H","6H","7H","8H","9H","10H","JH","QH","KH",
         "AC","2C","3C","4C","5C","6C","7C","8C","9C","10C","JC","QC","KC",
@@ -210,9 +211,12 @@ const GameContainer=() => {
             console.log("attempting to reset");
             //set a new deck to state
             _deck = initialiseDeck();
-            console.log(_deck);
+            
             
         }
+
+        console.log(_deck);
+
         let twoCards = [];             
         twoCards.push( _deck.shift() );
         twoCards.push( _deck.shift() );
