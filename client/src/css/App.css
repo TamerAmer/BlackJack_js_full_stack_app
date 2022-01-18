@@ -1,8 +1,14 @@
+@font-face {
+  font-family: 'Junkyard';
+  src: local('Junkyard'), url(../fonts/junkyard.regular.ttf) format('truetype');
+}
+
 .app-container{
   height: 1000px;
   text-align: center;
   padding-bottom: 30px;
-  background-color: rgb(35, 31, 32);
+  /* background-color: rgb(158, 199, 245); */
+  background-color: #ffe892
 }
 
 
@@ -22,9 +28,10 @@
 }
 
 .player-money{
+  -webkit-text-stroke: 0.01px black;
   font-family: Junkyard;
-  font-size: 30px;
-  color: #fff;
+  font-size: 40px;
+  color: #0fa;
   text-shadow:
     0 0 7px #fff,
     0 0 10px #fff,
@@ -54,6 +61,7 @@
       0 0 90px #0fa,
       0 0 100px #0fa,
       0 0 150px #0fa;
+      
   }
   20%, 24%, 55% {       
     text-shadow: none;
@@ -61,6 +69,7 @@
 }
 
 span{
+  -webkit-text-stroke: 1.2px black;
   animation: flicker 1.5s infinite alternate;  
 }
 
@@ -104,10 +113,11 @@ span{
   }
 
   .card{
-    box-shadow: rgba(240, 46, 170, 0.4) -5px 5px, rgba(240, 46, 170, 0.3) -10px 10px, rgba(240, 46, 170, 0.2) -15px 15px, rgba(240, 46, 170, 0.1) -20px 20px, rgba(240, 46, 170, 0.05) -25px 25px;
+    box-shadow: rgb(49, 203, 255, 0.4) -5px 5px, rgb(49, 203, 255, 0.3) -10px 10px, rgb(49, 203, 255, 0.2) -15px 15px, rgb(49, 203, 255, 0.1) -20px 20px, rgb(49, 203, 255, 0.0) -25px 25px;
     max-width: 13%;
     height: auto;
     margin-right: 55px;
     margin-bottom: 25px;
     /* padding: px; */
   }
+  
