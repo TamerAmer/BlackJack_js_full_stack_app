@@ -184,6 +184,21 @@ const GameContainer=() => {
             const handHolder=newPlayerHand
             setPlayerHand(splitHand)
             setSplitHand(handHolder)
+            const currentStake = players.at(-1).stake;
+            const updatedPlayer = {
+                'currentMoney': players.at(-1).currentMoney - currentStake,
+            }
+            //update player updates db, then() updates front end
+            updatePlayer(updatedPlayer, players.at(-1)._id)
+            .then((data) =>
+            {
+                updatedPlayer._id = players.at(-1)._id;
+                
+            });
+
+            //update front end
+            players.at(-1).currentMoney = players.at(-1).currentMoney - currentStake;
+
         }else{
             console.log("On Double down (Game container)");
 
@@ -458,9 +473,10 @@ const GameContainer=() => {
 
     const turnResolution = (playerHandValue, dealerHandValue) => {
         let isSplit=[playerHandValue]
+        let splitHandValue
         //ADD SPLIT HAND RESOLUTION CODE HERE
         if (splitHand !== []){
-            const splitHandValue=handValuator(splitHand)
+            splitHandValue=handValuator(splitHand)
             isSplit.push(splitHandValue)
         }
         for(let i = 0; i < isSplit.length; i++)
@@ -498,6 +514,9 @@ const GameContainer=() => {
                 //////
                 //update db
                 let moneyToAdd = players.at(-1).stake * 2
+                if(isSplit[i]==splitHandValue && splitDoubleDown==true){
+                    moneyToAdd = players.at(-1).stake * 4
+                }
                 
                 if (playerHandValue == 22){
                     moneyToAdd = players.at(-1).stake * 2.5
