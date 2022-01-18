@@ -388,6 +388,7 @@ const GameContainer=() => {
         let twoCards = [];             
         twoCards.push( _deck.shift() );
         twoCards.push( _deck.shift() );
+
         setPlayerHand(twoCards);
         let playerHandValue = handValuator(twoCards)
 
@@ -402,12 +403,17 @@ const GameContainer=() => {
             setCanSplit(true)
         }
 
+
+        console.log(_deck);
+
         //Dealer
         let _dealerHand = [];        
         _dealerHand.push( _deck.shift() );
         _dealerHand.push( _deck.shift() );
         setDealerHand(_dealerHand);
-        
+
+        console.log(_deck);
+        console.log(_dealerHand)
         console.log("Dealer's first is " + _dealerHand[0]);
         console.log("Dealer's second is " + _dealerHand[1]);
 
@@ -681,7 +687,7 @@ const GameContainer=() => {
                 <BetCounter addBet={addBet} player={players.at(-1)} minBet={minBet}/> : null            
             }           
             {turnStage > 1?
-                <Dealer dealerHand={dealerHand}/> : null
+                <Dealer dealerHand={dealerHand} turnStage={turnStage}/> : null
             }
             {turnStage > 1 ?
                 <Player player={players.at(-1)} playerHand={playerHand}/> : null
