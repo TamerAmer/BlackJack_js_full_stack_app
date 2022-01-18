@@ -8,7 +8,8 @@ const Dealer = ({dealerHand, turnStage}) => {
         return <Card card={card} key={index} />
     });
 
-    const showOne = dealerHand.splice(0,1).map((card, index) => {
+    //do this on a copy, don't change original array
+    const showOne = [...dealerHand].splice(0,1).map((card, index) => {
         return <Card card={card} key={index} />
     });
 
@@ -16,11 +17,10 @@ const Dealer = ({dealerHand, turnStage}) => {
         <>
             <h2>Dealer Hand</h2>
             
-            {/* {turnStage == 2? showOne: null}
+            {turnStage == 2? showOne: null}
             {turnStage == 2? <CardFaceDown/>: null}
-            {turnStage == 3? showHand: null} */}
+            {turnStage == 3? showHand: null}
 
-            {showHand}
             
         </>
     )
