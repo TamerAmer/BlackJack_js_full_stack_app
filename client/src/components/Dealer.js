@@ -14,15 +14,14 @@ const Dealer = ({dealerHand, turnStage}) => {
     });
 
     return(
-        <>
-            <h2>Dealer Hand</h2>
-            
-            {turnStage == 2? showOne: null}
-            {turnStage == 2? <CardFaceDown/>: null}
-            {turnStage == 3? showHand: null}
-
-            
-        </>
+        <div className="dealer">
+            <h2 className="hand-text">Dealer Hand</h2>
+            <div className="dealer-cards">
+              {turnStage == 2? showOne: null}
+              {turnStage == 2? <CardFaceDown/>: null}
+              {turnStage == 3? showHand: null}  
+            </div>         
+        </div>
     )
 }
 

@@ -2,16 +2,15 @@
   height: 1000px;
   text-align: center;
   padding-bottom: 30px;
-  background-color: rgb(35, 31, 32)
+  background-color: rgb(35, 31, 32);
 }
 
-.card{
-  max-width: 13%;
-  height: auto;
-  padding: 10px;
-}
+
 
 .title{
+  text-decoration: underline;
+  text-underline-offset: 5px;
+  text-decoration-color: rgb(103, 228, 166);
   color: rgb(237, 75, 186);
   text-shadow: 2px 2px #296dec;
   padding-top: 20px;
@@ -38,6 +37,12 @@
 
 }
 
+.money-wrapper{
+  border-color: cyan;
+  border-radius: 50%;
+  border-width: 3px;
+}
+
 @keyframes flicker {
   0%, 18%, 22%, 25%, 53%, 57%, 100% {
     text-shadow:
@@ -58,3 +63,51 @@
 span{
   animation: flicker 1.5s infinite alternate;  
 }
+
+.hand-text{
+  font-family: Junkyard;
+  color: rgb(103, 228, 166);
+  text-shadow: 2px 2px #296dec;
+  
+}
+
+/* .dealer{
+  position:absolute;
+  right: 800px;
+  bottom: 250px;
+
+}
+
+.player{
+  position: absolute;
+  left: 300px
+} */
+
+.play-again{
+  display:inline-block;
+  padding:0.7em 1.4em;
+  margin:0 0.3em 0.3em 0;
+  border-radius:0.15em;
+  box-sizing:border-box;
+  text-decoration:none;
+  font-family:Junkyard;
+  text-transform:uppercase;
+  font-weight:900;
+  font-size: 30px;
+  color:#FFFFFF;
+  background-color: rgb(103, 228, 166);
+  box-shadow:inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.17);
+  text-align:center;
+  position:relative;
+  width: 300px;
+  height: 150px;
+  }
+
+  .card{
+    box-shadow: rgba(240, 46, 170, 0.4) -5px 5px, rgba(240, 46, 170, 0.3) -10px 10px, rgba(240, 46, 170, 0.2) -15px 15px, rgba(240, 46, 170, 0.1) -20px 20px, rgba(240, 46, 170, 0.05) -25px 25px;
+    max-width: 13%;
+    height: auto;
+    margin-right: 55px;
+    margin-bottom: 25px;
+    /* padding: px; */
+  }
