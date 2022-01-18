@@ -85,26 +85,16 @@ const GameContainer=() => {
         console.log("player hand value = " + playerHandValue)
 
         //check for bust
-        if(playerHandValue > 21)
+        if(playerHandValue >= 21)
         {
             //Check for player money.. if 0 then setCurrentPlayer to null
-            console.log("Player is bust!");
+            // console.log("Player is bust!");
             setHasSplit(false)
             const handHolder=newPlayerHand
             setPlayerHand(splitHand)
             setSplitHand(handHolder)
-        }else{
-            console.log("Player now has " + playerHandValue );
         }
 
-        if(playerHandValue == 21)
-        {
-            //we can use state, this wasn't auto fired
-            const handHolder=playerHand
-            setPlayerHand(splitHand)
-            setSplitHand(handHolder)
-            //ADD BLACKJACK MIMIC CODE HERE
-        }
         //separate the if statements to fix the blackjack bug
         //blackjack only occurs if this autoStand will trigger, use this
 
@@ -148,9 +138,17 @@ const GameContainer=() => {
         }
 
     }
+
+    const onSplitStand= () => {
+        
+    }
     //I think a change is needed to stop state change delays from causing miss fire bugs
     //If we instead pass a parameter in onStand() that takes in the playerHand and potentially the handValue we eliminate the need for state changes that can potentially mess up the program
     const onStand = () => {
+        if(hasSplit=true){
+            setHasSplit(false)
+            onSplitStand()
+        }
 
         //this function is called if player presses Stand button
         //we don't update the cards
