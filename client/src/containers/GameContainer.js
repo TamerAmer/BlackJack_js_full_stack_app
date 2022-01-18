@@ -26,6 +26,7 @@ const GameContainer=() => {
     const [canSplit, setCanSplit]=useState(false)
     const [hasSplit, setHasSplit]=useState(false)
     const [splitHand, setSplitHand]=useState([])
+    const [splitDoubleDown, setSplitDoubleDown]=useState(false)
 
     useEffect( () => {    
         console.log("use effect GameContainer");
@@ -175,43 +176,53 @@ const GameContainer=() => {
     }
 
     const onDoubleDown = () => {
-        console.log("On Double down (Game container)");
+        if(hasSplit==true){
+            setHasSplit(false)
+            setSplitDoubleDown(true)
+            let newPlayerHand = [...playerHand, deck.shift()];
+            setPlayerHand(newPlayerHand);
+            const handHolder=newPlayerHand
+            setPlayerHand(splitHand)
+            setSplitHand(handHolder)
+        }else{
+            console.log("On Double down (Game container)");
 
-        //double player stake
-        //////
-        //update db
-        const currentStake = players.at(-1).stake;
-        const updatedPlayer = {
-            'currentMoney': players.at(-1).currentMoney - currentStake,
-            'stake': (currentStake * 2)            
+            //double player stake
+            //////
+            //update db
+            const currentStake = players.at(-1).stake;
+            const updatedPlayer = {
+                'currentMoney': players.at(-1).currentMoney - currentStake,
+                'stake': (currentStake * 2)            
+            }
+            //update player updates db, then() updates front end
+            updatePlayer(updatedPlayer, players.at(-1)._id)
+            .then((data) =>
+            {
+                updatedPlayer._id = players.at(-1)._id;
+                
+            });
+
+            //update front end
+            players.at(-1).stake = players.at(-1).stake * 2;
+            players.at(-1).currentMoney = players.at(-1).currentMoney - currentStake;
+
+            //pass player card
+            console.log("On hit me GameContainer")
+            //create copy of hand and take from the deck
+            let newPlayerHand = [...playerHand, deck.shift()];
+            //if(newPlayerHand )
+            //set
+            setPlayerHand(newPlayerHand);
+
+            //dear turn 
+            dealerTurn(dealerHand);
+
+            let playerHandValue = handValuator(newPlayerHand);  
+            console.log("player hand value = " + playerHandValue)
+
+            autoStand(playerHandValue,dealerHand);
         }
-        //update player updates db, then() updates front end
-        updatePlayer(updatedPlayer, players.at(-1)._id)
-        .then((data) =>
-        {
-            updatedPlayer._id = players.at(-1)._id;
-            
-        });
-
-        //update front end
-        players.at(-1).stake = players.at(-1).stake * 2;
-        players.at(-1).currentMoney = players.at(-1).currentMoney - currentStake;
-
-        //pass player card
-        console.log("On hit me GameContainer")
-        //create copy of hand and take from the deck
-        let newPlayerHand = [...playerHand, deck.shift()];
-        //if(newPlayerHand )
-        //set
-        setPlayerHand(newPlayerHand);
-
-        //dear turn 
-        dealerTurn(dealerHand);
-
-        let playerHandValue = handValuator(newPlayerHand);  
-        console.log("player hand value = " + playerHandValue)
-
-        autoStand(playerHandValue,dealerHand);
 
     }
 
@@ -276,6 +287,7 @@ const GameContainer=() => {
                 secondHandValue="BlackJack"
                 autoStand(secondHandValue,dealerHand)
             }
+            setSplitHand([])
             
         }
         if (secondHandValue==21){
@@ -296,6 +308,7 @@ const GameContainer=() => {
             });
             //update front end
             players.at(-1).currentMoney = players.at(-1).currentMoney + moneyToAdd;
+            setSplitHand([])
         }
 
     })
