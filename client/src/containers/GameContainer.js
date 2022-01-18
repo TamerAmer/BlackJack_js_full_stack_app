@@ -421,9 +421,9 @@ const GameContainer=() => {
         console.log(_deck);
 
         //Dealer
-        let _dealerHand = ['AH', 'AD'];        
-        //_dealerHand.push( _deck.shift() );
-        //_dealerHand.push( _deck.shift() );
+        let _dealerHand = [];        
+        _dealerHand.push( _deck.shift() );
+        _dealerHand.push( _deck.shift() );
         setDealerHand(_dealerHand);
 
         console.log(_deck);
