@@ -174,6 +174,8 @@ const GameContainer=() => {
     }
 
     const onPlayAgain = () => {
+        setPlayerHand([])
+        setDealerHand([])
         //got to betting phase
         setTurnStage(1);
 
@@ -400,6 +402,7 @@ const GameContainer=() => {
         twoCards.push( _deck.shift() );
         twoCards.push( _deck.shift() );
 
+
         setPlayerHand(twoCards);
         let playerHandValue = handValuator(twoCards)
 
@@ -418,9 +421,9 @@ const GameContainer=() => {
         console.log(_deck);
 
         //Dealer
-        let _dealerHand = [];        
-        _dealerHand.push( _deck.shift() );
-        _dealerHand.push( _deck.shift() );
+        let _dealerHand = ['AH', 'AD'];        
+        //_dealerHand.push( _deck.shift() );
+        //_dealerHand.push( _deck.shift() );
         setDealerHand(_dealerHand);
 
         console.log(_deck);
@@ -640,6 +643,10 @@ const GameContainer=() => {
             console.log("Player dies")
             //player is dead
             setTurnStage(0);
+
+            setPlayerHand([])
+            setDealerHand([])
+            setMinBet(5);
 
         }
     }

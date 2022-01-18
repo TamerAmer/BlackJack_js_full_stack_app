@@ -11,6 +11,7 @@ const Dealer = ({dealerHand, turnStage}) => {
     //do this on a copy, don't change original array
     const showOne = [...dealerHand].splice(0,1).map((card, index) => {
         return <Card card={card} className={"card"}  key={index} />
+
     });
 
     return(

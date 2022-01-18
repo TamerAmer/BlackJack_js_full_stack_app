@@ -6,11 +6,13 @@ import Card from "./Card";
 const Player = ({playerHand, splitHand}) => {
    
     const showHand = playerHand.map((card, index) => {
+
         return <Card card={card} className={"card"} key={index} />
     });
 
     const showSplitHand = splitHand.map((card, index) => {
         return <Card card={card} className={"cardSmall"} key={index} />
+
     });
 
     return(
