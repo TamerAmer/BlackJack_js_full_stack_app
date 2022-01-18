@@ -12,6 +12,7 @@ import PlayAgain from "../components/PlayAgain"
 import PlayerMoney from "../components/PlayerMoney"
 import Stake from "../components/Stake"
 import Split from "../components/Split"
+import DoubleDown from "../components/DoubleDown"
 
 const GameContainer=() => {
     
@@ -697,15 +698,15 @@ const GameContainer=() => {
                 <Player player={players.at(-1)} playerHand={playerHand}/> : null
             }           
             {turnStage == 2 ?
-                    <PlayerActions onHitMe={onHitMe} onStand={onStand} onDoubleDown={onDoubleDown}/> : null
+                    <PlayerActions onHitMe={onHitMe} onStand={onStand}/> : null
             }
-            {/* {turnStage == 2 ?
+            {turnStage == 2 ?
                 players.at(-1).currentMoney > players.at(-1).stake?
-                    <PlayerActions onHitMe={onHitMe} onStand={onStand} onDoubleDown={onDoubleDown}/> : null :null
-            } */}
+                    <DoubleDown onDoubleDown={onDoubleDown}/> : null :null
+            }
             {turnStage == 2 ?
                 canSplit == true ?
-                    players.at(-1).currentMoney > players.at(-1).stake?
+                    players.at(-1).currentMoney >= players.at(-1).stake?
                         <Split onSplit={onSplit}/> : null :null :null
             }
             {turnStage == 3 ?
