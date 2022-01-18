@@ -12,6 +12,7 @@ import PlayAgain from "../components/PlayAgain"
 import PlayerMoney from "../components/PlayerMoney"
 import Stake from "../components/Stake"
 import Split from "../components/Split"
+import DoubleDown from "../components/DoubleDown"
 
 const GameContainer=() => {
     
@@ -183,7 +184,7 @@ const GameContainer=() => {
     }
 
     const onDoubleDown = () => {
-        if(hasSplit==true){
+        if(hasSplit===true){
             setHasSplit(false)
             setSplitDoubleDown(true)
             let newPlayerHand = [...playerHand, deck.shift()];
@@ -285,53 +286,58 @@ const GameContainer=() => {
         console.log(`Player has a ${firstHandValue} and a ${secondHandValue}`)
 
         if (firstHandValue==21){
+            firstHandValue="BlackJack"
             setHasSplit(false)
-            let moneyToAdd = players.at(-1).stake * 2.5
-                console.log('player wins with Blackjack!!!!, stake changed');
+            console.log(firstHandValue)
+            // let moneyToAdd = players.at(-1).stake * 2.5
+            //     console.log('player wins with Blackjack!!!!, stake changed');
 
-            const updatedPlayer = { 
-                'currentMoney': players.at(-1).currentMoney + moneyToAdd
-            }
+            // const updatedPlayer = { 
+            //     'currentMoney': players.at(-1).currentMoney + moneyToAdd
+            // }
             //update player updates db, then() updates front end
-            console.log(moneyToAdd);
-            updatePlayer(updatedPlayer, players.at(-1)._id)
-            .then((data) =>
-            {
-                updatedPlayer._id = players.at(-1)._id;
+            // console.log(moneyToAdd);
+            // updatePlayer(updatedPlayer, players.at(-1)._id)
+            // .then((data) =>
+            // {
+            //     updatedPlayer._id = players.at(-1)._id;
                 
-            });
+            // });
             //update front end
-            players.at(-1).currentMoney = players.at(-1).currentMoney + moneyToAdd;
+            // players.at(-1).currentMoney = players.at(-1).currentMoney + moneyToAdd;
 
-            const handHolder=playerHand
-            setPlayerHand(splitHand)
+            const handHolder=playerHand.map(c=>c)
+            setPlayerHand(secondPlayerHand)
             setSplitHand(handHolder)
             if(secondHandValue==21){
                 secondHandValue="BlackJack"
                 autoStand(secondHandValue,dealerHand)
             }
-            setSplitHand([])
             
         }
         if (secondHandValue==21){
+            // const handHolder=playerHand
+            // setPlayerHand(secondHandValue)
+            // setSplitHand(handHolder)
+            secondHandValue="BlackJack"
+            console.log(secondHandValue)
             setHasSplit(false)
-            let moneyToAdd = players.at(-1).stake * 2.5
-                console.log('player wins with Blackjack!!!!, stake changed');
+            // let moneyToAdd = players.at(-1).stake * 2.5
+            //     console.log('player wins with Blackjack!!!!, stake changed');
 
-            const updatedPlayer = { 
-                'currentMoney': players.at(-1).currentMoney + moneyToAdd
-            }
+            // const updatedPlayer = { 
+            //     'currentMoney': players.at(-1).currentMoney + moneyToAdd
+            // }
             //update player updates db, then() updates front end
-            console.log(moneyToAdd);
-            updatePlayer(updatedPlayer, players.at(-1)._id)
-            .then((data) =>
-            {
-                updatedPlayer._id = players.at(-1)._id;
+            // console.log(moneyToAdd);
+            // updatePlayer(updatedPlayer, players.at(-1)._id)
+            // .then((data) =>
+            // {
+            //     updatedPlayer._id = players.at(-1)._id;
                 
-            });
-            //update front end
-            players.at(-1).currentMoney = players.at(-1).currentMoney + moneyToAdd;
-            setSplitHand([])
+            // });
+            // //update front end
+            // players.at(-1).currentMoney = players.at(-1).currentMoney + moneyToAdd;
         }
 
     })
@@ -390,9 +396,10 @@ const GameContainer=() => {
 
         console.log(_deck);
 
-        let twoCards = ['7H','7D'];             
-        //twoCards.push( _deck.shift() );
-        //twoCards.push( _deck.shift() );
+        let twoCards = [];             
+        twoCards.push( _deck.shift() );
+        twoCards.push( _deck.shift() );
+
 
         setPlayerHand(twoCards);
         let playerHandValue = handValuator(twoCards)
@@ -488,10 +495,15 @@ const GameContainer=() => {
         let isSplit=[playerHandValue]
         let splitHandValue
         //ADD SPLIT HAND RESOLUTION CODE HERE
-        if (splitHand !== []){
+        if (splitHand.length >= 1){
+            console.log(splitHand)
+            console.log("in turn resolution splithand if statement")
             splitHandValue=handValuator(splitHand)
+            if (splitHandValue==21 && splitHand.length==2){
+                splitHandValue="BlackJack"
+            }
             isSplit.push(splitHandValue)
-//            setSplitHand([]) --//DEL TOOK OUT and moved to play again
+
         }
         for(let i = 0; i < isSplit.length; i++)
         {
@@ -499,7 +511,7 @@ const GameContainer=() => {
             console.log("on turn resolution")
             //set to -2 so player always loses against dealer
             //working this out again unless we want to save to state?
-        
+            
             if(playerHandValue > 21)
             {
                 playerHandValue = -2;
@@ -528,8 +540,10 @@ const GameContainer=() => {
                 //////
                 //update db
                 let moneyToAdd = players.at(-1).stake * 2
-                if(isSplit[i]==splitHandValue && splitDoubleDown==true){
+
+                if(isSplit[i]===splitHandValue && splitDoubleDown==true){
                     moneyToAdd = players.at(-1).stake * 4
+                    console.log("Quadrouple stake")
                 }
                 
                 if (playerHandValue == 22){
@@ -698,11 +712,17 @@ const GameContainer=() => {
                 <Player playerHand={playerHand} splitHand={splitHand}/> : null
             }     
             {turnStage == 2 ?
-                <PlayerActions onHitMe={onHitMe} onStand={onStand} onDoubleDown={onDoubleDown}/> : null
+                    <PlayerActions onHitMe={onHitMe} onStand={onStand}/> : null
+            }
+            {turnStage == 2 ?
+                playerHand.length==2?
+                    players.at(-1).currentMoney > players.at(-1).stake?
+                        <DoubleDown onDoubleDown={onDoubleDown}/> : null :null :null
             }
             {turnStage == 2 ?
                 canSplit == true ?
-                    <Split onSplit={onSplit}/> : null :null
+                    players.at(-1).currentMoney >= players.at(-1).stake?
+                        <Split onSplit={onSplit}/> : null :null :null
             }
             {turnStage == 3 ?
                 <PlayAgain turnEndMessage={turnEndMessage} onPlayAgain={onPlayAgain}/> : null
