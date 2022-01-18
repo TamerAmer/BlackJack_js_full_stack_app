@@ -1,8 +1,3 @@
-@font-face {
-  font-family: 'Junkyard';
-  src: local('Junkyard'), url(./fonts/junkyard.regular.ttf) format('truetype');
-}
-
 .app-container{
   height: 1000px;
   text-align: center;
