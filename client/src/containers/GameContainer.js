@@ -243,6 +243,59 @@ const GameContainer=() => {
         setPlayerHand(firstPlayerHand)
         setSplitHand(secondPlayerHand)
 
+        let firstHandValue=handValuator(firstPlayerHand)
+        let secondHandValue=handValuator(secondPlayerHand)
+
+        console.log(`Player has a ${firstHandValue} and a ${secondHandValue}`)
+
+        if (firstHandValue==21){
+            setHasSplit(false)
+            moneyToAdd = players.at(-1).stake * 2.5
+                console.log('player wins with Blackjack!!!!, stake changed');
+
+            const updatedPlayer = { 
+                'currentMoney': players.at(-1).currentMoney + moneyToAdd
+            }
+            //update player updates db, then() updates front end
+            console.log(moneyToAdd);
+            updatePlayer(updatedPlayer, players.at(-1)._id)
+            .then((data) =>
+            {
+                updatedPlayer._id = players.at(-1)._id;
+                
+            });
+            //update front end
+            players.at(-1).currentMoney = players.at(-1).currentMoney + moneyToAdd;
+
+            const handHolder=playerHand
+            setPlayerHand(splitHand)
+            setSplitHand(handHolder)
+            if(secondHandValue==21){
+                secondHandValue="BlackJack"
+                autoStand(secondHandValue,dealerHand)
+            }
+            
+        }
+        if (secondHandValue==21){
+            setHasSplit(false)
+            moneyToAdd = players.at(-1).stake * 2.5
+                console.log('player wins with Blackjack!!!!, stake changed');
+
+            const updatedPlayer = { 
+                'currentMoney': players.at(-1).currentMoney + moneyToAdd
+            }
+            //update player updates db, then() updates front end
+            console.log(moneyToAdd);
+            updatePlayer(updatedPlayer, players.at(-1)._id)
+            .then((data) =>
+            {
+                updatedPlayer._id = players.at(-1)._id;
+                
+            });
+            //update front end
+            players.at(-1).currentMoney = players.at(-1).currentMoney + moneyToAdd;
+        }
+
     })
 
     //////end of on button presses functions
