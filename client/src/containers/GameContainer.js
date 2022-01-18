@@ -444,107 +444,111 @@ const GameContainer=() => {
     }
 
     const turnResolution = (playerHandValue, dealerHandValue) => {
-
-         //ADD SPLIT HAND RESOLUTION CODE HERE
-         if (splitHand !== []){
-             
-         }
-
-        console.log("on turn resolution")
-        //set to -2 so player always loses against dealer
-        //working this out again unless we want to save to state?
-       
-        if(playerHandValue > 21)
+        let isSplit=[playerHandValue]
+        //ADD SPLIT HAND RESOLUTION CODE HERE
+        if (splitHand !== []){
+            const splitHandValue=handValuator(splitHand)
+            isSplit.push(splitHandValue)
+        }
+        for(let i = 0; i < isSplit.length; i++)
         {
-            playerHandValue = -2;
-        }
-        if (playerHandValue=="BlackJack"){
-            playerHandValue=22
-        }
+            playerHandValue=isSplit[i]
+            console.log("on turn resolution")
+            //set to -2 so player always loses against dealer
+            //working this out again unless we want to save to state?
         
-        if (dealerHandValue=="BlackJack"){
-            dealerHandValue=22
-            console.log("Dealer has BlackJack")
-        }
-        console.log("IF statement player hand value = " + playerHandValue);
-        console.log("IF statement dealer hand value = " + dealerHandValue);
-
-        //check for blackjack on either the player side or the dealer side
-        //if either have a blackjack set the handValue to 22
-        //if player wins with blackjack give player 2.5x bet amount        
-        if( playerHandValue > dealerHandValue)
-        {
-            //player wins
-            console.log("Player wins!");
-
-            setTurnEndMessage("Not bad - You won!");
-            
-            //////
-             //update db
-            let moneyToAdd = players.at(-1).stake * 2
-            
-            if (playerHandValue == 22){
-                moneyToAdd = players.at(-1).stake * 2.5
-                console.log('player wins with Blackjack!!!!, stake changed');
-            }
-
-            const updatedPlayer = { 
-                'currentMoney': players.at(-1).currentMoney + moneyToAdd
-            }
-            //update player updates db, then() updates front end
-            console.log(moneyToAdd);
-            updatePlayer(updatedPlayer, players.at(-1)._id)
-            .then((data) =>
+            if(playerHandValue > 21)
             {
-                updatedPlayer._id = players.at(-1)._id;
+                playerHandValue = -2;
+            }
+            if (playerHandValue=="BlackJack"){
+                playerHandValue=22
+            }
+            
+            if (dealerHandValue=="BlackJack"){
+                dealerHandValue=22
+                console.log("Dealer has BlackJack")
+            }
+            console.log("IF statement player hand value = " + playerHandValue);
+            console.log("IF statement dealer hand value = " + dealerHandValue);
+
+            //check for blackjack on either the player side or the dealer side
+            //if either have a blackjack set the handValue to 22
+            //if player wins with blackjack give player 2.5x bet amount        
+            if( playerHandValue > dealerHandValue)
+            {
+                //player wins
+                console.log("Player wins!");
+
+                setTurnEndMessage("Not bad - You won!");
                 
-            });
+                //////
+                //update db
+                let moneyToAdd = players.at(-1).stake * 2
+                
+                if (playerHandValue == 22){
+                    moneyToAdd = players.at(-1).stake * 2.5
+                    console.log('player wins with Blackjack!!!!, stake changed');
+                }
 
-            //update front end
-            players.at(-1).currentMoney = players.at(-1).currentMoney + moneyToAdd;
+                const updatedPlayer = { 
+                    'currentMoney': players.at(-1).currentMoney + moneyToAdd
+                }
+                //update player updates db, then() updates front end
+                console.log(moneyToAdd);
+                updatePlayer(updatedPlayer, players.at(-1)._id)
+                .then((data) =>
+                {
+                    updatedPlayer._id = players.at(-1)._id;
+                    
+                });
 
-            //and force a re-render
-            if (playerHandValue == 22){
-                setTurnEndMessage("Player Wins with Blackjack!")
+                //update front end
+                players.at(-1).currentMoney = players.at(-1).currentMoney + moneyToAdd;
+
+                //and force a re-render
+                if (playerHandValue == 22){
+                    setTurnEndMessage("Player Wins with Blackjack!")
+                }
+                else
+                    setTurnEndMessage("Player Wins!")
+        
+            }
+            else if (dealerHandValue > playerHandValue)
+            {
+                //dealer wins
+                console.log("Dealer wins!")
+            
+
+                setTurnEndMessage("Too bad - Dealer Wins!")
+                
             }
             else
-                setTurnEndMessage("Player Wins!")
-    
-        }
-        else if (dealerHandValue > playerHandValue)
-        {
-            //dealer wins
-            console.log("Dealer wins!")
-           
-
-            setTurnEndMessage("Too bad - Dealer Wins!")
-            
-        }
-        else
-        {
-            //a "push" happens, player gets money back
-            console.log("Push - Player gets money back")
-
-            let moneyToAdd = players.at(-1).stake
-
-            const updatedPlayer = { 
-                'currentMoney': players.at(-1).currentMoney + moneyToAdd                
-            }
-            //update player updates db, then() updates front end
-            console.log(moneyToAdd);
-            updatePlayer(updatedPlayer, players.at(-1)._id)
-            .then((data) =>
             {
-                updatedPlayer._id = players.at(-1)._id;
+                //a "push" happens, player gets money back
+                console.log("Push - Player gets money back")
+
+                let moneyToAdd = players.at(-1).stake
+
+                const updatedPlayer = { 
+                    'currentMoney': players.at(-1).currentMoney + moneyToAdd                
+                }
+                //update player updates db, then() updates front end
+                console.log(moneyToAdd);
+                updatePlayer(updatedPlayer, players.at(-1)._id)
+                .then((data) =>
+                {
+                    updatedPlayer._id = players.at(-1)._id;
+                    
+                })
+
+                //update front end
+                players.at(-1).currentMoney = players.at(-1).currentMoney + moneyToAdd
                 
-            })
 
-            //update front end
-            players.at(-1).currentMoney = players.at(-1).currentMoney + moneyToAdd
-            
-
-            setTurnEndMessage("Push! What the fuck happens!?")
-            //Give player 1x bet amount back in their money property
+                setTurnEndMessage("Push! What the fuck happens!?")
+                //Give player 1x bet amount back in their money property
+            }
         }
 
         //set turn stage so we can keep track of what to render
