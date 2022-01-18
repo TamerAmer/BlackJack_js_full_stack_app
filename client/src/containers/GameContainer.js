@@ -385,7 +385,6 @@ const GameContainer=() => {
 
         console.log(_deck);
 
-
         let twoCards = [];             
         twoCards.push( _deck.shift() );
         twoCards.push( _deck.shift() );
