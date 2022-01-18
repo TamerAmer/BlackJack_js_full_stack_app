@@ -10,7 +10,9 @@ const Dealer = ({dealerHand}) => {
     return(
         <div className="dealer">
             <h2 className="hand-text">Dealer Hand</h2>
-            {showHand}            
+            <div className="dealer-cards">
+            {showHand}   
+            </div>         
         </div>
     )
 }
