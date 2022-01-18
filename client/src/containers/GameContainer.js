@@ -229,12 +229,17 @@ const GameContainer=() => {
             console.log("PLAYER BLACKJACK!!!")
         }
 
+
+        console.log(_deck);
+
         //Dealer
-        let _dealerHand = [];        
+        let _dealerHand = ['AH','2H'];        
         _dealerHand.push( _deck.shift() );
         _dealerHand.push( _deck.shift() );
         setDealerHand(_dealerHand);
-        
+
+        console.log(_deck);
+        console.log(_dealerHand)
         console.log("Dealer's first is " + _dealerHand[0]);
         console.log("Dealer's second is " + _dealerHand[1]);
 
@@ -496,7 +501,7 @@ const GameContainer=() => {
                 <BetCounter addBet={addBet} player={players.at(-1)} minBet={minBet}/> : null            
             }           
             {turnStage > 1?
-                <Dealer dealerHand={dealerHand}/> : null
+                <Dealer dealerHand={dealerHand} turnStage={turnStage}/> : null
             }
             {turnStage > 1 ?
                 <Player player={players.at(-1)} playerHand={playerHand}/> : null
