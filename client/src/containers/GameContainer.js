@@ -148,7 +148,7 @@ const GameContainer=() => {
     //I think a change is needed to stop state change delays from causing miss fire bugs
     //If we instead pass a parameter in onStand() that takes in the playerHand and potentially the handValue we eliminate the need for state changes that can potentially mess up the program
     const onStand = () => {
-        if(hasSplit=true){
+        if(hasSplit==true){
             setHasSplit(false)
             onSplitStand()
         }else{
@@ -252,7 +252,7 @@ const GameContainer=() => {
 
         if (firstHandValue==21){
             setHasSplit(false)
-            moneyToAdd = players.at(-1).stake * 2.5
+            let moneyToAdd = players.at(-1).stake * 2.5
                 console.log('player wins with Blackjack!!!!, stake changed');
 
             const updatedPlayer = { 
@@ -280,7 +280,7 @@ const GameContainer=() => {
         }
         if (secondHandValue==21){
             setHasSplit(false)
-            moneyToAdd = players.at(-1).stake * 2.5
+            let moneyToAdd = players.at(-1).stake * 2.5
                 console.log('player wins with Blackjack!!!!, stake changed');
 
             const updatedPlayer = { 
