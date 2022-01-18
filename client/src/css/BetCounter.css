@@ -6,10 +6,115 @@
     text-decoration: underline;
 }
 
-#button{
-    background-color: rgb(88, 175, 140);
-    padding: 20px;
-    border-radius: 50%;
+.stake{
     font-family: Junkyard;
+    color:rgb(88, 175, 140);
+    text-shadow: 2px 2px #296dec;
 }
 
+#button{
+    align-items: center;
+    margin: 20px;
+    padding: 0;
+}
+
+
+.five{
+    display:inline-block;
+    padding:0.7em 1.4em;
+    margin:0 0.3em 0.3em 0;
+    border-radius:0.15em;
+    box-sizing:border-box;
+    text-decoration:none;
+    font-family:Junkyard;
+    text-transform:uppercase;
+    font-weight:900;
+    font-size: 30px;
+    color:#FFFFFF;
+    background-color: #19b4e9;
+    box-shadow:inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.17);
+    text-align:center;
+    position:relative;
+    width: 150px;
+    height: 75px;
+}
+
+.ten{
+    display:inline-block;
+    padding:0.7em 1.4em;
+    margin:0 0.3em 0.3em 0;
+    border-radius:0.15em;
+    box-sizing:border-box;
+    text-decoration:none;
+    font-family:Junkyard;
+    text-transform:uppercase;
+    font-weight:900;
+    font-size: 30px;
+    color:#FFFFFF;
+    background-color: #dbae77;
+    box-shadow:inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.17);
+    text-align:center;
+    position:relative;
+    width: 150px;
+    height: 75px;
+}
+
+.twenty{
+    display:inline-block;
+    padding:0.7em 1.4em;
+    margin:0 0.3em 0.3em 0;
+    border-radius:0.15em;
+    box-sizing:border-box;
+    text-decoration:none;
+    font-family:Junkyard;
+    text-transform:uppercase;
+    font-weight:900;
+    font-size: 30px;
+    color:#FFFFFF;
+    background-color: #6c5ec0; 
+    box-shadow:inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.17);
+    text-align:center;
+    position:relative;
+    width: 150px;
+    height: 75px;
+}
+
+.place-bet{
+    display:inline-block;
+    padding:0.7em 1.4em;
+    margin:0 0.3em 0.3em 0;
+    border-radius:0.15em;
+    box-sizing:border-box;
+    text-decoration:none;
+    font-family:Junkyard;
+    text-transform:uppercase;
+    font-weight:900;
+    font-size: 25px;
+    color:#FFFFFF;
+    background-color: rgb(103, 228, 166);
+    box-shadow:inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.17);
+    text-align:center;
+    position:relative;
+    width: 150px;
+    height: 75px;
+}
+
+.clear{
+    display:inline-block;
+    padding:0.7em 1.4em;
+    margin:0 0.3em 0.3em 0;
+    border-radius:0.15em;
+    box-sizing:border-box;
+    text-decoration:none;
+    font-family:Junkyard;
+    text-transform:uppercase;
+    font-weight:900;
+    font-size: 30px;
+    color:#FFFFFF;
+    background-color: #d33576;
+    box-shadow:inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.17);
+    text-align:center;
+    position:relative;
+    width: 150px;
+    height: 75px;
+}
