@@ -19,7 +19,7 @@ const Player = ({playerHand, splitHand}) => {
         <div className="player">
             <h2 className="hand-text">Player Hand</h2>
             {showHand}             
-            <hr/>
+
             {splitHand.length > 0 ?  <h3 className="hand-text">Split Hand</h3> : null}
             {showSplitHand}            
             <br/>
