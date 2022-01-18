@@ -50,11 +50,12 @@ const BetCounter = ({ addBet, player, minBet}) => {
 	return (
 			<div className="counter-container">
 				
-				<Stake stake={currentBetAmount} />
+				<Stake className="stake" stake={currentBetAmount} />
 
 				<button value="5" id="button" className="five" onClick={handleCounterChange}>£5</button>
 				<button value="10" id="button" className="ten" onClick={handleCounterChange}>£10</button>
 				<button value="20" id="button" className="twenty" onClick={handleCounterChange}>£20</button>
+				<br/>
 				<button id="button" className="place-bet" onClick={handleSubmitBet} >Place Bet</button>				
 				<button id="button" className="clear" onClick={handleClear}>Clear</button>
             </div>

@@ -3,8 +3,13 @@
   src: local('Junkyard'), url(../fonts/junkyard.regular.ttf) format('truetype');
 }
 
+*{
+  background-color: #ffe892
+}
+
 .app-container{
-  height: 1000px;
+  position:relative;
+  height: auto;
   text-align: center;
   padding-bottom: 30px;
   /* background-color: rgb(158, 199, 245); */
@@ -128,5 +133,63 @@ span{
     margin-right: 55px;
     margin-bottom: 25px;
     /* padding: px; */
+  }
+
+  .player-action-button{
+    display:inline-block;
+    padding:0.7em 1.4em;
+    margin:0 0.3em 0.3em 0;
+    border-radius:0.15em;
+    box-sizing:border-box;
+    text-decoration:none;
+    font-family:Junkyard;
+    text-transform:uppercase;
+    font-weight:900;
+    font-size: 20px;
+    color:#FFFFFF;
+    background-color: #67d2ca;
+    box-shadow:inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.17);
+    text-align:center;
+    position:relative;
+    width: 150px;
+    height: 75px;
+  }
+
+  .play{
+    display:inline-block;
+    padding:0.7em 1.4em;
+    margin:0 0.3em 0.3em 0;
+    border-radius:0.15em;
+    box-sizing:border-box;
+    text-decoration:none;
+    font-family:Junkyard;
+    text-transform:uppercase;
+    font-weight:900;
+    font-size: 30px;
+    color:#FFFFFF;
+    background-color: rgb(103, 228, 166);
+    box-shadow:inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.17);
+    text-align:center;
+    position:relative;
+    width: 150px;
+    height: 75px;
+    margin-top: 5px;
+  }
+
+  .player-name-input{
+    font-family: Junkyard;
+    color: #333;
+    font-size: 1.2rem;
+    text-align: center;
+    font-weight: 900;
+    margin: 0 auto;
+    padding: 1.5rem 2rem;
+    border-radius: 0.2rem;
+    background-color: rgb(255, 255, 255);
+    border: none;
+    width: 30%;
+    display: block;
+    border-bottom: 0.3rem solid transparent;
+    transition: all 0.3s;
   }
   
