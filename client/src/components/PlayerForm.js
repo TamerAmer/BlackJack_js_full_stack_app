@@ -43,13 +43,14 @@ const PlayerForm=({addPlayer}) => {
 
     return(        
         <form className="player-form" onSubmit={handleFormSubmit}>
-            <input            
+            <input  
+                className="player-name-input"          
                 type="text"
                 placeholder="Enter player name!"
                 value={name}
                 onChange={handleNameChange}
             />
-            <button type="submit">Play!</button>
+            <button className="play" type="submit">Play!</button>
         </form>
     )
 }

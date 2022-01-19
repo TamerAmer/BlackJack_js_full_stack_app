@@ -1,13 +1,26 @@
 @font-face {
   font-family: 'Junkyard';
-  src: local('Junkyard'), url(./fonts/junkyard.regular.ttf) format('truetype');
+  src: local('Junkyard'), url(../fonts/junkyard.regular.ttf) format('truetype');
+}
+
+*{
+   background-color: #ffea94; 
+  font-family: Junkyard;
+}
+
+.stake{
+  font-family: Junkyard;
+  color:rgb(88, 175, 140);
+  text-shadow: 2px 2px #296dec;
 }
 
 .app-container{
-  height: 1000px;
+  position:relative;
+  height: auto;
   text-align: center;
   padding-bottom: 30px;
-  background-color: rgb(35, 31, 32);
+  /* background-color: rgb(158, 199, 245); */
+  /* background-color: #ffe892 */
 }
 
 
@@ -27,9 +40,10 @@
 }
 
 .player-money{
+  -webkit-text-stroke: 0.01px black;
   font-family: Junkyard;
-  font-size: 30px;
-  color: #fff;
+  font-size: 40px;
+  color: #0fa;
   text-shadow:
     0 0 7px #fff,
     0 0 10px #fff,
@@ -59,6 +73,7 @@
       0 0 90px #0fa,
       0 0 100px #0fa,
       0 0 150px #0fa;
+      
   }
   20%, 24%, 55% {       
     text-shadow: none;
@@ -66,6 +81,7 @@
 }
 
 span{
+  -webkit-text-stroke: 1.2px black;
   animation: flicker 1.5s infinite alternate;  
 }
 
@@ -73,6 +89,9 @@ span{
   font-family: Junkyard;
   color: rgb(103, 228, 166);
   text-shadow: 2px 2px #296dec;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+  text-decoration-color: rgb(103, 228, 166);
   
 }
 
@@ -109,10 +128,83 @@ span{
   }
 
   .card{
-    box-shadow: rgba(240, 46, 170, 0.4) -5px 5px, rgba(240, 46, 170, 0.3) -10px 10px, rgba(240, 46, 170, 0.2) -15px 15px, rgba(240, 46, 170, 0.1) -20px 20px, rgba(240, 46, 170, 0.05) -25px 25px;
-    max-width: 13%;
+    box-shadow: rgb(49, 203, 255, 0.4) -5px 5px, rgb(49, 203, 255, 0.3) -10px 10px, rgb(49, 203, 255, 0.2) -15px 15px, rgb(49, 203, 255, 0.1) -20px 20px, rgb(49, 203, 255, 0.0) -25px 25px;
+    max-width: 8%;
     height: auto;
     margin-right: 55px;
     margin-bottom: 25px;
     /* padding: px; */
   }
+
+  .cardSmall{
+    box-shadow: rgb(49, 203, 255, 0.4) -5px 5px, rgb(49, 203, 255, 0.3) -10px 10px, rgb(49, 203, 255, 0.2) -15px 15px, rgb(49, 203, 255, 0.1) -20px 20px, rgb(49, 203, 255, 0.0) -25px 25px;
+    max-width: 4%;
+    height: auto;
+    margin-right: 55px;
+    margin-bottom: 25px;
+    /* padding: px; */
+  }
+
+  .player-action-button{
+    display:inline-block;
+    padding:0.7em 1.4em;
+    margin:0 0.3em 0.3em 0;
+    border-radius:0.15em;
+    box-sizing:border-box;
+    text-decoration:none;
+    font-family:Junkyard;
+    text-transform:uppercase;
+    font-weight:900;
+    font-size: 20px;
+    color:#FFFFFF;
+    background-color: #67d2ca;
+    box-shadow:inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.17);
+    text-align:center;
+    position:relative;
+    width: 150px;
+    height: 75px;
+  }
+
+  .play{
+    display:inline-block;
+    padding:0.7em 1.4em;
+    margin:0 0.3em 0.3em 0;
+    border-radius:0.15em;
+    box-sizing:border-box;
+    text-decoration:none;
+    font-family:Junkyard;
+    text-transform:uppercase;
+    font-weight:900;
+    font-size: 30px;
+    color:#FFFFFF;
+    background-color: rgb(103, 228, 166);
+    box-shadow:inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.17);
+    text-align:center;
+    position:relative;
+    width: 150px;
+    height: 75px;
+    margin-top: 5px;
+  }
+
+  .player-name-input{
+    font-family: Junkyard;
+    color: #333;
+    font-size: 1.2rem;
+    text-align: center;
+    font-weight: 900;
+    margin: 0 auto;
+    padding: 1.5rem 2rem;
+    border-radius: 0.2rem;
+    background-color: rgb(255, 255, 255);
+    border: none;
+    width: 30%;
+    display: block;
+    border-bottom: 0.3rem solid transparent;
+    transition: all 0.3s;
+  }
+  
+
+.turn-end-msg{
+  color: #6f5ec3;
+  text-shadow: 2px 2px #e263c2
+}

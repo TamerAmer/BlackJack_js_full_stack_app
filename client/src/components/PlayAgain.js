@@ -6,7 +6,7 @@ const PlayAgain = ({turnEndMessage, onPlayAgain}) => {
 
     return(
         <>
-            <h1>{turnEndMessage}</h1>
+            <h1 className="turn-end-msg">{turnEndMessage}</h1>
             <button className="play-again" onClick={handlePlayAgain}>Play Another Turn</button>
         </>
     )
