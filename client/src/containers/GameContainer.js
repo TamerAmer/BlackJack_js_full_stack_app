@@ -315,10 +315,12 @@ const GameContainer=() => {
             console.log(firstHandValue);
 
             //copy hand to temporary variable
-            const handHolder = playerHand.map(c=>c);
+            const handHolder1 = firstPlayerHand
+            const handHolder2 = secondPlayerHand
+
             //and swap hands
-            setPlayerHand(secondPlayerHand);
-            setSplitHand(handHolder);
+            setSplitHand(handHolder1);
+            setPlayerHand(handHolder2);
             
             //check second hand for blackjack
             if(secondHandValue == 21){
@@ -388,10 +390,10 @@ const GameContainer=() => {
 
         console.log(_deck);
         //create array to hold player cards
-        let twoCards = [];             
+        let twoCards = ["AH","AD"];             
         //take cards from our passed deck and put them in the array
-        twoCards.push( _deck.shift() );
-        twoCards.push( _deck.shift() );
+        // twoCards.push( _deck.shift() );
+        // twoCards.push( _deck.shift() );
 
         //save to state
         setPlayerHand(twoCards);
