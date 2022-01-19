@@ -325,6 +325,25 @@ const GameContainer=() => {
             //check second hand for blackjack
             if(secondHandValue == 21){
                 secondHandValue = "BlackJack";
+                let moneyToAdd = players.at(-1).stake * 2.5
+                console.log('player wins with Blackjack!!!!, stake changed');
+
+                //update player object on db
+                const updatedPlayer = { 
+                    'currentMoney': players.at(-1).currentMoney + moneyToAdd
+                }                
+
+                //db update
+                updatePlayer(updatedPlayer, players.at(-1)._id)
+                .then((data) =>
+                {
+                    updatedPlayer._id = players.at(-1)._id;
+                    
+                });
+
+                //update front end
+                players.at(-1).currentMoney = players.at(-1).currentMoney + moneyToAdd;
+
                 autoStand(secondHandValue, dealerHand);
             }
         }
@@ -390,10 +409,10 @@ const GameContainer=() => {
 
         console.log(_deck);
         //create array to hold player cards
-        let twoCards = ["AH","AD"];             
+        let twoCards = [];             
         //take cards from our passed deck and put them in the array
-        // twoCards.push( _deck.shift() );
-        // twoCards.push( _deck.shift() );
+        twoCards.push( _deck.shift() );
+        twoCards.push( _deck.shift() );
 
         //save to state
         setPlayerHand(twoCards);
