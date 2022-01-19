@@ -651,7 +651,7 @@ const GameContainer=() => {
 
         //increase min bet!
         //use temp varialbe, don't rely on state being updated
-        const _minBet = minBet + 2;
+        const _minBet = minBet + 5;
         setMinBet(_minBet);
 
         //check if palyer can play another game
