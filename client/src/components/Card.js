@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-const Card = ({ card }) => {
+const Card = ({ card, className }) => {
    
     const locationA = require ("../images/cards/" + card + "a.png")
     const locationB = require ("../images/cards/" + card + "b.png")
@@ -42,7 +42,7 @@ const Card = ({ card }) => {
     }
     return (
         <>
-            <img className="card" src={imageLocation}/>  
+            <img className={className} src={imageLocation}/>  
         </>
     )
 }
