@@ -168,6 +168,9 @@ const GameContainer=() => {
         setSplitHand([]);
         setPlayerHand([]);
         setDealerHand([]);
+        setCanSplit(false)
+        setHasSplit(false)
+        setSplitDoubleDown(false)
     }
 
     const onDoubleDown = () => {
