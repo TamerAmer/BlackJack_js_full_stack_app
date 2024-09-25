@@ -15,12 +15,11 @@ Style with CSS
 
 To run the project in your terminal you will first have to
 
-1. Ensure you have MongoDB downloaded https://www.mongodb.com/try/download/community
-2. npm install in the client folder
-3. npm install in the server folder
-4. Go into the server folder and run the seeds file: npm run seeds
-5. In the server folder start the server: npm start server:dev
-6. Go into the client folder: npm start app
+1. npm install in the client folder
+2. npm install in the server folder
+3. Go into the server folder and run the seeds file: npm run seeds
+4. In the server folder start the server: npm start server:dev
+5. Go into the client folder: npm start app
 Program should then appear in localhost:3000
 
 <img width="1279" alt="Screenshot 2022-03-15 at 10 00 36" src="https://user-images.githubusercontent.com/83923406/158353800-e1c70b19-d6a1-4cd5-ba4f-5e2a6bcce83b.png">
